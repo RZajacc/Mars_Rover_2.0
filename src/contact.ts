@@ -1,9 +1,10 @@
+import emailjs from "@emailjs/browser";
 // *Initialize emailJS
 (function () {
   emailjs.init("DzZ6BIu3N4pT6e34Q");
 })();
 
-const contact_Form = document.querySelector("#contact-form");
+const contact_Form = (document.querySelector("#contact-form") as HTMLFormElement);
 
 // * Send email with data from the document
 contact_Form.addEventListener("submit", (event) => {
