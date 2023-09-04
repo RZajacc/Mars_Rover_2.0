@@ -1,4 +1,4 @@
-"use strict";
+import emailjs from "@emailjs/browser";
 // *Initialize emailJS
 (function () {
     emailjs.init("DzZ6BIu3N4pT6e34Q");
@@ -16,4 +16,3 @@ contact_Form.addEventListener("submit", (event) => {
         console.log("FAILED....", error);
     });
 });
-//# sourceMappingURL=contact.js.map

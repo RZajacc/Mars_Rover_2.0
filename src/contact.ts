@@ -19,4 +19,3 @@ contact_Form.addEventListener("submit", (event) => {
       console.log("FAILED....", error);
     });
 });
-

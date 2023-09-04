@@ -1,43 +1,48 @@
+import { APIResponse, responseManifest } from "./types/fetchedTypes";
+
 // ? ----------------------------------------------
 // ? -----------CLEANER FUNCTIONS -----------------
 // ? ----------------------------------------------
+
+
 // * REMOVE ALL CHILDREN OF SELECTED ELEMENT
-function removeAllChildNodes(parent) {
+function removeAllChildNodes(parent : HTMLDivElement): void {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
   }
 }
 
+const roverInfo = document.querySelector("#rover-info");
+
 // *REMOVES ALL DYNAMICALLY CREATED CONTENT
 function cleanAllDynamicContent() {
-  const roverInfo = document.querySelector("#rover-info");
+  const roverInfo = (document.querySelector("#rover-info") as HTMLDivElement);
   removeAllChildNodes(roverInfo);
-  const solDayDescDiv = document.querySelector("#sol-day-desc");
+  const solDayDescDiv = (document.querySelector("#sol-day-desc") as HTMLDivElement);
   removeAllChildNodes(solDayDescDiv);
-  const camerasList = document.querySelector("#camera-selectors");
+  const camerasList = (document.querySelector("#camera-selectors") as HTMLDivElement);
   removeAllChildNodes(camerasList);
-  const camInfo = document.querySelector("#cameras-info");
+  const camInfo = (document.querySelector("#cameras-info") as HTMLParagraphElement);
   camInfo.innerHTML = "";
-  const solDayInput = document.querySelector("#solar-day-input");
+  const solDayInput = (document.querySelector("#solar-day-input") as HTMLDivElement);
   removeAllChildNodes(solDayInput);
 
   // * Get the gallery div and clean it from existing content
-  const photoDiv = document.querySelector("#photo-gallery");
+  const photoDiv = (document.querySelector("#photo-gallery") as HTMLDivElement);
   removeAllChildNodes(photoDiv);
 
   // *Get pagination div and delete the content
-  const pagesDiv = document.querySelector("#pages");
+  const pagesDiv = (document.querySelector("#pages") as HTMLDivElement);
   removeAllChildNodes(pagesDiv);
 }
 
-// !INITIALIZE ALL EVENTS
 chooseRover();
 
 // ? ----------------------------------------------
 // ? SELECT PARAMETERS AND FETCH MISSION MANIFEST
 // ? ----------------------------------------------
 function chooseRover() {
-  const roverSelect = document.querySelector("#rover-select");
+  const roverSelect = (document.querySelector("#rover-select") as HTMLSelectElement);
   roverSelect.addEventListener("change", () => {
     const roverName = roverSelect.value;
 
@@ -53,14 +58,16 @@ function chooseRover() {
   });
 }
 
+
+
 // ? ----------------------------------------------
 // ? -----DISPLAY ALL RELEVANT INFORMATIONS--------
 // ? ----------------------------------------------
 // * If no rover selected clean all the data below
-function displayEmptyRoverErr(message) {
+function displayEmptyRoverErr(message: string) {
   cleanAllDynamicContent();
 
-  const roverInfo = document.querySelector("#rover-info");
+  const roverInfo = (document.querySelector("#rover-info") as HTMLDivElement);
   // * Generate description of selected rover
   const roverParagraph = document.createElement("p");
   roverParagraph.innerHTML = `<strong>${message}</strong>`;
@@ -69,9 +76,11 @@ function displayEmptyRoverErr(message) {
 }
 
 // *If data is provided display information about selected rover
-function displayRoverInfo(info, roverName) {
+function displayRoverInfo(info: object, roverName: string) {
   cleanAllDynamicContent();
-
+  
+  const manifestData: roverManifest = info;
+  console.log(manifestData);
   const roverInfo = document.querySelector("#rover-info");
   // * Generate description of selected rover
   const roverParagraph = document.createElement("p");
