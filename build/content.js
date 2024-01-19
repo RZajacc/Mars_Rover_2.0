@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 // Object.defineProperty(exports, "__esModule", { value: true });
 // ? ----------------------------------------------
 // ? -----------CLEANER FUNCTIONS -----------------
@@ -224,7 +224,6 @@ function fetchBasic(roverName, selectedSolarDay, pagesCount, page = `1`) {
   fetch(fetchUrl)
     .then((response) => response.json())
     .then((data) => {
-      console.log("DATA--->", data);
       showAllPhotos(data, roverName, selectedSolarDay, pagesCount, page);
     })
     .catch(() => console.log("Something went wrong"));
@@ -234,15 +233,14 @@ function fetchExpanded(roverName, selectedSolarDay, camName, page = `1`) {
   const fetchUrl = `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?sol=${selectedSolarDay}&camera=${camName}&page=${page}&api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`;
   fetch(fetchUrl)
     .then((response) => response.json())
-    .then((data) =>
-      showSelectedPhotos(data, roverName, selectedSolarDay, camName, page)
-    )
+    .then((data) => {
+      showSelectedPhotos(data, roverName, selectedSolarDay, camName, page);
+    })
     .catch(() => console.log("Something went wrong"));
 }
 // !HERE
 // * Generate photos on a webpage
 function showAllPhotos(data, roverName, selectedSolarDay, pagesCount, page) {
-  console.log(data);
   // * Get the gallery div and clean it from existing content
   const photoDiv = document.querySelector("#photo-gallery");
   removeAllChildNodes(photoDiv);
@@ -255,9 +253,9 @@ function showAllPhotos(data, roverName, selectedSolarDay, pagesCount, page) {
   // *Displaying photos is called from few places
   displayGallery(cardGroup, data);
   // * Create a pagination if there are more pages than 1
-  if (pagesCount > 1) {
+  if (+pagesCount > 1) {
     //  *Create navigation and FIRST element tab
-    const pagesDiv = document.querySelector("#pages");
+    // const pagesDiv = document.querySelector("#pages") as HTMLDivElement;
     const paginationNav = document.createElement("nav");
     paginationNav.setAttribute("aria-label", "pagination-nav");
     pagesDiv.appendChild(paginationNav);
@@ -274,107 +272,107 @@ function showAllPhotos(data, roverName, selectedSolarDay, pagesCount, page) {
     firstLi.appendChild(firstHref);
     paginationUl.appendChild(firstLi);
     firstHref.addEventListener("click", () => {
-      targetPage = 1;
+      const targetPage = `1`;
       removeAllChildNodes(photoDiv);
       fetchBasic(roverName, selectedSolarDay, pagesCount, targetPage);
     });
     // * PAGINATION LOGIC
-    if (page === 1 && pagesCount >= 3) {
-      for (let i = page; i < page + 3; i++) {
+    if (+page === 1 && +pagesCount >= 3) {
+      for (let i = +page; i < +page + 3; i++) {
         const paginationLi = document.createElement("li");
         paginationLi.setAttribute("class", "page-item");
         const paginationHref = document.createElement("a");
-        if (i === page) {
+        if (i === +page) {
           paginationHref.setAttribute("class", "page-link active");
         } else {
           paginationHref.setAttribute("class", "page-link");
         }
         paginationHref.setAttribute("href", "#");
-        paginationHref.textContent = i;
+        paginationHref.textContent = i.toString();
         paginationLi.appendChild(paginationHref);
         paginationUl.appendChild(paginationLi);
         paginationHref.addEventListener("click", () => {
-          targetPage = parseInt(paginationHref.textContent);
+          const targetPage = paginationHref.textContent;
           removeAllChildNodes(photoDiv);
           fetchBasic(roverName, selectedSolarDay, pagesCount, targetPage);
         });
       }
-    } else if (page === 1 && pagesCount <= 3) {
-      for (let i = page; i < pagesCount + 1; i++) {
+    } else if (+page === 1 && +pagesCount <= 3) {
+      for (let i = +page; i < +pagesCount + 1; i++) {
         const paginationLi = document.createElement("li");
         paginationLi.setAttribute("class", "page-item");
         const paginationHref = document.createElement("a");
-        if (i === page) {
+        if (i === +page) {
           paginationHref.setAttribute("class", "page-link active");
         } else {
           paginationHref.setAttribute("class", "page-link");
         }
         paginationHref.setAttribute("href", "#");
-        paginationHref.textContent = i;
+        paginationHref.textContent = i.toString();
         paginationLi.appendChild(paginationHref);
         paginationUl.appendChild(paginationLi);
         paginationHref.addEventListener("click", () => {
-          targetPage = parseInt(paginationHref.textContent);
+          const targetPage = paginationHref.textContent;
           removeAllChildNodes(photoDiv);
           fetchBasic(roverName, selectedSolarDay, pagesCount, targetPage);
         });
       }
-    } else if (page === pagesCount && pagesCount >= 3) {
-      for (let i = page - 2; i < pagesCount + 1; i++) {
+    } else if (+page === +pagesCount && +pagesCount >= 3) {
+      for (let i = +page - 2; i < +pagesCount + 1; i++) {
         const paginationLi = document.createElement("li");
         paginationLi.setAttribute("class", "page-item");
         const paginationHref = document.createElement("a");
-        if (i === page) {
+        if (i === +page) {
           paginationHref.setAttribute("class", "page-link active");
         } else {
           paginationHref.setAttribute("class", "page-link");
         }
         paginationHref.setAttribute("href", "#");
-        paginationHref.textContent = i;
+        paginationHref.textContent = i.toString();
         paginationLi.appendChild(paginationHref);
         paginationUl.appendChild(paginationLi);
         paginationHref.addEventListener("click", () => {
-          targetPage = parseInt(paginationHref.textContent);
+          const targetPage = paginationHref.textContent;
           removeAllChildNodes(photoDiv);
           fetchBasic(roverName, selectedSolarDay, pagesCount, targetPage);
         });
       }
-    } else if (page === pagesCount && pagesCount <= 3) {
-      for (let i = pagesCount - 1; i < pagesCount + 1; i++) {
+    } else if (+page === +pagesCount && +pagesCount <= 3) {
+      for (let i = +pagesCount - 1; i < +pagesCount + 1; i++) {
         const paginationLi = document.createElement("li");
         paginationLi.setAttribute("class", "page-item");
         const paginationHref = document.createElement("a");
-        if (i === page) {
+        if (i === +page) {
           paginationHref.setAttribute("class", "page-link active");
         } else {
           paginationHref.setAttribute("class", "page-link");
         }
         paginationHref.setAttribute("href", "#");
-        paginationHref.textContent = i;
+        paginationHref.textContent = i.toString();
         paginationLi.appendChild(paginationHref);
         paginationUl.appendChild(paginationLi);
         paginationHref.addEventListener("click", () => {
-          targetPage = parseInt(paginationHref.textContent);
+          const targetPage = paginationHref.textContent;
           removeAllChildNodes(photoDiv);
           fetchBasic(roverName, selectedSolarDay, pagesCount, targetPage);
         });
       }
     } else {
-      for (let i = page - 1; i < page + 2; i++) {
+      for (let i = +page - 1; i < +page + 2; i++) {
         const paginationLi = document.createElement("li");
         paginationLi.setAttribute("class", "page-item");
         const paginationHref = document.createElement("a");
-        if (i === page) {
+        if (i === +page) {
           paginationHref.setAttribute("class", "page-link active");
         } else {
           paginationHref.setAttribute("class", "page-link");
         }
         paginationHref.setAttribute("href", "#");
-        paginationHref.textContent = i;
+        paginationHref.textContent = i.toString();
         paginationLi.appendChild(paginationHref);
         paginationUl.appendChild(paginationLi);
         paginationHref.addEventListener("click", () => {
-          targetPage = parseInt(paginationHref.textContent);
+          const targetPage = paginationHref.textContent;
           removeAllChildNodes(photoDiv);
           fetchBasic(roverName, selectedSolarDay, pagesCount, targetPage);
         });
@@ -390,12 +388,13 @@ function showAllPhotos(data, roverName, selectedSolarDay, pagesCount, page) {
     lastLi.appendChild(lastHref);
     paginationUl.appendChild(lastLi);
     lastHref.addEventListener("click", () => {
-      targetPage = pagesCount;
+      const targetPage = pagesCount;
       removeAllChildNodes(photoDiv);
       fetchBasic(roverName, selectedSolarDay, pagesCount, targetPage);
     });
   }
 }
+// !------------------------HERE---------------------------
 function showSelectedPhotos(data, roverName, selectedSolarDay, camName, page) {
   // * Get the gallery div and clean it from existing content
   const photoDiv = document.querySelector("#photo-gallery");
@@ -410,12 +409,12 @@ function showSelectedPhotos(data, roverName, selectedSolarDay, camName, page) {
   displayGallery(cardGroup, data);
   // * If requested page is empty then move to last working one (Pagination)
   if (data.photos.length === 0) {
-    let targetPage = page - 1;
+    const targetPage = +page - 1;
     removeAllChildNodes(photoDiv);
-    fetchExpanded(roverName, selectedSolarDay, camName, targetPage);
+    fetchExpanded(roverName, selectedSolarDay, camName, targetPage.toString());
   }
   // * PAGINATION LOGIC
-  if (data.photos.length === 25 || page != 1) {
+  if (data.photos.length === 25 || +page != 1) {
     // ? Create navigation and Previous element tab
     const pagesDiv = document.querySelector("#pages");
     const paginationNav = document.createElement("nav");
@@ -434,7 +433,7 @@ function showSelectedPhotos(data, roverName, selectedSolarDay, camName, page) {
     firstLi.appendChild(firstHref);
     paginationUl.appendChild(firstLi);
     firstHref.addEventListener("click", () => {
-      let targetPage = 1;
+      const targetPage = `1`;
       removeAllChildNodes(photoDiv);
       fetchExpanded(roverName, selectedSolarDay, camName, targetPage);
     });
@@ -448,10 +447,15 @@ function showSelectedPhotos(data, roverName, selectedSolarDay, camName, page) {
     previousLi.appendChild(previousHref);
     paginationUl.appendChild(previousLi);
     previousHref.addEventListener("click", () => {
-      if (page > 1) {
-        let targetPage = page - 1;
+      if (+page > 1) {
+        let targetPage = +page - 1;
         removeAllChildNodes(photoDiv);
-        fetchExpanded(roverName, selectedSolarDay, camName, targetPage);
+        fetchExpanded(
+          roverName,
+          selectedSolarDay,
+          camName,
+          targetPage.toString()
+        );
       }
     });
     // * Create a CURRENT PAGE element
@@ -473,9 +477,14 @@ function showSelectedPhotos(data, roverName, selectedSolarDay, camName, page) {
     nextLi.appendChild(nextHref);
     paginationUl.appendChild(nextLi);
     nextHref.addEventListener("click", () => {
-      targetPage = page + 1;
+      const targetPage = +page + 1;
       removeAllChildNodes(photoDiv);
-      fetchExpanded(roverName, selectedSolarDay, camName, targetPage);
+      fetchExpanded(
+        roverName,
+        selectedSolarDay,
+        camName,
+        targetPage.toString()
+      );
     });
   }
 }
