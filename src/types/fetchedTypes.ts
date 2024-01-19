@@ -1,5 +1,9 @@
 // * Interface from data fetched from mission manifest
-export interface roverManifest {
+export interface responseManifest {
+  photo_manifest: missionManifest;
+}
+
+export interface missionManifest {
   name: string;
   landing_date: string;
   launch_date: string;
@@ -7,33 +11,29 @@ export interface roverManifest {
   max_sol: string;
   max_date: string;
   total_photos: number;
-  photos: Photo[];
+  photos: PhotoManifest[];
 }
 
-export interface Photo {
+export interface PhotoManifest {
   sol: number;
   earth_date: string;
   total_photos: number;
   cameras: string[];
 }
 
-export interface responseManifest {
-  photo_manifest: PhotoManifest;
-}
+// * Fetched data
 
-export interface PhotoManifest {
+export interface Data {}
+
+export interface Camera {
+  full_name: string;
+  id: number;
   name: string;
-  landing_date: string;
-  launch_date: string;
-  status: string;
-  max_sol: number;
-  max_date: string;
-  total_photos: number;
-  photos: Photo[];
+  rover_id: number;
 }
 
-export interface APIResponse<Type> {
-  status: number;
-  data: Type;
-  error?: string;
-}
+// export interface APIResponse<Type> {
+//   status: number;
+//   data: Type;
+//   error?: string;
+// }

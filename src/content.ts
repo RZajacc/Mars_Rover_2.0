@@ -1,4 +1,8 @@
-import { Photo, roverManifest } from "./types/fetchedTypes";
+import {
+  PhotoManifest,
+  missionManifest,
+  responseManifest,
+} from "./types/fetchedTypes";
 
 // ? ----------------------------------------------
 // ? -----------CLEANER FUNCTIONS -----------------
@@ -60,7 +64,9 @@ function chooseRover() {
         `https://api.nasa.gov/mars-photos/api/v1/manifests/${roverName}/?api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
       )
         .then((response) => response.json())
-        .then((data) => displayRoverInfo(data.photo_manifest, roverName));
+        .then((data: responseManifest) => {
+          displayRoverInfo(data.photo_manifest, roverName);
+        });
     }
   });
 }
@@ -81,7 +87,7 @@ function displayEmptyRoverErr(message: string) {
 }
 
 // *If data is provided display information about selected rover
-function displayRoverInfo(info: roverManifest, roverName: string) {
+function displayRoverInfo(info: missionManifest, roverName: string) {
   cleanAllDynamicContent();
 
   const roverInfo = document.querySelector("#rover-info") as HTMLDivElement;
@@ -152,7 +158,7 @@ function displayRoverInfo(info: roverManifest, roverName: string) {
 }
 
 function displaySolDayInfo(
-  photoArr: Photo[],
+  photoArr: PhotoManifest[],
   roverName: string,
   selectedSolarDay: string
 ) {
@@ -169,8 +175,8 @@ function displaySolDayInfo(
 
   const solDayDescParagraph = document.createElement("p");
   solDayDescDiv.appendChild(solDayDescParagraph);
-  let totalPictures;
-  let camerasUsed;
+  let totalPictures: number;
+  let camerasUsed: string[] = [];
 
   // * If there's no match the list still will contain empty array
   if (selectedData.length !== 0) {
@@ -185,7 +191,7 @@ function displaySolDayInfo(
 
   // * If there are any pictures display them, if not, clear the rest of a screen
   if (totalPictures !== 0) {
-    let pagesCount = Math.ceil(totalPictures / 25);
+    let pagesCount = Math.ceil(totalPictures / 25).toString();
     displayCameraSelectors(
       camerasUsed,
       roverName,
@@ -209,19 +215,22 @@ function displaySolDayInfo(
   }
 }
 
-// ! DONE HERE!
 // * Display switches for cameras and initial fetch
 function displayCameraSelectors(
-  camerasUsed,
-  roverName,
-  selectedSolarDay,
-  pagesCount
+  camerasUsed: string[],
+  roverName: string,
+  selectedSolarDay: string,
+  pagesCount: string
 ) {
-  const camInfo = document.querySelector("#cameras-info");
+  const camInfo = document.querySelector(
+    "#cameras-info"
+  ) as HTMLParagraphElement;
   camInfo.innerHTML =
     "Each rover has a diffent set of cameras. Select the ones that are interesting for you:";
 
-  const camerasList = document.querySelector("#camera-selectors");
+  const camerasList = document.querySelector(
+    "#camera-selectors"
+  ) as HTMLDivElement;
   removeAllChildNodes(camerasList);
 
   // *List of available cameras
@@ -253,7 +262,8 @@ function displayCameraSelectors(
   camerasUsed.forEach((camera) => {
     const selectOption = document.createElement("option");
     selectOption.setAttribute("value", camera);
-    selectOption.textContent = availableCameras[camera];
+    selectOption.textContent =
+      availableCameras[camera as keyof typeof availableCameras];
     camSelect.appendChild(selectOption);
   });
 
@@ -274,18 +284,29 @@ function displayCameraSelectors(
 // ? --------------------------------------------
 
 // * BASIC FETCH - Takes rover name and solar day
-function fetchBasic(roverName, selectedSolarDay, pagesCount, page = 1) {
+function fetchBasic(
+  roverName: string,
+  selectedSolarDay: string,
+  pagesCount: string,
+  page = `1`
+) {
   const fetchUrl = `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?sol=${selectedSolarDay}&page=${page}&api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`;
   fetch(fetchUrl)
     .then((response) => response.json())
-    .then((data) =>
-      showAllPhotos(data, roverName, selectedSolarDay, pagesCount, page)
-    )
+    .then((data) => {
+      console.log("DATA--->", data);
+      showAllPhotos(data, roverName, selectedSolarDay, pagesCount, page);
+    })
     .catch(() => console.log("Something went wrong"));
 }
 
 // * BASIC FETCH - Takes also selected camera
-function fetchExpanded(roverName, selectedSolarDay, camName, page = 1) {
+function fetchExpanded(
+  roverName: string,
+  selectedSolarDay: string,
+  camName: string,
+  page = `1`
+) {
   const fetchUrl = `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?sol=${selectedSolarDay}&camera=${camName}&page=${page}&api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`;
   fetch(fetchUrl)
     .then((response) => response.json())
@@ -295,8 +316,16 @@ function fetchExpanded(roverName, selectedSolarDay, camName, page = 1) {
     .catch(() => console.log("Something went wrong"));
 }
 
+// !HERE
 // * Generate photos on a webpage
-function showAllPhotos(data, roverName, selectedSolarDay, pagesCount, page) {
+function showAllPhotos(
+  data,
+  roverName: string,
+  selectedSolarDay: string,
+  pagesCount: string,
+  page: string
+) {
+  console.log(data);
   // * Get the gallery div and clean it from existing content
   const photoDiv = document.querySelector("#photo-gallery");
   removeAllChildNodes(photoDiv);
