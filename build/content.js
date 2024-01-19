@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 // ? ----------------------------------------------
 // ? -----------CLEANER FUNCTIONS -----------------
 // ? ----------------------------------------------
@@ -7,7 +9,6 @@ function removeAllChildNodes(parent) {
         parent.removeChild(parent.firstChild);
     }
 }
-const roverInfo = document.querySelector("#rover-info");
 // *REMOVES ALL DYNAMICALLY CREATED CONTENT
 function cleanAllDynamicContent() {
     const roverInfo = document.querySelector("#rover-info");
@@ -35,6 +36,7 @@ function chooseRover() {
     const roverSelect = document.querySelector("#rover-select");
     roverSelect.addEventListener("change", () => {
         const roverName = roverSelect.value;
+        console.log(roverName);
         if (roverName === "") {
             displayEmptyRoverErr("Nothing to display! Please select a rover!");
         }
@@ -61,8 +63,6 @@ function displayEmptyRoverErr(message) {
 // *If data is provided display information about selected rover
 function displayRoverInfo(info, roverName) {
     cleanAllDynamicContent();
-    const manifestData = info;
-    console.log(manifestData);
     const roverInfo = document.querySelector("#rover-info");
     // * Generate description of selected rover
     const roverParagraph = document.createElement("p");
@@ -107,7 +107,8 @@ function displayRoverInfo(info, roverName) {
     solDayInput.appendChild(failureDiv);
     // * Add value of a solar day
     solDayInputField.addEventListener("change", () => {
-        if (solDayInputField.value >= 0 && solDayInputField.value <= info.max_sol) {
+        if (parseInt(solDayInputField.value) >= 0 &&
+            parseInt(solDayInputField.value) <= parseInt(info.max_sol)) {
             solDayInputField.setAttribute("class", "form-control is-valid");
             failureDiv.setAttribute("hidden", "");
             displaySolDayInfo(info.photos, roverName, solDayInputField.value);
@@ -118,9 +119,9 @@ function displayRoverInfo(info, roverName) {
         }
     });
 }
-function displaySolDayInfo(photoDesc, roverName, selectedSolarDay) {
+function displaySolDayInfo(photoArr, roverName, selectedSolarDay) {
     // * Find the array containing selected solar day
-    const selectedData = photoDesc.filter((entry) => {
+    const selectedData = photoArr.filter((entry) => {
         const selectedSolarDayInt = parseInt(selectedSolarDay);
         return entry.sol === selectedSolarDayInt;
     });
@@ -157,6 +158,7 @@ function displaySolDayInfo(photoDesc, roverName, selectedSolarDay) {
         removeAllChildNodes(pagesDiv);
     }
 }
+// ! DONE HERE!
 // * Display switches for cameras and initial fetch
 function displayCameraSelectors(camerasUsed, roverName, selectedSolarDay, pagesCount) {
     const camInfo = document.querySelector("#cameras-info");
@@ -521,4 +523,3 @@ function displayGallery(cardGroup, data) {
         cardFooter.appendChild(footerContent);
     });
 }
-export {};

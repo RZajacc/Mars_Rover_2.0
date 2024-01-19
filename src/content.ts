@@ -1,4 +1,4 @@
-import { APIResponse, responseManifest } from "./types/fetchedTypes";
+import { Photo, roverManifest } from "./types/fetchedTypes";
 
 // ? ----------------------------------------------
 // ? -----------CLEANER FUNCTIONS -----------------
@@ -10,8 +10,6 @@ function removeAllChildNodes(parent: HTMLDivElement): void {
     parent.removeChild(parent.firstChild);
   }
 }
-
-const roverInfo = document.querySelector("#rover-info");
 
 // *REMOVES ALL DYNAMICALLY CREATED CONTENT
 function cleanAllDynamicContent() {
@@ -54,7 +52,7 @@ function chooseRover() {
   ) as HTMLSelectElement;
   roverSelect.addEventListener("change", () => {
     const roverName = roverSelect.value;
-
+    console.log(roverName);
     if (roverName === "") {
       displayEmptyRoverErr("Nothing to display! Please select a rover!");
     } else {
@@ -83,12 +81,10 @@ function displayEmptyRoverErr(message: string) {
 }
 
 // *If data is provided display information about selected rover
-function displayRoverInfo(info: object, roverName: string) {
+function displayRoverInfo(info: roverManifest, roverName: string) {
   cleanAllDynamicContent();
 
-  const manifestData: roverManifest = info;
-  console.log(manifestData);
-  const roverInfo = document.querySelector("#rover-info");
+  const roverInfo = document.querySelector("#rover-info") as HTMLDivElement;
   // * Generate description of selected rover
   const roverParagraph = document.createElement("p");
   roverParagraph.innerHTML = `<strong>${info.name}</strong> was active for 
@@ -98,7 +94,9 @@ function displayRoverInfo(info: object, roverName: string) {
   roverInfo.appendChild(roverParagraph);
 
   // * Check mission status and change it's color accordingly
-  const missionStatus = document.querySelector("#mission-status");
+  const missionStatus = document.querySelector(
+    "#mission-status"
+  ) as HTMLElement;
 
   if (info.status === "active") {
     missionStatus.textContent = info.status.toUpperCase();
@@ -109,7 +107,9 @@ function displayRoverInfo(info: object, roverName: string) {
   }
 
   // * Generate a input field for solar day
-  const solDayInput = document.querySelector("#solar-day-input");
+  const solDayInput = document.querySelector(
+    "#solar-day-input"
+  ) as HTMLDivElement;
   removeAllChildNodes(solDayInput);
   const solDaylabel = document.createElement("span");
   solDaylabel.setAttribute("class", "input-group-text");
@@ -137,7 +137,10 @@ function displayRoverInfo(info: object, roverName: string) {
 
   // * Add value of a solar day
   solDayInputField.addEventListener("change", () => {
-    if (solDayInputField.value >= 0 && solDayInputField.value <= info.max_sol) {
+    if (
+      parseInt(solDayInputField.value) >= 0 &&
+      parseInt(solDayInputField.value) <= parseInt(info.max_sol)
+    ) {
       solDayInputField.setAttribute("class", "form-control is-valid");
       failureDiv.setAttribute("hidden", "");
       displaySolDayInfo(info.photos, roverName, solDayInputField.value);
@@ -148,14 +151,20 @@ function displayRoverInfo(info: object, roverName: string) {
   });
 }
 
-function displaySolDayInfo(photoDesc, roverName, selectedSolarDay) {
+function displaySolDayInfo(
+  photoArr: Photo[],
+  roverName: string,
+  selectedSolarDay: string
+) {
   // * Find the array containing selected solar day
-  const selectedData = photoDesc.filter((entry) => {
+  const selectedData = photoArr.filter((entry) => {
     const selectedSolarDayInt = parseInt(selectedSolarDay);
     return entry.sol === selectedSolarDayInt;
   });
 
-  const solDayDescDiv = document.querySelector("#sol-day-desc");
+  const solDayDescDiv = document.querySelector(
+    "#sol-day-desc"
+  ) as HTMLDivElement;
   removeAllChildNodes(solDayDescDiv);
 
   const solDayDescParagraph = document.createElement("p");
@@ -184,18 +193,23 @@ function displaySolDayInfo(photoDesc, roverName, selectedSolarDay) {
       pagesCount
     );
   } else {
-    const camerasList = document.querySelector("#camera-selectors");
+    const camerasList = document.querySelector(
+      "#camera-selectors"
+    ) as HTMLDivElement;
     removeAllChildNodes(camerasList);
-    const camInfo = document.querySelector("#cameras-info");
+    const camInfo = document.querySelector(
+      "#cameras-info"
+    ) as HTMLParagraphElement;
     camInfo.innerHTML = "";
     // * Get the gallery div and clean it from existing content
-    const photoDiv = document.querySelector("#photo-gallery");
+    const photoDiv = document.querySelector("#photo-gallery") as HTMLDivElement;
     removeAllChildNodes(photoDiv);
-    const pagesDiv = document.querySelector("#pages");
+    const pagesDiv = document.querySelector("#pages") as HTMLDivElement;
     removeAllChildNodes(pagesDiv);
   }
 }
 
+// ! DONE HERE!
 // * Display switches for cameras and initial fetch
 function displayCameraSelectors(
   camerasUsed,
