@@ -4,7 +4,7 @@ import emailjs from "@emailjs/browser";
   emailjs.init("DzZ6BIu3N4pT6e34Q");
 })();
 
-const contact_Form = (document.querySelector("#contact-form") as HTMLFormElement);
+const contact_Form = document.querySelector("#contact-form") as HTMLFormElement;
 
 // * Send email with data from the document
 contact_Form.addEventListener("submit", (event) => {
@@ -16,6 +16,8 @@ contact_Form.addEventListener("submit", (event) => {
     .sendForm("contact_service", "contact_form", contact_Form)
     .then(() => contact_Form.submit())
     .catch((error) => {
+      const par = document.getElementById("test") as HTMLParagraphElement;
+      par.innerText = "Something went wrong!";
       console.log("FAILED....", error);
     });
 });

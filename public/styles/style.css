@@ -87,6 +87,11 @@ body {
   text-align: center;
 }
 
+#emailErr {
+  color: red;
+  font-weight: bold;
+}
+
 /* *********FOOTER******************* */
 .footer {
   margin-top: 7rem;
