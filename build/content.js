@@ -1,5 +1,3 @@
-// "use strict";
-// Object.defineProperty(exports, "__esModule", { value: true });
 // ? ----------------------------------------------
 // ? -----------CLEANER FUNCTIONS -----------------
 // ? ----------------------------------------------
@@ -394,7 +392,7 @@ function showAllPhotos(data, roverName, selectedSolarDay, pagesCount, page) {
     });
   }
 }
-// !------------------------HERE---------------------------
+
 function showSelectedPhotos(data, roverName, selectedSolarDay, camName, page) {
   // * Get the gallery div and clean it from existing content
   const photoDiv = document.querySelector("#photo-gallery");

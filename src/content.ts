@@ -8,7 +8,6 @@ import {
 // ? ----------------------------------------------
 // ? -----------CLEANER FUNCTIONS -----------------
 // ? ----------------------------------------------
-
 // * REMOVE ALL CHILDREN OF SELECTED ELEMENT
 function removeAllChildNodes(parent: HTMLDivElement): void {
   while (parent.firstChild) {
