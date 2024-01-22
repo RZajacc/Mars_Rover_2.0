@@ -86,3 +86,8 @@ body {
 #form-desc {
   text-align: center;
 }
+
+/* *********FOOTER******************* */
+.footer {
+  margin-top: 7rem;
+}
