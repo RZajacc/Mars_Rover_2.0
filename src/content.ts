@@ -1,20 +1,21 @@
+import { removeAllChildNodes } from "./Utility/ClearScreen.js";
 import {
   PhotoManifest,
   missionManifest,
   responseManifest,
   responseRover,
-} from "./types/fetchedTypes";
+} from "./types/fetchedTypes.js";
 
 // ? ----------------------------------------------
 // ? -----------CLEANER FUNCTIONS -----------------
 // ? ----------------------------------------------
-// * REMOVE ALL CHILDREN OF SELECTED ELEMENT
-function removeAllChildNodes(parent: HTMLDivElement): void {
-  while (parent.firstChild) {
-    parent.removeChild(parent.firstChild);
-  }
-}
-
+// // * REMOVE ALL CHILDREN OF SELECTED ELEMENT
+// function removeAllChildNodes(parent: HTMLDivElement): void {
+//   while (parent.firstChild) {
+//     parent.removeChild(parent.firstChild);
+//   }
+// }
+console.log("Hello");
 // *REMOVES ALL DYNAMICALLY CREATED CONTENT
 function cleanAllDynamicContent() {
   const roverInfo = document.querySelector("#rover-info") as HTMLDivElement;
