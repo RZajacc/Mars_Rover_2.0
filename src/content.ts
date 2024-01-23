@@ -1,50 +1,10 @@
-import { removeAllChildNodes } from "./Utility/ClearScreen.js";
+import * as Cleaner from "./Utility/ClearDynamicContent.js";
 import {
   PhotoManifest,
   missionManifest,
   responseManifest,
   responseRover,
 } from "./types/fetchedTypes.js";
-
-// ? ----------------------------------------------
-// ? -----------CLEANER FUNCTIONS -----------------
-// ? ----------------------------------------------
-// // * REMOVE ALL CHILDREN OF SELECTED ELEMENT
-// function removeAllChildNodes(parent: HTMLDivElement): void {
-//   while (parent.firstChild) {
-//     parent.removeChild(parent.firstChild);
-//   }
-// }
-console.log("Hello");
-// *REMOVES ALL DYNAMICALLY CREATED CONTENT
-function cleanAllDynamicContent() {
-  const roverInfo = document.querySelector("#rover-info") as HTMLDivElement;
-  removeAllChildNodes(roverInfo);
-  const solDayDescDiv = document.querySelector(
-    "#sol-day-desc"
-  ) as HTMLDivElement;
-  removeAllChildNodes(solDayDescDiv);
-  const camerasList = document.querySelector(
-    "#camera-selectors"
-  ) as HTMLDivElement;
-  removeAllChildNodes(camerasList);
-  const camInfo = document.querySelector(
-    "#cameras-info"
-  ) as HTMLParagraphElement;
-  camInfo.innerHTML = "";
-  const solDayInput = document.querySelector(
-    "#solar-day-input"
-  ) as HTMLDivElement;
-  removeAllChildNodes(solDayInput);
-
-  // * Get the gallery div and clean it from existing content
-  const photoDiv = document.querySelector("#photo-gallery") as HTMLDivElement;
-  removeAllChildNodes(photoDiv);
-
-  // *Get pagination div and delete the content
-  const pagesDiv = document.querySelector("#pages") as HTMLDivElement;
-  removeAllChildNodes(pagesDiv);
-}
 
 chooseRover();
 
@@ -77,7 +37,7 @@ function chooseRover() {
 // ? ----------------------------------------------
 // * If no rover selected clean all the data below
 function displayEmptyRoverErr(message: string) {
-  cleanAllDynamicContent();
+  Cleaner.cleanAllDynamicContent();
 
   const roverInfo = document.querySelector("#rover-info") as HTMLDivElement;
   // * Generate description of selected rover
@@ -89,7 +49,7 @@ function displayEmptyRoverErr(message: string) {
 
 // *If data is provided display information about selected rover
 function displayRoverInfo(info: missionManifest, roverName: string) {
-  cleanAllDynamicContent();
+  Cleaner.cleanAllDynamicContent();
 
   const roverInfo = document.querySelector("#rover-info") as HTMLDivElement;
   // * Generate description of selected rover
@@ -117,7 +77,7 @@ function displayRoverInfo(info: missionManifest, roverName: string) {
   const solDayInput = document.querySelector(
     "#solar-day-input"
   ) as HTMLDivElement;
-  removeAllChildNodes(solDayInput);
+  Cleaner.removeAllChildNodes(solDayInput);
   const solDaylabel = document.createElement("span");
   solDaylabel.setAttribute("class", "input-group-text");
   solDaylabel.setAttribute("id", "inputGroup-sizing-sm");
@@ -172,7 +132,7 @@ function displaySolDayInfo(
   const solDayDescDiv = document.querySelector(
     "#sol-day-desc"
   ) as HTMLDivElement;
-  removeAllChildNodes(solDayDescDiv);
+  Cleaner.removeAllChildNodes(solDayDescDiv);
 
   const solDayDescParagraph = document.createElement("p");
   solDayDescDiv.appendChild(solDayDescParagraph);
@@ -203,16 +163,16 @@ function displaySolDayInfo(
     const camerasList = document.querySelector(
       "#camera-selectors"
     ) as HTMLDivElement;
-    removeAllChildNodes(camerasList);
+    Cleaner.removeAllChildNodes(camerasList);
     const camInfo = document.querySelector(
       "#cameras-info"
     ) as HTMLParagraphElement;
     camInfo.innerHTML = "";
     // * Get the gallery div and clean it from existing content
     const photoDiv = document.querySelector("#photo-gallery") as HTMLDivElement;
-    removeAllChildNodes(photoDiv);
+    Cleaner.removeAllChildNodes(photoDiv);
     const pagesDiv = document.querySelector("#pages") as HTMLDivElement;
-    removeAllChildNodes(pagesDiv);
+    Cleaner.removeAllChildNodes(pagesDiv);
   }
 }
 
@@ -232,7 +192,7 @@ function displayCameraSelectors(
   const camerasList = document.querySelector(
     "#camera-selectors"
   ) as HTMLDivElement;
-  removeAllChildNodes(camerasList);
+  Cleaner.removeAllChildNodes(camerasList);
 
   // *List of available cameras
   const availableCameras = {
@@ -316,7 +276,6 @@ function fetchExpanded(
     .catch(() => console.log("Something went wrong"));
 }
 
-// !HERE
 // * Generate photos on a webpage
 function showAllPhotos(
   data: responseRover,
@@ -327,9 +286,9 @@ function showAllPhotos(
 ) {
   // * Get the gallery div and clean it from existing content
   const photoDiv = document.querySelector("#photo-gallery") as HTMLDivElement;
-  removeAllChildNodes(photoDiv);
+  Cleaner.removeAllChildNodes(photoDiv);
   const pagesDiv = document.querySelector("#pages") as HTMLDivElement;
-  removeAllChildNodes(pagesDiv);
+  Cleaner.removeAllChildNodes(pagesDiv);
 
   // *Create a div containing cards group
   const cardGroup = document.createElement("div");
@@ -362,7 +321,7 @@ function showAllPhotos(
 
     firstHref.addEventListener("click", () => {
       const targetPage = `1`;
-      removeAllChildNodes(photoDiv);
+      Cleaner.removeAllChildNodes(photoDiv);
       fetchBasic(roverName, selectedSolarDay, pagesCount, targetPage);
     });
 
@@ -384,7 +343,7 @@ function showAllPhotos(
         paginationUl.appendChild(paginationLi);
         paginationHref.addEventListener("click", () => {
           const targetPage = paginationHref.textContent!;
-          removeAllChildNodes(photoDiv);
+          Cleaner.removeAllChildNodes(photoDiv);
           fetchBasic(roverName, selectedSolarDay, pagesCount, targetPage);
         });
       }
@@ -405,7 +364,7 @@ function showAllPhotos(
         paginationUl.appendChild(paginationLi);
         paginationHref.addEventListener("click", () => {
           const targetPage = paginationHref.textContent!;
-          removeAllChildNodes(photoDiv);
+          Cleaner.removeAllChildNodes(photoDiv);
           fetchBasic(roverName, selectedSolarDay, pagesCount, targetPage);
         });
       }
@@ -426,7 +385,7 @@ function showAllPhotos(
         paginationUl.appendChild(paginationLi);
         paginationHref.addEventListener("click", () => {
           const targetPage = paginationHref.textContent!;
-          removeAllChildNodes(photoDiv);
+          Cleaner.removeAllChildNodes(photoDiv);
           fetchBasic(roverName, selectedSolarDay, pagesCount, targetPage);
         });
       }
@@ -447,7 +406,7 @@ function showAllPhotos(
         paginationUl.appendChild(paginationLi);
         paginationHref.addEventListener("click", () => {
           const targetPage = paginationHref.textContent!;
-          removeAllChildNodes(photoDiv);
+          Cleaner.removeAllChildNodes(photoDiv);
           fetchBasic(roverName, selectedSolarDay, pagesCount, targetPage);
         });
       }
@@ -468,7 +427,7 @@ function showAllPhotos(
         paginationUl.appendChild(paginationLi);
         paginationHref.addEventListener("click", () => {
           const targetPage = paginationHref.textContent!;
-          removeAllChildNodes(photoDiv);
+          Cleaner.removeAllChildNodes(photoDiv);
           fetchBasic(roverName, selectedSolarDay, pagesCount, targetPage);
         });
       }
@@ -486,13 +445,12 @@ function showAllPhotos(
 
     lastHref.addEventListener("click", () => {
       const targetPage = pagesCount;
-      removeAllChildNodes(photoDiv);
+      Cleaner.removeAllChildNodes(photoDiv);
       fetchBasic(roverName, selectedSolarDay, pagesCount, targetPage);
     });
   }
 }
 
-// !------------------------HERE---------------------------
 function showSelectedPhotos(
   data: responseRover,
   roverName: string,
@@ -502,9 +460,9 @@ function showSelectedPhotos(
 ) {
   // * Get the gallery div and clean it from existing content
   const photoDiv = document.querySelector("#photo-gallery") as HTMLDivElement;
-  removeAllChildNodes(photoDiv);
+  Cleaner.removeAllChildNodes(photoDiv);
   const pagesDiv = document.querySelector("#pages") as HTMLDivElement;
-  removeAllChildNodes(pagesDiv);
+  Cleaner.removeAllChildNodes(pagesDiv);
 
   // *Create a div containing cards group
   const cardGroup = document.createElement("div");
@@ -517,7 +475,7 @@ function showSelectedPhotos(
   // * If requested page is empty then move to last working one (Pagination)
   if (data.photos.length === 0) {
     const targetPage = +page - 1;
-    removeAllChildNodes(photoDiv);
+    Cleaner.removeAllChildNodes(photoDiv);
     fetchExpanded(roverName, selectedSolarDay, camName, targetPage.toString());
   }
 
@@ -544,7 +502,7 @@ function showSelectedPhotos(
 
     firstHref.addEventListener("click", () => {
       const targetPage = `1`;
-      removeAllChildNodes(photoDiv);
+      Cleaner.removeAllChildNodes(photoDiv);
       fetchExpanded(roverName, selectedSolarDay, camName, targetPage);
     });
 
@@ -561,7 +519,7 @@ function showSelectedPhotos(
     previousHref.addEventListener("click", () => {
       if (+page > 1) {
         let targetPage = +page - 1;
-        removeAllChildNodes(photoDiv);
+        Cleaner.removeAllChildNodes(photoDiv);
         fetchExpanded(
           roverName,
           selectedSolarDay,
@@ -593,7 +551,7 @@ function showSelectedPhotos(
 
     nextHref.addEventListener("click", () => {
       const targetPage = +page + 1;
-      removeAllChildNodes(photoDiv);
+      Cleaner.removeAllChildNodes(photoDiv);
       fetchExpanded(
         roverName,
         selectedSolarDay,
