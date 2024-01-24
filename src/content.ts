@@ -43,7 +43,7 @@ export function fetchExpanded(
       })
       .catch(() => console.log('Something went wrong'));
 }
-console.log({ test: 'val' });
+
 // * Generate photos on a webpage
 function showAllPhotos(
    data: responseRover,
