@@ -1,14 +1,17 @@
-// ? ----------------------------------------------
-// ? -----------CLEANER FUNCTIONS -----------------
-// ? ----------------------------------------------
-// * REMOVE ALL CHILDREN OF SELECTED ELEMENT
-export function removeAllChildNodes(parent: HTMLDivElement): void {
+/**
+   Helper function deleting all child nodes of a provided HTML Element.
+   @param {HTMLElement} parent Element for which you want to delete all child nodes
+*/
+export function removeAllChildNodes(parent: HTMLElement): void {
    while (parent.firstChild) {
       parent.removeChild(parent.firstChild);
    }
 }
 
-// *REMOVES ALL DYNAMICALLY CREATED CONTENT
+/**
+   it queries of elements of the page that might contain dynamically generated content
+   and removes it with the help of removeAllChildNodes function. 
+*/
 export function cleanAllDynamicContent() {
    const roverInfo = document.querySelector('#rover-info') as HTMLDivElement;
    removeAllChildNodes(roverInfo);
