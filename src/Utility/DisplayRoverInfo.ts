@@ -2,27 +2,38 @@ import * as Cleaner from './ClearDynamicContent.js';
 import { displaySolDayInfo } from './DisplaySolarDayInfo.js';
 import { missionManifest } from '../types/fetchedTypes.js';
 
-// ? ----------------------------------------------
-// ? -----DISPLAY ALL RELEVANT INFORMATIONS--------
-// ? ----------------------------------------------
-// * If no rover selected clean all the data below
+/**
+   Simple function displaying a message when rover was not 
+   selected from select field in HTML. Before displaying content
+   it uses other util function to clean all previousle generated 
+   content on the DOM tree.
+   @param {string} message Message to display on the page
+*/
 export function displayEmptyRoverErr(message: string) {
+   // * Clear previously generated data
    Cleaner.cleanAllDynamicContent();
 
+   // * Create a field to display provided message and append it
    const roverInfo = document.querySelector('#rover-info') as HTMLDivElement;
-   // * Generate description of selected rover
    const roverParagraph = document.createElement('p');
    roverParagraph.innerHTML = `<strong>${message}</strong>`;
    roverParagraph.setAttribute('style', 'text-align:center; color:red');
    roverInfo.appendChild(roverParagraph);
 }
 
-// *If data is provided display information about selected rover
+/**
+  If the rover name was selected by a user on the page then data will be fetched
+  from NASA API. This entry doesn't contain images, but it holds a lot of information
+  about selected rovers mission. Part of if will be displayed on the page as a result
+   @param {missionManifest} info Data fetched from NASA API for selected rover
+   @param {string} roverName Name of the rover collected from select input on the page
+*/
 export function displayRoverInfo(info: missionManifest, roverName: string) {
+   // * Clear previously generated data
    Cleaner.cleanAllDynamicContent();
 
+   // * Create a field to display provided message and append it
    const roverInfo = document.querySelector('#rover-info') as HTMLDivElement;
-   // * Generate description of selected rover
    const roverParagraph = document.createElement('p');
    roverParagraph.innerHTML = `<strong>${info.name}</strong> was active for 
       <strong>${info.max_sol}</strong> solar days, and made 
@@ -30,24 +41,28 @@ export function displayRoverInfo(info: missionManifest, roverName: string) {
       status is <strong id="mission-status">${info.status.toUpperCase()}</strong>.`;
    roverInfo.appendChild(roverParagraph);
 
-   // * Check mission status and change it's color accordingly
+   // * Check mission status and add value to a field
    const missionStatus = document.querySelector(
       '#mission-status'
    ) as HTMLElement;
 
+   missionStatus.textContent = info.status.toUpperCase();
+
+   // * Apply color to mission status depending if its active or not
    if (info.status === 'active') {
-      missionStatus.textContent = info.status.toUpperCase();
       missionStatus.setAttribute('style', 'color:#7CFC00');
    } else {
-      missionStatus.textContent = info.status.toUpperCase();
       missionStatus.setAttribute('style', 'color:red');
    }
 
-   // * Generate a input field for solar day
+   // * Generate an input field for solar day
    const solDayInput = document.querySelector(
       '#solar-day-input'
    ) as HTMLDivElement;
+
+   // * Clear previously generated data
    Cleaner.removeAllChildNodes(solDayInput);
+
    const solDaylabel = document.createElement('span');
    solDaylabel.setAttribute('class', 'input-group-text');
    solDaylabel.setAttribute('id', 'inputGroup-sizing-sm');
@@ -72,7 +87,7 @@ export function displayRoverInfo(info: missionManifest, roverName: string) {
    failureDiv.innerHTML = `<strong>Value of range!</strong> You can choose between <strong>0</strong> and <strong>${info.max_sol}</strong>!`;
    solDayInput.appendChild(failureDiv);
 
-   // * Add value of a solar day
+   // * Didplay error if provided value is out of range or call a function to display solar day information
    solDayInputField.addEventListener('change', () => {
       if (
          parseInt(solDayInputField.value) >= 0 &&
