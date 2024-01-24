@@ -1,13 +1,7 @@
 import * as Cleaner from "./Utility/ClearDynamicContent.js";
+import * as RoverDesc from "./Utility/RoverInfo.js";
 import { displayGallery } from "./Utility/DisplayGallery.js";
-import {
-  PhotoManifest,
-  missionManifest,
-  responseManifest,
-  responseRover,
-} from "./types/fetchedTypes.js";
-
-chooseRover();
+import { responseManifest, responseRover } from "./types/fetchedTypes.js";
 
 // ? ----------------------------------------------
 // ? SELECT PARAMETERS AND FETCH MISSION MANIFEST
@@ -20,233 +14,27 @@ function chooseRover() {
     const roverName = roverSelect.value;
     console.log(roverName);
     if (roverName === "") {
-      displayEmptyRoverErr("Nothing to display! Please select a rover!");
+      RoverDesc.displayEmptyRoverErr(
+        "Nothing to display! Please select a rover!"
+      );
     } else {
       fetch(
         `https://api.nasa.gov/mars-photos/api/v1/manifests/${roverName}/?api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
       )
         .then((response) => response.json())
         .then((data: responseManifest) => {
-          displayRoverInfo(data.photo_manifest, roverName);
+          RoverDesc.displayRoverInfo(data.photo_manifest, roverName);
         });
     }
   });
 }
-
-// ? ----------------------------------------------
-// ? -----DISPLAY ALL RELEVANT INFORMATIONS--------
-// ? ----------------------------------------------
-// * If no rover selected clean all the data below
-function displayEmptyRoverErr(message: string) {
-  Cleaner.cleanAllDynamicContent();
-
-  const roverInfo = document.querySelector("#rover-info") as HTMLDivElement;
-  // * Generate description of selected rover
-  const roverParagraph = document.createElement("p");
-  roverParagraph.innerHTML = `<strong>${message}</strong>`;
-  roverParagraph.setAttribute("style", "text-align:center; color:red");
-  roverInfo.appendChild(roverParagraph);
-}
-
-// *If data is provided display information about selected rover
-function displayRoverInfo(info: missionManifest, roverName: string) {
-  Cleaner.cleanAllDynamicContent();
-
-  const roverInfo = document.querySelector("#rover-info") as HTMLDivElement;
-  // * Generate description of selected rover
-  const roverParagraph = document.createElement("p");
-  roverParagraph.innerHTML = `<strong>${info.name}</strong> was active for 
-    <strong>${info.max_sol}</strong> solar days, and made 
-    <strong>${info.total_photos}</strong> during that time. Current mission 
-    status is <strong id="mission-status">${info.status.toUpperCase()}</strong>.`;
-  roverInfo.appendChild(roverParagraph);
-
-  // * Check mission status and change it's color accordingly
-  const missionStatus = document.querySelector(
-    "#mission-status"
-  ) as HTMLElement;
-
-  if (info.status === "active") {
-    missionStatus.textContent = info.status.toUpperCase();
-    missionStatus.setAttribute("style", "color:#7CFC00");
-  } else {
-    missionStatus.textContent = info.status.toUpperCase();
-    missionStatus.setAttribute("style", "color:red");
-  }
-
-  // * Generate a input field for solar day
-  const solDayInput = document.querySelector(
-    "#solar-day-input"
-  ) as HTMLDivElement;
-  Cleaner.removeAllChildNodes(solDayInput);
-  const solDaylabel = document.createElement("span");
-  solDaylabel.setAttribute("class", "input-group-text");
-  solDaylabel.setAttribute("id", "inputGroup-sizing-sm");
-  solDaylabel.textContent = "Solar day to display";
-  solDayInput.appendChild(solDaylabel);
-
-  const solDayInputField = document.createElement("input");
-  solDayInputField.setAttribute("type", "number");
-  solDayInputField.setAttribute("class", "form-control");
-  solDayInputField.setAttribute("min", "0");
-  solDayInputField.setAttribute("max", info.max_sol);
-  solDayInputField.setAttribute("aria-label", "Sizing example input");
-  solDayInputField.setAttribute("aria-describedby", "inputGroup-sizing-sm");
-  solDayInputField.setAttribute("id", "selected-solar-day");
-  solDayInputField.setAttribute("placeholder", "i.e. 1");
-  solDayInput.appendChild(solDayInputField);
-
-  // * Invalid feedback div
-  const failureDiv = document.createElement("div");
-  failureDiv.setAttribute("class", "invalid-feedback");
-  failureDiv.setAttribute("hidden", "");
-  failureDiv.innerHTML = `<strong>Value of range!</strong> You can choose between <strong>0</strong> and <strong>${info.max_sol}</strong>!`;
-  solDayInput.appendChild(failureDiv);
-
-  // * Add value of a solar day
-  solDayInputField.addEventListener("change", () => {
-    if (
-      parseInt(solDayInputField.value) >= 0 &&
-      parseInt(solDayInputField.value) <= parseInt(info.max_sol)
-    ) {
-      solDayInputField.setAttribute("class", "form-control is-valid");
-      failureDiv.setAttribute("hidden", "");
-      displaySolDayInfo(info.photos, roverName, solDayInputField.value);
-    } else {
-      solDayInputField.setAttribute("class", "form-control is-invalid");
-      failureDiv.toggleAttribute("hidden");
-    }
-  });
-}
-
-function displaySolDayInfo(
-  photoArr: PhotoManifest[],
-  roverName: string,
-  selectedSolarDay: string
-) {
-  // * Find the array containing selected solar day
-  const selectedData = photoArr.filter((entry) => {
-    const selectedSolarDayInt = parseInt(selectedSolarDay);
-    return entry.sol === selectedSolarDayInt;
-  });
-
-  const solDayDescDiv = document.querySelector(
-    "#sol-day-desc"
-  ) as HTMLDivElement;
-  Cleaner.removeAllChildNodes(solDayDescDiv);
-
-  const solDayDescParagraph = document.createElement("p");
-  solDayDescDiv.appendChild(solDayDescParagraph);
-  let totalPictures: number;
-  let camerasUsed: string[] = [];
-
-  // * If there's no match the list still will contain empty array
-  if (selectedData.length !== 0) {
-    totalPictures = selectedData[0].total_photos;
-    camerasUsed = selectedData[0].cameras;
-  } else {
-    totalPictures = 0;
-  }
-
-  solDayDescParagraph.innerHTML = `On <strong>${selectedSolarDay}</strong> 
-    solar day rover made a total of <strong>${totalPictures}</strong> pictures.`;
-
-  // * If there are any pictures display them, if not, clear the rest of a screen
-  if (totalPictures !== 0) {
-    let pagesCount = Math.ceil(totalPictures / 25).toString();
-    displayCameraSelectors(
-      camerasUsed,
-      roverName,
-      selectedSolarDay,
-      pagesCount
-    );
-  } else {
-    const camerasList = document.querySelector(
-      "#camera-selectors"
-    ) as HTMLDivElement;
-    Cleaner.removeAllChildNodes(camerasList);
-    const camInfo = document.querySelector(
-      "#cameras-info"
-    ) as HTMLParagraphElement;
-    camInfo.innerHTML = "";
-    // * Get the gallery div and clean it from existing content
-    const photoDiv = document.querySelector("#photo-gallery") as HTMLDivElement;
-    Cleaner.removeAllChildNodes(photoDiv);
-    const pagesDiv = document.querySelector("#pages") as HTMLDivElement;
-    Cleaner.removeAllChildNodes(pagesDiv);
-  }
-}
-
-// * Display switches for cameras and initial fetch
-function displayCameraSelectors(
-  camerasUsed: string[],
-  roverName: string,
-  selectedSolarDay: string,
-  pagesCount: string
-) {
-  const camInfo = document.querySelector(
-    "#cameras-info"
-  ) as HTMLParagraphElement;
-  camInfo.innerHTML =
-    "Each rover has a diffent set of cameras. Select the ones that are interesting for you:";
-
-  const camerasList = document.querySelector(
-    "#camera-selectors"
-  ) as HTMLDivElement;
-  Cleaner.removeAllChildNodes(camerasList);
-
-  // *List of available cameras
-  const availableCameras = {
-    ENTRY: "Entry, Descent, and Landing Camera",
-    FHAZ: "Front Hazard Avoidance Camera",
-    RHAZ: "Rear Hazard Avoidance Camera",
-    MAST: "Mast Camera",
-    CHEMCAM: "Chemistry and Camera Complex",
-    MAHLI: "Mars Hand Lens Imager",
-    MARDI: "Mars Descent Imager",
-    NAVCAM: "Navigation Camera",
-    PANCAM: "Panoramic Camera",
-    MINITES: "Miniature Thermal Emission Spectrometer (Mini-TES)",
-  };
-
-  const camSelect = document.createElement("select");
-  camSelect.setAttribute("class", "form-select");
-  camSelect.setAttribute("aria-label", "camera-select");
-  camSelect.setAttribute("id", "cam-select");
-  camerasList.appendChild(camSelect);
-
-  const selectAll = document.createElement("option");
-  selectAll.setAttribute("value", "ALL");
-  selectAll.textContent = "All cameras";
-  camSelect.appendChild(selectAll);
-
-  // *Add cameras options to a list
-  camerasUsed.forEach((camera) => {
-    const selectOption = document.createElement("option");
-    selectOption.setAttribute("value", camera);
-    selectOption.textContent =
-      availableCameras[camera as keyof typeof availableCameras];
-    camSelect.appendChild(selectOption);
-  });
-
-  // * Make a first fetch and then respond to select change
-  fetchBasic(roverName, selectedSolarDay, pagesCount);
-
-  camSelect.addEventListener("change", () => {
-    if (camSelect.value === "ALL") {
-      fetchBasic(roverName, selectedSolarDay, pagesCount);
-    } else {
-      fetchExpanded(roverName, selectedSolarDay, camSelect.value);
-    }
-  });
-}
+chooseRover();
 
 // ? --------------------------------------------
 // ? DEFINITION OF TWO DIFFERENT KINDS OF FETCH *
 // ? --------------------------------------------
-
 // * BASIC FETCH - Takes rover name and solar day
-function fetchBasic(
+export function fetchBasic(
   roverName: string,
   selectedSolarDay: string,
   pagesCount: string,
@@ -262,7 +50,7 @@ function fetchBasic(
 }
 
 // * BASIC FETCH - Takes also selected camera
-function fetchExpanded(
+export function fetchExpanded(
   roverName: string,
   selectedSolarDay: string,
   camName: string,
