@@ -1,36 +1,13 @@
 import * as Cleaner from "./Utility/ClearDynamicContent.js";
-import * as RoverDesc from "./Utility/RoverInfo.js";
+import { chooseRover } from "./Utility/ChooseRover.js";
 import { displayGallery } from "./Utility/DisplayGallery.js";
 import { PaginationFixedPages } from "./Utility/PaginationFixedPages.js";
 import { PaginationUncertainPAmount } from "./Utility/PaginationUncertainPCount.js";
-import { responseManifest, responseRover } from "./types/fetchedTypes.js";
+import { responseRover } from "./types/fetchedTypes.js";
 
-// ? ----------------------------------------------
-// ? SELECT PARAMETERS AND FETCH MISSION MANIFEST
-// ? ----------------------------------------------
-function chooseRover() {
-  const roverSelect = document.querySelector(
-    "#rover-select"
-  ) as HTMLSelectElement;
-  roverSelect.addEventListener("change", () => {
-    const roverName = roverSelect.value;
-    console.log(roverName);
-    if (roverName === "") {
-      RoverDesc.displayEmptyRoverErr(
-        "Nothing to display! Please select a rover!"
-      );
-    } else {
-      fetch(
-        `https://api.nasa.gov/mars-photos/api/v1/manifests/${roverName}/?api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
-      )
-        .then((response) => response.json())
-        .then((data: responseManifest) => {
-          RoverDesc.displayRoverInfo(data.photo_manifest, roverName);
-        });
-    }
-  });
-}
-
+// ? --------------------------------------------
+// ? This function call is a root for all other operations
+// ? --------------------------------------------
 chooseRover();
 
 // ? --------------------------------------------
