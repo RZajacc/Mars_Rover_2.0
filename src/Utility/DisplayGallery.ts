@@ -1,61 +1,61 @@
-import { responseRover } from "../types/fetchedTypes.js";
+import { responseRover } from '../types/fetchedTypes.js';
 
 // ? --------------------------------------------
 // ? ----------DISPLAY PHOTO GALLERY-------------
 // ? --------------------------------------------
 export function displayGallery(cardGroup: HTMLDivElement, data: responseRover) {
-  // *Loop through requested data
-  data.photos.forEach((element) => {
-    const colCard = document.createElement("div");
-    colCard.setAttribute("class", "col");
-    cardGroup.appendChild(colCard);
+   // *Loop through requested data
+   data.photos.forEach((element) => {
+      const colCard = document.createElement('div');
+      colCard.setAttribute('class', 'col');
+      cardGroup.appendChild(colCard);
 
-    const cardBody = document.createElement("div");
-    cardBody.setAttribute("class", "card h-100");
-    colCard.appendChild(cardBody);
+      const cardBody = document.createElement('div');
+      cardBody.setAttribute('class', 'card h-100');
+      colCard.appendChild(cardBody);
 
-    // *Create card body elements
-    const photoRef = document.createElement("a");
-    photoRef.setAttribute("href", element.img_src);
-    photoRef.setAttribute("target", "_blank");
-    cardBody.append(photoRef);
-    const cardPhoto = document.createElement("img");
-    cardPhoto.setAttribute("class", "card-img-top");
-    cardPhoto.setAttribute("src", element.img_src);
-    cardPhoto.setAttribute("alt", "Made on: " + element.earth_date);
-    photoRef.appendChild(cardPhoto);
+      // *Create card body elements
+      const photoRef = document.createElement('a');
+      photoRef.setAttribute('href', element.img_src);
+      photoRef.setAttribute('target', '_blank');
+      cardBody.append(photoRef);
+      const cardPhoto = document.createElement('img');
+      cardPhoto.setAttribute('class', 'card-img-top');
+      cardPhoto.setAttribute('src', element.img_src);
+      cardPhoto.setAttribute('alt', 'Made on: ' + element.earth_date);
+      photoRef.appendChild(cardPhoto);
 
-    const photoDesc = document.createElement("ul");
-    photoDesc.setAttribute("class", "list-group list-group-flush");
-    cardBody.appendChild(photoDesc);
+      const photoDesc = document.createElement('ul');
+      photoDesc.setAttribute('class', 'list-group list-group-flush');
+      cardBody.appendChild(photoDesc);
 
-    const roverLi = document.createElement("li");
-    roverLi.setAttribute("class", "list-group-item");
-    roverLi.innerHTML = "<strong>Rover : </strong>" + element.rover.name;
-    photoDesc.appendChild(roverLi);
+      const roverLi = document.createElement('li');
+      roverLi.setAttribute('class', 'list-group-item');
+      roverLi.innerHTML = '<strong>Rover : </strong>' + element.rover.name;
+      photoDesc.appendChild(roverLi);
 
-    const solLi = document.createElement("li");
-    solLi.setAttribute("class", "list-group-item");
-    solLi.innerHTML = "<strong>Solar day : </strong>" + element.sol;
-    photoDesc.appendChild(solLi);
+      const solLi = document.createElement('li');
+      solLi.setAttribute('class', 'list-group-item');
+      solLi.innerHTML = '<strong>Solar day : </strong>' + element.sol;
+      photoDesc.appendChild(solLi);
 
-    const idLi = document.createElement("li");
-    idLi.setAttribute("class", "list-group-item");
-    idLi.innerHTML = "<strong>Photo ID : </strong>" + element.id;
-    photoDesc.appendChild(idLi);
+      const idLi = document.createElement('li');
+      idLi.setAttribute('class', 'list-group-item');
+      idLi.innerHTML = '<strong>Photo ID : </strong>' + element.id;
+      photoDesc.appendChild(idLi);
 
-    const camLi = document.createElement("li");
-    camLi.setAttribute("class", "list-group-item");
-    camLi.innerHTML = "<strong>Camera : </strong>" + element.camera.name;
-    photoDesc.appendChild(camLi);
+      const camLi = document.createElement('li');
+      camLi.setAttribute('class', 'list-group-item');
+      camLi.innerHTML = '<strong>Camera : </strong>' + element.camera.name;
+      photoDesc.appendChild(camLi);
 
-    // *Create a card footer
-    const cardFooter = document.createElement("div");
-    cardFooter.setAttribute("class", "card-footer");
-    const footerContent = document.createElement("small");
-    footerContent.setAttribute("class", "text-body-secondary");
-    footerContent.innerHTML = "Earth date : " + element.earth_date;
-    cardBody.appendChild(cardFooter);
-    cardFooter.appendChild(footerContent);
-  });
+      // *Create a card footer
+      const cardFooter = document.createElement('div');
+      cardFooter.setAttribute('class', 'card-footer');
+      const footerContent = document.createElement('small');
+      footerContent.setAttribute('class', 'text-body-secondary');
+      footerContent.innerHTML = 'Earth date : ' + element.earth_date;
+      cardBody.appendChild(cardFooter);
+      cardFooter.appendChild(footerContent);
+   });
 }

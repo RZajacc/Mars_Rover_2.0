@@ -1,148 +1,152 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../public/styles/style.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-      crossorigin="anonymous"
-    />
-    <script src="../build/content.js" defer type="module"></script>
-    <title>Content</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-md bg-warning">
-      <div class="container-fluid">
-        <div class="col-1 col-md-2"></div>
-        <div class="col-5">
-          <a class="navbar-brand" href="index.html">
-            <img
-              src="assets/rover.jpg"
-              alt="Rover drawing"
-              id="rover-nav-pic"
-            />
-          </a>
-        </div>
-        <div class="col-4 col-md-3">
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-              <a class="nav-link active" aria-current="page" href="index.html"
-                >About</a
-              >
-              <a class="nav-link" href="content.html">Pictures</a>
-              <a class="nav-link" href="contact.html">Contact</a>
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="../public/styles/style.css" />
+      <link
+         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+         rel="stylesheet"
+         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+         crossorigin="anonymous"
+      />
+      <script src="../build/content.js" defer type="module"></script>
+      <title>Content</title>
+   </head>
+   <body>
+      <nav class="navbar navbar-expand-md bg-warning">
+         <div class="container-fluid">
+            <div class="col-1 col-md-2"></div>
+            <div class="col-5">
+               <a class="navbar-brand" href="index.html">
+                  <img
+                     src="assets/rover.jpg"
+                     alt="Rover drawing"
+                     id="rover-nav-pic"
+                  />
+               </a>
             </div>
-          </div>
-        </div>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="col-2"></div>
-      </div>
-    </nav>
+            <div class="col-4 col-md-3">
+               <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                  <div class="navbar-nav">
+                     <a
+                        class="nav-link active"
+                        aria-current="page"
+                        href="index.html"
+                        >About</a
+                     >
+                     <a class="nav-link" href="content.html">Pictures</a>
+                     <a class="nav-link" href="contact.html">Contact</a>
+                  </div>
+               </div>
+            </div>
+            <button
+               class="navbar-toggler"
+               type="button"
+               data-bs-toggle="collapse"
+               data-bs-target="#navbarNavAltMarkup"
+               aria-controls="navbarNavAltMarkup"
+               aria-expanded="false"
+               aria-label="Toggle navigation"
+            >
+               <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="col-2"></div>
+         </div>
+      </nav>
 
-    <!-- *------------INPUTS FOR DATA TO FETCH--------------------------- -->
-    <div class="container-fluid" id="gallery-nav">
-      <div class="row justify-content-center">
-        <div class="col-10 col-xs-9 col-sm-8 col-md-6 col-lg-4">
-          <h2 class="text-center">Please select a rover:</h2>
-          <select
-            class="form-select"
-            aria-label="Default select example"
-            id="rover-select"
-          >
-            <option selected value=""></option>
-            <option value="curiosity">Curiosity</option>
-            <option value="opportunity">Opportunity</option>
-            <option value="spirit">Spirit</option>
-          </select>
-        </div>
+      <!-- *------------INPUTS FOR DATA TO FETCH--------------------------- -->
+      <div class="container-fluid" id="gallery-nav">
+         <div class="row justify-content-center">
+            <div class="col-10 col-xs-9 col-sm-8 col-md-6 col-lg-4">
+               <h2 class="text-center">Please select a rover:</h2>
+               <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  id="rover-select"
+               >
+                  <option selected value=""></option>
+                  <option value="curiosity">Curiosity</option>
+                  <option value="opportunity">Opportunity</option>
+                  <option value="spirit">Spirit</option>
+               </select>
+            </div>
+         </div>
+
+         <!--? PLACEHOLDER FOR INFORMATION ABOUT ROVER  -->
+         <div class="row justify-content-center">
+            <div
+               class="col-10 col-xs-9 col-sm-8 col-md-6 col-lg-4"
+               id="rover-info"
+            ></div>
+         </div>
+
+         <!--? PLACEHOLDER FOR SOLAR DAY INPUT FIELD  -->
+         <div class="row justify-content-center">
+            <div class="col-10 col-xs-9 col-sm-8 col-md-6 col-lg-4">
+               <div
+                  class="input-group input-group-sm mb-3"
+                  id="solar-day-input"
+               ></div>
+            </div>
+         </div>
+
+         <!--? PLACEHOLDER FOR SOLAR DAY DESC  -->
+         <div class="row justify-content-center">
+            <div
+               class="col-10 col-xs-9 col-sm-8 col-md-6 col-lg-4"
+               id="sol-day-desc"
+            ></div>
+         </div>
+
+         <!--? PLACEHOLDER FOR CAMERAS INFORMATION  -->
+         <div class="row justify-content-center">
+            <div class="col-10 col-xs-9 col-sm-8 col-md-6 col-lg-4">
+               <p id="cameras-info"></p>
+            </div>
+         </div>
+
+         <!--? PLACEHOLDER FOR CAMERAS SELECTOR  -->
+         <div class="row justify-content-center">
+            <div
+               class="col-10 col-xs-9 col-sm-8 col-md-6 col-lg-4"
+               id="camera-selectors"
+            ></div>
+         </div>
       </div>
 
-      <!--? PLACEHOLDER FOR INFORMATION ABOUT ROVER  -->
-      <div class="row justify-content-center">
-        <div
-          class="col-10 col-xs-9 col-sm-8 col-md-6 col-lg-4"
-          id="rover-info"
-        ></div>
+      <!--? PLACEHOLDER FOR PHOTO GALLERY  -->
+      <div class="container-fluid">
+         <div class="row justify-content-center">
+            <div class="col-10" id="photo-gallery"></div>
+         </div>
       </div>
 
-      <!--? PLACEHOLDER FOR SOLAR DAY INPUT FIELD  -->
-      <div class="row justify-content-center">
-        <div class="col-10 col-xs-9 col-sm-8 col-md-6 col-lg-4">
-          <div
-            class="input-group input-group-sm mb-3"
-            id="solar-day-input"
-          ></div>
-        </div>
+      <!--? PLACEHOLDER FOR PAGINATION  -->
+      <div class="container-fluid">
+         <div class="row justify-content-center">
+            <div class="col-10" id="pages"></div>
+         </div>
       </div>
 
-      <!--? PLACEHOLDER FOR SOLAR DAY DESC  -->
-      <div class="row justify-content-center">
-        <div
-          class="col-10 col-xs-9 col-sm-8 col-md-6 col-lg-4"
-          id="sol-day-desc"
-        ></div>
-      </div>
+      <footer class="footer">
+         <div class="container-fluid bg-light fixed-bottom">
+            <div class="row text-center align-items-center footer-row">
+               <div class="col">&copy; Rafał Zając</div>
+            </div>
+            <div class="row text-center align-items-center footer-row">
+               <div class="col">
+                  Contact me:
+                  <a href="mailto:examplemail@mail.com">&#128231;</a>
+               </div>
+            </div>
+         </div>
+      </footer>
 
-      <!--? PLACEHOLDER FOR CAMERAS INFORMATION  -->
-      <div class="row justify-content-center">
-        <div class="col-10 col-xs-9 col-sm-8 col-md-6 col-lg-4">
-          <p id="cameras-info"></p>
-        </div>
-      </div>
-
-      <!--? PLACEHOLDER FOR CAMERAS SELECTOR  -->
-      <div class="row justify-content-center">
-        <div
-          class="col-10 col-xs-9 col-sm-8 col-md-6 col-lg-4"
-          id="camera-selectors"
-        ></div>
-      </div>
-    </div>
-
-    <!--? PLACEHOLDER FOR PHOTO GALLERY  -->
-    <div class="container-fluid">
-      <div class="row justify-content-center">
-        <div class="col-10" id="photo-gallery"></div>
-      </div>
-    </div>
-
-    <!--? PLACEHOLDER FOR PAGINATION  -->
-    <div class="container-fluid">
-      <div class="row justify-content-center">
-        <div class="col-10" id="pages"></div>
-      </div>
-    </div>
-
-    <footer class="footer">
-      <div class="container-fluid bg-light fixed-bottom">
-        <div class="row text-center align-items-center footer-row">
-          <div class="col">&copy; Rafał Zając</div>
-        </div>
-        <div class="row text-center align-items-center footer-row">
-          <div class="col">
-            Contact me: <a href="mailto:examplemail@mail.com">&#128231;</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+      <script
+         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+         crossorigin="anonymous"
+      ></script>
+   </body>
 </html>
