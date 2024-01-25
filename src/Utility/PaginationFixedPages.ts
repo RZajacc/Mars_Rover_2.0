@@ -1,6 +1,23 @@
 import * as Cleaner from './ClearDynamicContent.js';
 import { fetchBasic } from '../content.js';
 
+/**
+   Displays bootrap pagination on the bottom of the page. This option is used
+   when user does not select any camera and browse all the photos. Only then is 
+   the total amount of pages countable. Therefore logic and form of displaying
+   pagination differs a bit from the one with selected camera. Each time user
+   changes a page to be displayed another piece of data is fetched from the API
+   @param {HTMLDivElement} photoDiv Div where gallery is displayed, and which 
+   has to be also cleaned from previous content before displaying new. 
+   @param {HTMLDivElement} pagesDiv Div serving as placeholder for a pagination
+   to be displayed, and updated in.
+   @param {string} pagesCount Calculated amount of pages that are available to 
+   display
+   @param {string} roverName Rover name selected by the user.
+   @param {string} selectedSolarDay Solar day selected by the user.
+   @param {string} page Current page fethed from the API (page is a attribute 
+   for a fetch)
+*/
 export function PaginationFixedPages(
    photoDiv: HTMLDivElement,
    pagesDiv: HTMLDivElement,
@@ -36,7 +53,7 @@ export function PaginationFixedPages(
          fetchBasic(roverName, selectedSolarDay, pagesCount, targetPage);
       });
 
-      // * PAGINATION LOGIC
+      // * PAGINATION LOGIC DEPENDING ON SEVERAL POSSIBLE SCENARIOS
       if (+page === 1 && +pagesCount >= 3) {
          for (let i = +page; i < +page + 3; i++) {
             const paginationLi = document.createElement('li');

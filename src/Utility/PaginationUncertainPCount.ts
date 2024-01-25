@@ -2,6 +2,23 @@ import * as Cleaner from './ClearDynamicContent.js';
 import { fetchExpanded } from '../content.js';
 import { responseRover } from '../types/fetchedTypes.js';
 
+/**
+   Displays bootrap pagination on the bottom of the page. This option is used
+   when user selects a camera. In this case it's impossible to say how many
+   pages are available (without making big amount of requests to the the server).
+   Becayse of that logic and form of displaying pagination differs a bit from the 
+   one without selected camera. Each time user changes a page to be displayed another 
+   piece of data is fetched from the API
+   @param {HTMLDivElement} photoDiv Div where gallery is displayed, and which 
+   has to be also cleaned from previous content before displaying new. 
+   @param {responseRover} data Data fetched from the API for a given rover on 
+   a given solar day.
+   @param {string} roverName Rover name selected by the user.
+   @param {string} selectedSolarDay Solar day selected by the user.
+   @param {string} camName Name of the camera that was selected by the user
+   @param {string} page Current page fethed from the API (page is a attribute 
+   for a fetch)
+*/
 export function PaginationUncertainPAmount(
    photoDiv: HTMLDivElement,
    data: responseRover,
@@ -22,7 +39,7 @@ export function PaginationUncertainPAmount(
       );
    }
 
-   // * PAGINATION LOGIC
+   // * PAGINATION LOGIC FOR EACH POSSIBLE SCENARIO
    if (data.photos.length === 25 || +page != 1) {
       // ? Create navigation and Previous element tab
       const pagesDiv = document.querySelector('#pages') as HTMLDivElement;
