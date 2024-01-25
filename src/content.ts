@@ -10,9 +10,23 @@ import { responseRover } from './types/fetchedTypes.js';
 // ? ----------------------------------------------------------------------
 chooseRover();
 
-// ? --------------------------------------------
-// ? DEFINITION OF TWO DIFFERENT KINDS OF FETCH *
-// ? --------------------------------------------
+// ? ----------------------------------------------------------------------
+// ? FETCHING DATA - Functions are called in several places but since they
+// ? they are connected with displaying images I decided to keep them here
+// ? for better readability.
+// ? ----------------------------------------------------------------------
+/**
+ * Requests a data from NASA Api for a selected rover, on a selected solar day. API
+ * is paginated (each response contains 25 entries), therefore also page attribute is
+ * specified. By default it will always fetch first page, untill its provided otherwise
+ * by clicking a page number on pagination at the bottom of the page. In this case
+ * data is fetched for all cameras that were used by a rover on this day. After successfull
+ * fetch data is passed to a function that will display all selected photos on the page.
+ * @param {string} roverName Rover selected by the user
+ * @param {string} selectedSolarDay Solar day selected by the user
+ * @param {string} pagesCount Calculated amount of page that are available to display
+ * @param {string} page Page user is currently on (default=1).
+ */
 export function fetchBasic(
    roverName: string,
    selectedSolarDay: string,
@@ -28,7 +42,18 @@ export function fetchBasic(
       .catch(() => console.log('Something went wrong'));
 }
 
-// * EXPANDED FETCH - Takes also selected camera
+/**
+ * Requests a data from NASA Api for a selected rover, on a selected solar day. API
+ * is paginated (each response contains 25 entries), therefore also page attribute is
+ * specified. By default it will always fetch first page, untill its provided otherwise
+ * by clicking a page number on pagination at the bottom of the page. In this case
+ * data is fetched only for the camera selected by the user. After successfull
+ * fetch data is passed to a function that will display only those selected images.
+ * @param {string} roverName Rover selected by the user
+ * @param {string} selectedSolarDay Solar day selected by the user
+ * @param {string} camName Name of the camera selected
+ * @param {string} page Page user is currently on (default=1).
+ */
 export function fetchExpanded(
    roverName: string,
    selectedSolarDay: string,
@@ -44,7 +69,22 @@ export function fetchExpanded(
       .catch(() => console.log('Something went wrong'));
 }
 
-// * Generate photos on a webpage
+// ? -----------------------------------------------------------------------
+// ? DISPLAYING IMAGES - Functions are called only by fetching corresponding
+// ? fetching methods. Logic in both methods is similar but it differs a bit
+// ? in pagination and therefore it was easier to divide them in two.
+// ? -----------------------------------------------------------------------
+/**
+ * Called only by basic fetch function. It receives the data required
+ * to display gallery, and prepares the area for it. To display the images
+ * it calls displayGallery function. Then it calles also pagination in a version
+ * fitting to this kind of fetch.
+ * @param {responseRover} data Data fetched from the API
+ * @param {string} roverName Rover selected by the user
+ * @param {string} selectedSolarDay Solar day selected by the user
+ * @param {string} pagesCount Calculated amount of pages available to display
+ * @param {string} page Page user is currently on (default=1).
+ */
 function showAllPhotos(
    data: responseRover,
    roverName: string,
@@ -77,6 +117,17 @@ function showAllPhotos(
    );
 }
 
+/**
+ * Called only by expanded fetch function. It receives the data required
+ * to display gallery, and prepares the area for it. To display the images
+ * it calls displayGallery function. Then it calles also pagination in a version
+ * fitting to this kind of fetch.
+ * @param {responseRover} data Data fetched from the API
+ * @param {string} roverName Rover selected by the user
+ * @param {string} selectedSolarDay Solar day selected by the user
+ * @param {string} camName Name of the camera selected
+ * @param {string} page Page user is currently on (default=1).
+ */
 function showSelectedPhotos(
    data: responseRover,
    roverName: string,

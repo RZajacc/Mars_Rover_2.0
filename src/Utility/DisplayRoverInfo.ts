@@ -3,12 +3,12 @@ import { displaySolDayInfo } from './DisplaySolarDayInfo.js';
 import { missionManifest } from '../types/fetchedTypes.js';
 
 /**
-   Simple function displaying a message when rover was not 
-   selected from select field in HTML. Before displaying content
-   it uses other util function to clean all previousle generated 
-   content on the DOM tree.
-   @param {string} message Message to display on the page
-*/
+ * Simple function displaying a message when rover was not
+ * selected from select field in HTML. Before displaying content
+ * it uses other util function to clean all previousle generated
+ * content on the DOM tree.
+ * @param {string} message Message to display on the page
+ */
 export function displayEmptyRoverErr(message: string) {
    // * Clear previously generated data
    Cleaner.cleanAllDynamicContent();
@@ -22,12 +22,12 @@ export function displayEmptyRoverErr(message: string) {
 }
 
 /**
-  If the rover name was selected by a user on the page then data will be fetched
-  from NASA API. This entry doesn't contain images, but it holds a lot of information
-  about selected rovers mission. Part of if will be displayed on the page as a result
-   @param {missionManifest} info Data fetched from NASA API for selected rover
-   @param {string} roverName Name of the rover collected from select input on the page
-*/
+ * If the rover name was selected by a user on the page then data will be fetched
+ * from NASA API. This entry doesn't contain images, but it holds a lot of information
+ * about selected rovers mission. Part of if will be displayed on the page as a result
+ * @param {missionManifest} info Data fetched from NASA API for selected rover
+ * @param {string} roverName Name of the rover collected from select input on the page
+ */
 export function displayRoverInfo(info: missionManifest, roverName: string) {
    // * Clear previously generated data
    Cleaner.cleanAllDynamicContent();

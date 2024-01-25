@@ -2,13 +2,13 @@ import { responseManifest } from '../types/fetchedTypes.js';
 import * as RoverDesc from './DisplayRoverInfo.js';
 
 /**
-  It queries select field on the page containing a string with a name
-  of a rover to display data for. In case none was selected it will trigger
-  a function do display error with a message provided manually. If it is selected
-  properly it will fetch data from NASA API's mission manifest containing information
-  describing selected rover's mission and pass it to a function that will display it 
-  on the page 
-*/
+ * It queries select field on the page containing a string with a name
+ * of a rover to display data for. In case none was selected it will trigger
+ * a function do display error with a message provided manually. If it is selected
+ * properly it will fetch data from NASA API's mission manifest containing information
+ * describing selected rover's mission and pass it to a function that will display it
+ * on the page
+ */
 export function chooseRover() {
    const roverSelect = document.querySelector(
       '#rover-select'

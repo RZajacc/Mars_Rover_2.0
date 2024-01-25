@@ -2,16 +2,16 @@ import * as Cleaner from './ClearDynamicContent.js';
 import { fetchBasic, fetchExpanded } from '../content.js';
 
 /**
-   Displays camera select element with only those that were used by the rover
-   on the given day. Not all rover's have the same set of cameras, and not all
-   of them are used on any given day. 
-   @param {string[]} cameraUsed Array of strings containg camera names used
-   by a rover at given day
-   @param {string} roverName Rover selected by the user
-   @param {string} selectedSolarDay Solar day selected by the user
-   @param {string} pagesCount It is a paginated api, and this number contains
-   calculated number of available pages to display.
-*/
+ * Displays camera select element with only those that were used by the rover
+ * on the given day. Not all rover's have the same set of cameras, and not all
+ * of them are used on any given day.
+ * @param {string[]} cameraUsed Array of strings containg camera names used
+ * by a rover at given day
+ * @param {string} roverName Rover selected by the user
+ * @param {string} selectedSolarDay Solar day selected by the user
+ * @param {string} pagesCount It is a paginated api, and this number contains
+ * calculated number of available pages to display.
+ */
 export function displayCameraSelectors(
    camerasUsed: string[],
    roverName: string,

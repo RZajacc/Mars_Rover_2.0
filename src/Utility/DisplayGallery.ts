@@ -1,13 +1,13 @@
 import { responseRover } from '../types/fetchedTypes.js';
 
 /**
-   Displays a photo gallery after all necessary options before are provided 
-   (like rover, and solar day, optionally also selected camera). Gallery uses
-   bootstrap card group. 
-   @param {HTMLDivElement} cardGroup Div element with bootrap classes defining
-   parameters of a card group.
-   @param {responseRover} data Data fetched from the API
-*/
+ * Displays a photo gallery after all necessary options before are provided
+ * (like rover, and solar day, optionally also selected camera). Gallery uses
+ * bootstrap card group.
+ * @param {HTMLDivElement} cardGroup Div element with bootrap classes defining
+ * parameters of a card group.
+ * @param {responseRover} data Data fetched from the API
+ */
 export function displayGallery(cardGroup: HTMLDivElement, data: responseRover) {
    // *Loop through requested data
    data.photos.forEach((element) => {
