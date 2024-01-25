@@ -2,6 +2,16 @@ import * as Cleaner from './ClearDynamicContent.js';
 import { displayCameraSelectors } from './DisplayCameraSelectors.js';
 import { PhotoManifest } from '../types/fetchedTypes.js';
 
+/**
+   Displays basic information referring to a solar day selected by the user, 
+   like how many pictures were taken on that day in total. If there were
+   some pictures taken then also data referring to cameras used by the rover
+   will be collected and provided to a function displaying camera selectors
+   @param {PhotoManifest[]} photoArr Photos fetched from NASA API for a given
+   solar day.
+   @param {string} roverName Rover selected by the user
+   @param {string} selectedSolarDay Solar day selected by the user
+*/
 export function displaySolDayInfo(
    photoArr: PhotoManifest[],
    roverName: string,
@@ -31,6 +41,7 @@ export function displaySolDayInfo(
       totalPictures = 0;
    }
 
+   // * Display message on the page
    solDayDescParagraph.innerHTML = `On <strong>${selectedSolarDay}</strong> 
       solar day rover made a total of <strong>${totalPictures}</strong> pictures.`;
 
