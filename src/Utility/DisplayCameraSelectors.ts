@@ -1,7 +1,17 @@
 import * as Cleaner from './ClearDynamicContent.js';
 import { fetchBasic, fetchExpanded } from '../content.js';
 
-// * Display switches for cameras and initial fetch
+/**
+   Displays camera select element with only those that were used by the rover
+   on the given day. Not all rover's have the same set of cameras, and not all
+   of them are used on any given day. 
+   @param {string[]} cameraUsed Array of strings containg camera names used
+   by a rover at given day
+   @param {string} roverName Rover selected by the user
+   @param {string} selectedSolarDay Solar day selected by the user
+   @param {string} pagesCount It is a paginated api, and this number contains
+   calculated number of available pages to display.
+*/
 export function displayCameraSelectors(
    camerasUsed: string[],
    roverName: string,
@@ -56,6 +66,7 @@ export function displayCameraSelectors(
    // * Make a first fetch and then respond to select change
    fetchBasic(roverName, selectedSolarDay, pagesCount);
 
+   // * Basic and expanded fetch differ only selected camera passed as attribute
    camSelect.addEventListener('change', () => {
       if (camSelect.value === 'ALL') {
          fetchBasic(roverName, selectedSolarDay, pagesCount);
