@@ -1,5 +1,6 @@
-import { responseManifest } from '../types/fetchedTypes.js';
-import * as RoverDesc from './DisplayRoverInfo.js';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import type { responseManifest } from '../types/fetchedTypes.js'
+import * as RoverDesc from './DisplayRoverInfo.js'
 
 /**
  * It queries select field on the page containing a string with a name
@@ -9,29 +10,31 @@ import * as RoverDesc from './DisplayRoverInfo.js';
  * describing selected rover's mission and pass it to a function that will display it
  * on the page
  */
-export function chooseRover() {
-   const roverSelect = document.querySelector(
-      '#rover-select'
-   ) as HTMLSelectElement;
+export function chooseRover(): void {
+  const roverSelect: HTMLSelectElement =
+    document.querySelector('#rover-select')!
 
-   // * Listen to changes in select field and store seleted value in a variable
-   roverSelect.addEventListener('change', () => {
-      const roverName = roverSelect.value;
+  // * Listen to changes in select field and store seleted value in a variable
+  roverSelect.addEventListener('change', () => {
+    const roverName = roverSelect.value
 
-      // * In case nothing was selected display an error
-      if (roverName === '') {
-         RoverDesc.displayEmptyRoverErr(
-            'Nothing to display! Please select a rover!'
-         );
-         // * If rover was selected fetch data from its mission manifest entry
-      } else {
-         fetch(
-            `https://api.nasa.gov/mars-photos/api/v1/manifests/${roverName}/?api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
-         )
-            .then((response) => response.json())
-            .then((data: responseManifest) => {
-               RoverDesc.displayRoverInfo(data.photo_manifest, roverName);
-            });
-      }
-   });
+    // * In case nothing was selected display an error
+    if (roverName === '') {
+      RoverDesc.displayEmptyRoverErr(
+        'Nothing to display! Please select a rover!'
+      )
+      // * If rover was selected fetch data from its mission manifest entry
+    } else {
+      fetch(
+        `https://api.nasa.gov/mars-photos/api/v1/manifests/${roverName}/?api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
+      )
+        .then((response) => response.json())
+        .then((data: responseManifest) => {
+          RoverDesc.displayRoverInfo(data.photo_manifest, roverName)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  })
 }
