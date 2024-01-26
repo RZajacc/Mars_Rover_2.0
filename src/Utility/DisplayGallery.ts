@@ -1,4 +1,4 @@
-import type { responseRover } from '../types/fetchedTypes.js'
+import type { responseRover } from '../types/fetchedTypes'
 
 /**
  * Displays a photo gallery after all necessary options before are provided

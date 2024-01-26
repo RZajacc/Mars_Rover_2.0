@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as Cleaner from './ClearDynamicContent.js'
-import { displaySolDayInfo } from './DisplaySolarDayInfo.js'
-import type { missionManifest } from '../types/fetchedTypes.js'
+import * as Cleaner from './ClearDynamicContent'
+import { displaySolDayInfo } from './DisplaySolarDayInfo'
+import type { missionManifest } from '../types/fetchedTypes'
 
 /**
  * Simple function displaying a message when rover was not

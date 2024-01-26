@@ -1,20 +1,24 @@
 {
-   "name": "MarsRover",
-   "version": "1.0.0",
-   "description": "JS Project connecting with Mars Rover API from Nasa",
-   "author": "Rafal Zajac",
-   "type": "module",
-   "dependencies": {
-      "@emailjs/browser": "^3.11.0"
-   },
-   "devDependencies": {
-      "@typescript-eslint/eslint-plugin": "^6.19.1",
-      "eslint": "^8.56.0",
-      "eslint-config-standard-with-typescript": "^43.0.1",
-      "eslint-plugin-import": "^2.29.1",
-      "eslint-plugin-n": "^16.6.2",
-      "eslint-plugin-promise": "^6.1.1",
-      "prettier": "3.2.4",
-      "typescript": "^5.3.3"
-   }
+  "version": "1.0.0",
+  "description": "JS Project connecting with Mars Rover API from Nasa",
+  "author": "Rafal Zajac",
+  "scripts": {
+    "build": "webpack"
+  },
+  "dependencies": {
+    "@emailjs/browser": "^3.11.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "eslint": "^8.56.0",
+    "eslint-config-standard-with-typescript": "^43.0.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.1.1",
+    "prettier": "3.2.4",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.90.0",
+    "webpack-cli": "^5.1.4"
+  }
 }

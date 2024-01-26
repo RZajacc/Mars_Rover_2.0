@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as Cleaner from './Utility/ClearDynamicContent.js'
-import { chooseRover } from './Utility/ChooseRover.js'
-import { displayGallery } from './Utility/DisplayGallery.js'
-import { PaginationFixedPages } from './Utility/PaginationFixedPages.js'
-import { PaginationUncertainPAmount } from './Utility/PaginationUncertainPCount.js'
+import * as Cleaner from './Utility/ClearDynamicContent'
+import { chooseRover } from './Utility/ChooseRover'
+import { displayGallery } from './Utility/DisplayGallery'
+import { PaginationFixedPages } from './Utility/PaginationFixedPages'
+import { PaginationUncertainPAmount } from './Utility/PaginationUncertainPCount'
 import type { responseRover } from './types/fetchedTypes.js'
 
 // ? ----------------------------------------------------------------------

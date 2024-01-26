@@ -8,7 +8,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "ignorePatterns": ["build/**"],
+  "ignorePatterns": ["build/**", "dist/**", "webpack.config.js"],
   "rules": {
     "space-before-function-paren": "off",
     "@typescript-eslint/space-before-function-paren": "off"

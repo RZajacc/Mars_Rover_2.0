@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as Cleaner from './ClearDynamicContent.js'
-import { displayCameraSelectors } from './DisplayCameraSelectors.js'
-import type { PhotoManifest } from '../types/fetchedTypes.js'
+import * as Cleaner from './ClearDynamicContent'
+import { displayCameraSelectors } from './DisplayCameraSelectors'
+import type { PhotoManifest } from '../types/fetchedTypes'
 
 /**
  * Displays basic information referring to a solar day selected by the user,

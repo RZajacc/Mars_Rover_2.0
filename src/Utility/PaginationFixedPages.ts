@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as Cleaner from './ClearDynamicContent.js'
-import { fetchBasic } from '../content.js'
+import * as Cleaner from './ClearDynamicContent'
+import { fetchBasic } from '../content'
 
 /**
  * Displays bootrap pagination on the bottom of the page. This option is used

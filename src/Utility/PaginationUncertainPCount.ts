@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as Cleaner from './ClearDynamicContent.js'
-import { fetchExpanded } from '../content.js'
-import type { responseRover } from '../types/fetchedTypes.js'
+import * as Cleaner from './ClearDynamicContent'
+import { fetchExpanded } from '../content'
+import type { responseRover } from '../types/fetchedTypes'
 
 /**
  * Displays bootrap pagination on the bottom of the page. This option is used
@@ -36,7 +36,7 @@ export function PaginationUncertainPAmount(
   }
 
   // * PAGINATION LOGIC FOR EACH POSSIBLE SCENARIO
-  if (data.photos.length === 25 || +page != 1) {
+  if (data.photos.length === 25 || +page !== 1) {
     // ? Create navigation and Previous element tab
     const pagesDiv: HTMLDivElement = document.querySelector('#pages')!
     const paginationNav = document.createElement('nav')

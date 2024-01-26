@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as Cleaner from './ClearDynamicContent.js'
-import { fetchBasic, fetchExpanded } from '../content.js'
+import * as Cleaner from './ClearDynamicContent'
+import { fetchBasic, fetchExpanded } from '../content'
 
 /**
  * Displays camera select element with only those that were used by the rover
