@@ -3,7 +3,8 @@
   "description": "JS Project connecting with Mars Rover API from Nasa",
   "author": "Rafal Zajac",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "test": "vitest --run --reporter verbose"
   },
   "dependencies": {
     "@emailjs/browser": "^3.11.0"
@@ -18,6 +19,7 @@
     "prettier": "3.2.4",
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
+    "vitest": "^1.2.2",
     "webpack": "^5.90.0",
     "webpack-cli": "^5.1.4"
   }
