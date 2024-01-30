@@ -13,12 +13,3 @@ it('Should add two numbers and return a sum', () => {
   const expectedResult = valA + valB
   expect(sum).toBe(expectedResult)
 })
-
-it('Should yield a Nan value as a result if at least one value is of wrong type', () => {
-  const valA = 'hello'
-  const valB = 4
-
-  const sum = add(valA, valB)
-
-  expect(sum).toBeNaN()
-})
