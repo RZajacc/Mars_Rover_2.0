@@ -4,13 +4,16 @@
   "author": "Rafal Zajac",
   "scripts": {
     "build": "webpack",
-    "test": "vitest --run --reporter verbose"
+    "test": "vitest --run --reporter verbose",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@emailjs/browser": "^3.11.0"
+    "@emailjs/browser": "^3.11.0",
+    "vite-tsconfig-paths": "^4.3.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@vitest/coverage-v8": "^1.2.2",
     "eslint": "^8.56.0",
     "eslint-config-standard-with-typescript": "^43.0.1",
     "eslint-plugin-import": "^2.29.1",
