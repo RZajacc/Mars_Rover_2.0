@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import type { responseManifest } from '../types/fetchedTypes'
 import * as RoverDesc from './DisplayRoverInfo'
+import { fetchManifest } from './FetchManifest'
 
 /**
  * It queries select field on the page containing a string with a name
@@ -25,16 +25,8 @@ export function chooseRover(): void {
       )
       // * If rover was selected fetch data from its mission manifest entry
     } else {
-      fetch(
-        `https://api.nasa.gov/mars-photos/api/v1/manifests/${roverName}/?api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
-      )
-        .then(async (response) => await response.json())
-        .then((data: responseManifest) => {
-          RoverDesc.displayRoverInfo(data.photo_manifest, roverName)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+      // * Call the function fetching mission manifest
+      fetchManifest(roverName)
     }
   })
 }
