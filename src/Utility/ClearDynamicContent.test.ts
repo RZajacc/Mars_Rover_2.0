@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import { it, describe, expect, vi } from 'vitest'
+import { it, describe, expect, vi, beforeEach } from 'vitest'
 
 import { removeAllChildNodes } from './ClearDynamicContent'
 import { Window } from 'happy-dom'
@@ -11,11 +11,17 @@ const htmlDocumentContent = fs.readFileSync(htmlDocPath).toString()
 
 const window = new Window()
 const document = window.document
-document.write(htmlDocumentContent)
 vi.stubGlobal('document', document)
 
+beforeEach(() => {
+  document.body.innerHTML = ''
+  document.write(htmlDocumentContent)
+})
+
 it('Should remove all childnodes', () => {
-  const roverInfo: HTMLDivElement = document.querySelector('#rover-info')!
+  const roverInfo = document.querySelector(
+    '#rover-info'
+  )! as unknown as HTMLDivElement
   removeAllChildNodes(roverInfo)
   const childEl = roverInfo.firstElementChild
 
