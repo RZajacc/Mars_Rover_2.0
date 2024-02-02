@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import { it, describe, expect, vi } from 'vitest'
+import { it, expect, vi, beforeEach } from 'vitest'
 import { Window } from 'happy-dom'
 
 import { chooseRover } from '../Utility/ChooseRover'
@@ -14,7 +14,13 @@ const document = window.document
 document.write(htmlDocumentContent)
 vi.stubGlobal('document', document)
 
+beforeEach(() => {
+  document.body.innerHTML = ''
+  document.write(htmlDocumentContent)
+})
+
 it('Should not do anything yet', () => {
-  //   chooseRover()
+  // ! Probably requires a mock of this function
+  // chooseRover()
   // expect('test').toBe('test')
 })
