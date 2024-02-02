@@ -6,7 +6,7 @@ import { it, describe, expect, vi, beforeEach } from 'vitest'
 import {
   removeAllChildNodes,
   cleanAllDynamicContent
-} from './ClearDynamicContent'
+} from '../Utility/ClearDynamicContent'
 import { Window } from 'happy-dom'
 
 const htmlDocPath = path.join(process.cwd() + '/public', 'content.html')
@@ -46,7 +46,20 @@ describe('removeAllChildNodes', () => {
 })
 
 describe('cleanAllDynamicContent()', () => {
-  it('Make it one by one or for randomly selected one', () => {})
+  it('Should be able to clean the photo gallery div', () => {
+    const photoDiv: HTMLDivElement = document.querySelector(
+      '#photo-gallery'
+    ) as unknown as HTMLDivElement
+    cleanAllDynamicContent()
+    expect(photoDiv.childNodes.length).toBe(0)
+  })
+  it('Should be able to clean the photo pagination div', () => {
+    const pagesDiv: HTMLDivElement = document.querySelector(
+      '#pages'
+    ) as unknown as HTMLDivElement
+    cleanAllDynamicContent()
+    expect(pagesDiv.childNodes.length).toBe(0)
+  })
   it('Should change camInfo paragraph to contain an empty string', () => {
     cleanAllDynamicContent()
     const camInfo = document.querySelector(
