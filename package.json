@@ -4,7 +4,7 @@
   "author": "Rafal Zajac",
   "scripts": {
     "build": "webpack",
-    "test": "vitest --run --reporter verbose --environment happy-dom",
+    "test": "vitest --run --reporter verbose --environment jsdom",
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
@@ -20,7 +20,6 @@
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.1.1",
     "happy-dom": "^13.3.8",
-    "jsdom": "^24.0.0",
     "prettier": "3.2.4",
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",

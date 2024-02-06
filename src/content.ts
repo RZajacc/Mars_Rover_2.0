@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import * as Cleaner from './Utility/ClearDynamicContent'
 import { chooseRover } from './Utility/ChooseRover'
+import { displayEmptyRoverErr } from './Utility/DisplayRoverInfo'
+import { fetchManifest } from './Utility/FetchManifest'
 import { displayGallery } from './Utility/DisplayGallery'
 import { PaginationFixedPages } from './Utility/PaginationFixedPages'
 import { PaginationUncertainPAmount } from './Utility/PaginationUncertainPCount'
@@ -9,7 +11,8 @@ import type { responseRover } from './types/fetchedTypes.js'
 // ? ----------------------------------------------------------------------
 // ? SELECTING ROVER - Serves as a root call for everytning that comes next
 // ? ----------------------------------------------------------------------
-chooseRover()
+const roverSelect: HTMLSelectElement = document.querySelector('#rover-select')!
+chooseRover(roverSelect, displayEmptyRoverErr, fetchManifest)
 
 // ? ----------------------------------------------------------------------
 // ? FETCHING DATA - Functions are called in several places but since they

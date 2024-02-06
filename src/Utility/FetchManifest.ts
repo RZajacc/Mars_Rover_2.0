@@ -20,14 +20,19 @@ export function fetchManifest(roverName: string): void {
     })
 }
 
-// export async function fetchManifest(roverName: string): Promise<void> {
+// export async function fetchManifest(
+//   roverName: string
+// ): Promise<responseManifest | undefined> {
+//   let data
 //   try {
 //     const response = await fetch(
 //       `https://api.nasa.gov/mars-photos/api/v1/manifests/${roverName}/?api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
 //     )
 //     const result: responseManifest = await response.json()
+//     data = result
 //     RoverDesc.displayRoverInfo(result.photo_manifest, roverName)
 //   } catch (error) {
 //     console.log(error)
 //   }
+//   return data
 // }
