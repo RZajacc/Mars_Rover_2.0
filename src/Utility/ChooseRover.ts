@@ -11,9 +11,6 @@ export function chooseRover(
   displayEmptyRoverErr: (message: string) => void,
   fetchManifest: (roverName: string) => void
 ): void {
-  // const roverSelect: HTMLSelectElement =
-  //   document.querySelector('#rover-select')!
-
   // * Listen to changes in select field and store selected value in a variable
   roverSelect.addEventListener('change', () => {
     const roverName = roverSelect.value

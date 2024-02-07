@@ -1,43 +1,60 @@
 import fs from 'fs'
 import path from 'path'
 
-import { it, describe, expect, vi } from 'vitest'
+import { it, describe, expect, vi, beforeEach } from 'vitest'
 import { Window } from 'happy-dom'
 
 import { chooseRover } from '../Utility/ChooseRover'
-import { displayEmptyRoverErr } from '../Utility/DisplayRoverInfo'
-import { fetchManifest } from '../Utility/FetchManifest'
 
 const htmlDocPath = path.join(process.cwd() + '/public', 'content.html')
 const htmlDocumentContent = fs.readFileSync(htmlDocPath).toString()
 
 const window = new Window()
 const document = window.document
-document.write(htmlDocumentContent)
 vi.stubGlobal('document', document)
 
+beforeEach(() => {
+  document.body.innerHTML = ''
+  document.write(htmlDocumentContent)
+  vi.clearAllMocks()
+})
+
+const mockDisplayEmptyRoverErr = vi.fn()
+const mockFetchManifest = vi.fn()
+
 describe('chooseRover function', () => {
-  it('should display an error message when no rover is selected', () => {
+  it('should call displayEmptyRoverErr function if no value in selected field is provided', () => {
+    // Query the select element from the document
+    const roverSelect = document.querySelector(
+      '#rover-select'
+    ) as unknown as HTMLSelectElement
+
+    // Mock functions for testing - since all of them will be tested individually I will leave implementation blank
     const displayEmptyRoverErrMock = vi.fn()
     const fetchManifestMock = vi.fn()
 
-    const roverSelect = document.querySelector(
-      '#rover-select'
-    )! as unknown as HTMLSelectElement
-    // Call the function under test
+    // Call the chooseRover function with mocked functions
     chooseRover(roverSelect, displayEmptyRoverErrMock, fetchManifestMock)
 
-    // Trigger change event without selecting a rover
-    roverSelect.addEventListener('change', () => {
-      console.log('Test')
+    // Value to be provdied to select element
+    const testedValue = ''
+    // Loop through the options and set the selected property to true for the desired option
+    // Since Happy-dom doesn't allow to assign value directly I had to change option to selected manually
+    Array.from(roverSelect.options).forEach((option) => {
+      if (option.value === testedValue) {
+        option.selected = true
+      }
     })
+    // Trigger 'change' event on the <select> element
+    const changeEvent = new window.Event('change') as unknown as Event
+    roverSelect.dispatchEvent(changeEvent)
 
-    // Expect displayEmptyRoverErr to be called with the correct message
-    expect(displayEmptyRoverErrMock).toHaveBeenCalledWith(
-      'Nothing to display! Please select a rover!'
-    )
+    // Verify that select element value was actually changed
+    expect(roverSelect.value).toBe(testedValue)
+    // Verify that displayEmptyRoverErr was actually called
+    expect(displayEmptyRoverErrMock).toHaveBeenCalledOnce()
 
-    // Expect fetchManifest not to be called
+    // Verify that fetchManifest was not called
     expect(fetchManifestMock).not.toHaveBeenCalled()
   })
 })
