@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as Cleaner from './Utility/ClearDynamicContent'
+import {
+  cleanAllDynamicContent,
+  removeAllChildNodes
+} from './Utility/ClearDynamicContent'
 import { chooseRover } from './Utility/ChooseRover'
 import { displayEmptyRoverErr } from './Utility/DisplayRoverInfo'
 import { fetchManifest } from './Utility/FetchManifest'
@@ -12,7 +15,12 @@ import type { responseRover } from './types/fetchedTypes.js'
 // ? SELECTING ROVER - Serves as a root call for everytning that comes next
 // ? ----------------------------------------------------------------------
 const roverSelect: HTMLSelectElement = document.querySelector('#rover-select')!
-chooseRover(roverSelect, displayEmptyRoverErr, fetchManifest)
+chooseRover(
+  roverSelect,
+  displayEmptyRoverErr,
+  fetchManifest,
+  cleanAllDynamicContent
+)
 
 // ? ----------------------------------------------------------------------
 // ? FETCHING DATA - Functions are called in several places but since they
@@ -102,9 +110,9 @@ function showAllPhotos(
 ): void {
   // * Get the gallery div and clean it from existing content
   const photoDiv: HTMLDivElement = document.querySelector('#photo-gallery')!
-  Cleaner.removeAllChildNodes(photoDiv)
+  removeAllChildNodes(photoDiv)
   const pagesDiv: HTMLDivElement = document.querySelector('#pages')!
-  Cleaner.removeAllChildNodes(pagesDiv)
+  removeAllChildNodes(pagesDiv)
 
   // *Create a div containing cards group
   const cardGroup = document.createElement('div')
@@ -145,9 +153,9 @@ function showSelectedPhotos(
 ): void {
   // * Get the gallery div and clean it from existing content
   const photoDiv: HTMLDivElement = document.querySelector('#photo-gallery')!
-  Cleaner.removeAllChildNodes(photoDiv)
+  removeAllChildNodes(photoDiv)
   const pagesDiv: HTMLDivElement = document.querySelector('#pages')!
-  Cleaner.removeAllChildNodes(pagesDiv)
+  removeAllChildNodes(pagesDiv)
 
   // *Create a div containing cards group
   const cardGroup = document.createElement('div')

@@ -1,5 +1,9 @@
 import type { responseManifest } from '../types/fetchedTypes'
 import * as RoverDesc from './DisplayRoverInfo'
+import {
+  cleanAllDynamicContent,
+  removeAllChildNodes
+} from '../Utility/ClearDynamicContent'
 
 /**
  * Fetching mission manifest of a selected rover. Function requires to provide
@@ -13,26 +17,14 @@ export function fetchManifest(roverName: string): void {
   )
     .then(async (response) => await response.json())
     .then((data: responseManifest) => {
-      RoverDesc.displayRoverInfo(data.photo_manifest, roverName)
+      RoverDesc.displayRoverInfo(
+        data.photo_manifest,
+        roverName,
+        cleanAllDynamicContent,
+        removeAllChildNodes
+      )
     })
     .catch((error) => {
       console.log(error)
     })
 }
-
-// export async function fetchManifest(
-//   roverName: string
-// ): Promise<responseManifest | undefined> {
-//   let data
-//   try {
-//     const response = await fetch(
-//       `https://api.nasa.gov/mars-photos/api/v1/manifests/${roverName}/?api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
-//     )
-//     const result: responseManifest = await response.json()
-//     data = result
-//     RoverDesc.displayRoverInfo(result.photo_manifest, roverName)
-//   } catch (error) {
-//     console.log(error)
-//   }
-//   return data
-// }

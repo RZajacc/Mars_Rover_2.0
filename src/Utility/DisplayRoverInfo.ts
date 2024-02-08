@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as Cleaner from './ClearDynamicContent'
 import { displaySolDayInfo } from './DisplaySolarDayInfo'
 import type { missionManifest } from '../types/fetchedTypes'
 
@@ -10,9 +9,12 @@ import type { missionManifest } from '../types/fetchedTypes'
  * content on the DOM tree.
  * @param {string} message Message to display on the page
  */
-export function displayEmptyRoverErr(message: string): void {
+export function displayEmptyRoverErr(
+  message: string,
+  cleanAllDynamicContent: () => void
+): void {
   // * Clear previously generated data
-  Cleaner.cleanAllDynamicContent()
+  cleanAllDynamicContent()
 
   // * Create a field to display provided message and append it
   const roverInfo: HTMLDivElement = document.querySelector('#rover-info')!
@@ -31,10 +33,12 @@ export function displayEmptyRoverErr(message: string): void {
  */
 export function displayRoverInfo(
   info: missionManifest,
-  roverName: string
+  roverName: string,
+  cleanAllDynamicContent: () => void,
+  removeAllChildNodes: (parent: HTMLElement) => void
 ): void {
   // * Clear previously generated data
-  Cleaner.cleanAllDynamicContent()
+  cleanAllDynamicContent()
 
   // * Create a field to display provided message and append it
   const roverInfo: HTMLDivElement = document.querySelector('#rover-info')!
@@ -62,7 +66,7 @@ export function displayRoverInfo(
     document.querySelector('#solar-day-input')!
 
   // * Clear previously generated data
-  Cleaner.removeAllChildNodes(solDayInput)
+  removeAllChildNodes(solDayInput)
 
   const solDaylabel = document.createElement('span')
   solDaylabel.setAttribute('class', 'input-group-text')

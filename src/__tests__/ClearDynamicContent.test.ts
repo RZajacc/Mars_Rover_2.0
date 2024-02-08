@@ -21,7 +21,7 @@ beforeEach(() => {
   document.write(htmlDocumentContent)
 })
 
-describe('removeAllChildNodes', () => {
+describe('removeAllChildNodes()', () => {
   it('Should not throw an error if provided element doesnt contain any childnodes initially', () => {
     const roverInfo = document.querySelector(
       '#rover-info'

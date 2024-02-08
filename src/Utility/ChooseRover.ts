@@ -8,8 +8,12 @@
  */
 export function chooseRover(
   roverSelect: HTMLSelectElement,
-  displayEmptyRoverErr: (message: string) => void,
-  fetchManifest: (roverName: string) => void
+  displayEmptyRoverErr: (
+    message: string,
+    cleanAllDynamicContent: () => void
+  ) => void,
+  fetchManifest: (roverName: string) => void,
+  cleanAllDynamicContent: () => void
 ): void {
   // * Listen to changes in select field and store selected value in a variable
   roverSelect.addEventListener('change', () => {
@@ -17,7 +21,10 @@ export function chooseRover(
 
     // * In case nothing was selected display an error
     if (roverName === '') {
-      displayEmptyRoverErr('Nothing to display! Please select a rover!')
+      displayEmptyRoverErr(
+        'Nothing to display! Please select a rover!',
+        cleanAllDynamicContent
+      )
       // * If rover was selected fetch data from its mission manifest entry
     } else {
       // * Call the function fetching mission manifest
