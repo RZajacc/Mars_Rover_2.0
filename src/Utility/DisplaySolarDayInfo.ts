@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as Cleaner from './ClearDynamicContent'
 import { displayCameraSelectors } from './DisplayCameraSelectors'
 import type { PhotoManifest } from '../types/fetchedTypes'
 
@@ -16,7 +15,18 @@ import type { PhotoManifest } from '../types/fetchedTypes'
 export function displaySolDayInfo(
   photoArr: PhotoManifest[],
   roverName: string,
-  selectedSolarDay: string
+  selectedSolarDay: string,
+  removeAllChildNodes: (parent: HTMLElement) => void,
+  fetchBasic: (
+    roverName: string,
+    selectedSolarDay: string,
+    pagesCount: string
+  ) => void,
+  fetchExpanded: (
+    roverName: string,
+    selectedSolarDay: string,
+    camName: string
+  ) => void
 ): void {
   // * Find the array containing selected solar day
   const selectedData = photoArr.filter((entry) => {
@@ -25,7 +35,7 @@ export function displaySolDayInfo(
   })
 
   const solDayDescDiv: HTMLDivElement = document.querySelector('#sol-day-desc')!
-  Cleaner.removeAllChildNodes(solDayDescDiv)
+  removeAllChildNodes(solDayDescDiv)
 
   const solDayDescParagraph = document.createElement('p')
   solDayDescDiv.appendChild(solDayDescParagraph)
@@ -47,18 +57,26 @@ export function displaySolDayInfo(
   // * If there are any pictures display them, if not, clear the rest of a screen
   if (totalPictures !== 0) {
     const pagesCount = Math.ceil(totalPictures / 25).toString()
-    displayCameraSelectors(camerasUsed, roverName, selectedSolarDay, pagesCount)
+    displayCameraSelectors(
+      camerasUsed,
+      roverName,
+      selectedSolarDay,
+      pagesCount,
+      removeAllChildNodes,
+      fetchBasic,
+      fetchExpanded
+    )
   } else {
     const camerasList: HTMLDivElement =
       document.querySelector('#camera-selectors')!
-    Cleaner.removeAllChildNodes(camerasList)
+    removeAllChildNodes(camerasList)
     const camInfo: HTMLParagraphElement =
       document.querySelector('#cameras-info')!
     camInfo.innerHTML = ''
     // * Get the gallery div and clean it from existing content
     const photoDiv: HTMLDivElement = document.querySelector('#photo-gallery')!
-    Cleaner.removeAllChildNodes(photoDiv)
+    removeAllChildNodes(photoDiv)
     const pagesDiv: HTMLDivElement = document.querySelector('#pages')!
-    Cleaner.removeAllChildNodes(pagesDiv)
+    removeAllChildNodes(pagesDiv)
   }
 }

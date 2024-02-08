@@ -1,7 +1,4 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as Cleaner from './ClearDynamicContent'
-import { fetchBasic, fetchExpanded } from '../content'
-
 /**
  * Displays camera select element with only those that were used by the rover
  * on the given day. Not all rover's have the same set of cameras, and not all
@@ -17,7 +14,18 @@ export function displayCameraSelectors(
   camerasUsed: string[],
   roverName: string,
   selectedSolarDay: string,
-  pagesCount: string
+  pagesCount: string,
+  removeAllChildNodes: (parent: HTMLElement) => void,
+  fetchBasic: (
+    roverName: string,
+    selectedSolarDay: string,
+    pagesCount: string
+  ) => void,
+  fetchExpanded: (
+    roverName: string,
+    selectedSolarDay: string,
+    camName: string
+  ) => void
 ): void {
   const camInfo: HTMLParagraphElement = document.querySelector('#cameras-info')!
   camInfo.innerHTML =
@@ -25,7 +33,7 @@ export function displayCameraSelectors(
 
   const camerasList: HTMLDivElement =
     document.querySelector('#camera-selectors')!
-  Cleaner.removeAllChildNodes(camerasList)
+  removeAllChildNodes(camerasList)
 
   // *List of available cameras
   const availableCameras = {

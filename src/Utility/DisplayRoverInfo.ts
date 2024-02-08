@@ -35,7 +35,17 @@ export function displayRoverInfo(
   info: missionManifest,
   roverName: string,
   cleanAllDynamicContent: () => void,
-  removeAllChildNodes: (parent: HTMLElement) => void
+  removeAllChildNodes: (parent: HTMLElement) => void,
+  fetchBasic: (
+    roverName: string,
+    selectedSolarDay: string,
+    pagesCount: string
+  ) => void,
+  fetchExpanded: (
+    roverName: string,
+    selectedSolarDay: string,
+    camName: string
+  ) => void
 ): void {
   // * Clear previously generated data
   cleanAllDynamicContent()
@@ -100,7 +110,14 @@ export function displayRoverInfo(
     ) {
       solDayInputField.setAttribute('class', 'form-control is-valid')
       failureDiv.setAttribute('hidden', '')
-      displaySolDayInfo(info.photos, roverName, solDayInputField.value)
+      displaySolDayInfo(
+        info.photos,
+        roverName,
+        solDayInputField.value,
+        removeAllChildNodes,
+        fetchBasic,
+        fetchExpanded
+      )
     } else {
       solDayInputField.setAttribute('class', 'form-control is-invalid')
       failureDiv.toggleAttribute('hidden')
