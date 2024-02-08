@@ -1,13 +1,13 @@
 import fs from 'fs'
 import path from 'path'
 
-import { it, describe, expect, vi, beforeEach } from 'vitest'
+import { it, expect, vi, beforeEach } from 'vitest'
 import { Window } from 'happy-dom'
 
 import { chooseRover } from '../Utility/ChooseRover'
 import { cleanAllDynamicContent } from '../Utility/ClearDynamicContent'
 
-const htmlDocPath = path.join(process.cwd(), '/public', 'content.html')
+const htmlDocPath = path.join(process.cwd(), 'public', 'content.html')
 const htmlDocumentContent = fs.readFileSync(htmlDocPath).toString()
 
 const window = new Window()
