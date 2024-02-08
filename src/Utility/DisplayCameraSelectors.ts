@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+
+import type { fetchBasicType, fetchExpandedType } from '../types/fetchedTypes'
+
 /**
  * Displays camera select element with only those that were used by the rover
  * on the given day. Not all rover's have the same set of cameras, and not all
@@ -16,16 +19,8 @@ export function displayCameraSelectors(
   selectedSolarDay: string,
   pagesCount: string,
   removeAllChildNodes: (parent: HTMLElement) => void,
-  fetchBasic: (
-    roverName: string,
-    selectedSolarDay: string,
-    pagesCount: string
-  ) => void,
-  fetchExpanded: (
-    roverName: string,
-    selectedSolarDay: string,
-    camName: string
-  ) => void
+  fetchBasic: (args: fetchBasicType) => void,
+  fetchExpanded: (args: fetchExpandedType) => void
 ): void {
   const camInfo: HTMLParagraphElement = document.querySelector('#cameras-info')!
   camInfo.innerHTML =
@@ -70,14 +65,24 @@ export function displayCameraSelectors(
   })
 
   // * Make a first fetch and then respond to select change
-  fetchBasic(roverName, selectedSolarDay, pagesCount)
+  const args1: fetchBasicType = {
+    roverName,
+    selectedSolarDay,
+    pagesCount
+  }
+  const args2: fetchExpandedType = {
+    roverName,
+    selectedSolarDay,
+    camName: camSelect.value
+  }
+  fetchBasic(args1)
 
   // * Basic and expanded fetch differ only selected camera passed as attribute
   camSelect.addEventListener('change', () => {
     if (camSelect.value === 'ALL') {
-      fetchBasic(roverName, selectedSolarDay, pagesCount)
+      fetchBasic(args1)
     } else {
-      fetchExpanded(roverName, selectedSolarDay, camSelect.value)
+      fetchExpanded(args2)
     }
   })
 }

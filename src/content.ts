@@ -4,12 +4,19 @@ import {
   removeAllChildNodes
 } from './Utility/ClearDynamicContent'
 import { chooseRover } from './Utility/ChooseRover'
-import { displayEmptyRoverErr } from './Utility/DisplayRoverInfo'
+import {
+  displayEmptyRoverErr,
+  displayRoverInfo
+} from './Utility/DisplayRoverInfo'
 import { fetchManifest } from './Utility/FetchManifest'
 import { displayGallery } from './Utility/DisplayGallery'
 import { PaginationFixedPages } from './Utility/PaginationFixedPages'
 import { PaginationUncertainPAmount } from './Utility/PaginationUncertainPCount'
-import type { responseRover } from './types/fetchedTypes.js'
+import type {
+  fetchBasicType,
+  fetchExpandedType,
+  responseRover
+} from './types/fetchedTypes.js'
 
 // ? ----------------------------------------------------------------------
 // ? SELECTING ROVER - Serves as a root call for everytning that comes next
@@ -18,8 +25,11 @@ const roverSelect: HTMLSelectElement = document.querySelector('#rover-select')!
 chooseRover(
   roverSelect,
   displayEmptyRoverErr,
+  displayRoverInfo,
   fetchManifest,
-  cleanAllDynamicContent
+  cleanAllDynamicContent,
+  fetchBasic,
+  fetchExpanded
 )
 
 // ? ----------------------------------------------------------------------
@@ -27,6 +37,7 @@ chooseRover(
 // ? they are connected with displaying images I decided to keep them here
 // ? for better readability.
 // ? ----------------------------------------------------------------------
+
 /**
  * Requests a data from NASA Api for a selected rover, on a selected solar day. API
  * is paginated (each response contains 25 entries), therefore also page attribute is
@@ -39,17 +50,18 @@ chooseRover(
  * @param {string} pagesCount Calculated amount of page that are available to display
  * @param {string} page Page user is currently on (default=1).
  */
-export function fetchBasic(
-  roverName: string,
-  selectedSolarDay: string,
-  pagesCount: string,
-  page = '1'
-): void {
-  const fetchUrl = `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?sol=${selectedSolarDay}&page=${page}&api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
+export function fetchBasic(args: fetchBasicType, page = '1'): void {
+  const fetchUrl = `https://api.nasa.gov/mars-photos/api/v1/rovers/${args.roverName}/photos?sol=${args.selectedSolarDay}&page=${page}&api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
   fetch(fetchUrl)
     .then(async (response) => await response.json())
     .then((data: responseRover) => {
-      showAllPhotos(data, roverName, selectedSolarDay, pagesCount, page)
+      showAllPhotos(
+        data,
+        args.roverName,
+        args.selectedSolarDay,
+        args.pagesCount,
+        page
+      )
     })
     .catch(() => {
       console.log('Something went wrong')
@@ -68,17 +80,18 @@ export function fetchBasic(
  * @param {string} camName Name of the camera selected
  * @param {string} page Page user is currently on (default=1).
  */
-export function fetchExpanded(
-  roverName: string,
-  selectedSolarDay: string,
-  camName: string,
-  page = '1'
-): void {
-  const fetchUrl = `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?sol=${selectedSolarDay}&camera=${camName}&page=${page}&api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
+export function fetchExpanded(args: fetchExpandedType, page = '1'): void {
+  const fetchUrl = `https://api.nasa.gov/mars-photos/api/v1/rovers/${args.roverName}/photos?sol=${args.selectedSolarDay}&camera=${args.camName}&page=${page}&api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
   fetch(fetchUrl)
     .then(async (response) => await response.json())
     .then((data: responseRover) => {
-      showSelectedPhotos(data, roverName, selectedSolarDay, camName, page)
+      showSelectedPhotos(
+        data,
+        args.roverName,
+        args.selectedSolarDay,
+        args.camName,
+        page
+      )
     })
     .catch(() => {
       console.log('Something went wrong')

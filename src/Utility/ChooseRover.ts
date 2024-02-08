@@ -1,3 +1,10 @@
+import type {
+  fetchBasicType,
+  fetchExpandedType,
+  missionManifest
+} from '../types/fetchedTypes'
+// import { displayRoverInfo } from './DisplayRoverInfo'
+
 /**
  * It queries select field on the page containing a string with a name
  * of a rover to display data for. In case none was selected it will trigger
@@ -12,8 +19,30 @@ export function chooseRover(
     message: string,
     cleanAllDynamicContent: () => void
   ) => void,
-  fetchManifest: (roverName: string) => void,
-  cleanAllDynamicContent: () => void
+  displayRoverInfo: (
+    info: missionManifest,
+    roverName: string,
+    cleanAllDynamicContent: () => void,
+    removeAllChildNodes: (parent: HTMLElement) => void,
+    fetchBasic: (args: fetchBasicType) => void,
+    fetchExpanded: (args: fetchExpandedType) => void
+  ) => void,
+  fetchManifest: (
+    roverName: string,
+    displayRoverInfo: (
+      info: missionManifest,
+      roverName: string,
+      cleanAllDynamicContent: () => void,
+      removeAllChildNodes: (parent: HTMLElement) => void,
+      fetchBasic: (args: fetchBasicType) => void,
+      fetchExpanded: (args: fetchExpandedType) => void
+    ) => void,
+    fetchBasic: (args: fetchBasicType) => void,
+    fetchExpanded: (args: fetchExpandedType) => void
+  ) => void,
+  cleanAllDynamicContent: () => void,
+  fetchBasic: (args: fetchBasicType) => void,
+  fetchExpanded: (args: fetchExpandedType) => void
 ): void {
   // * Listen to changes in select field and store selected value in a variable
   roverSelect.addEventListener('change', () => {
@@ -28,7 +57,7 @@ export function chooseRover(
       // * If rover was selected fetch data from its mission manifest entry
     } else {
       // * Call the function fetching mission manifest
-      fetchManifest(roverName)
+      fetchManifest(roverName, displayRoverInfo, fetchBasic, fetchExpanded)
     }
   })
 }

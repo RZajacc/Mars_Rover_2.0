@@ -32,7 +32,10 @@ export function PaginationUncertainPAmount(
   if (data.photos.length === 0) {
     const targetPage = +page - 1
     Cleaner.removeAllChildNodes(photoDiv)
-    fetchExpanded(roverName, selectedSolarDay, camName, targetPage.toString())
+    fetchExpanded(
+      { roverName, selectedSolarDay, camName },
+      targetPage.toString()
+    )
   }
 
   // * PAGINATION LOGIC FOR EACH POSSIBLE SCENARIO
@@ -59,7 +62,7 @@ export function PaginationUncertainPAmount(
     firstHref.addEventListener('click', () => {
       const targetPage = '1'
       Cleaner.removeAllChildNodes(photoDiv)
-      fetchExpanded(roverName, selectedSolarDay, camName, targetPage)
+      fetchExpanded({ roverName, selectedSolarDay, camName }, targetPage)
     })
 
     // *Create a move to a PREVIOUS PAGE element
@@ -77,9 +80,7 @@ export function PaginationUncertainPAmount(
         const targetPage = +page - 1
         Cleaner.removeAllChildNodes(photoDiv)
         fetchExpanded(
-          roverName,
-          selectedSolarDay,
-          camName,
+          { roverName, selectedSolarDay, camName },
           targetPage.toString()
         )
       }
@@ -108,7 +109,10 @@ export function PaginationUncertainPAmount(
     nextHref.addEventListener('click', () => {
       const targetPage = +page + 1
       Cleaner.removeAllChildNodes(photoDiv)
-      fetchExpanded(roverName, selectedSolarDay, camName, targetPage.toString())
+      fetchExpanded(
+        { roverName, selectedSolarDay, camName },
+        targetPage.toString()
+      )
     })
   }
 }

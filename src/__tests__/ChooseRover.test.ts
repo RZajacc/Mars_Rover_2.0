@@ -6,6 +6,8 @@ import { Window } from 'happy-dom'
 
 import { chooseRover } from '../Utility/ChooseRover'
 import { cleanAllDynamicContent } from '../Utility/ClearDynamicContent'
+import { displayRoverInfo } from '../Utility/DisplayRoverInfo'
+import { fetchBasic, fetchExpanded } from '../content'
 
 const htmlDocPath = path.join(process.cwd(), 'public', 'content.html')
 const htmlDocumentContent = fs.readFileSync(htmlDocPath).toString()
@@ -29,13 +31,19 @@ it('should call displayEmptyRoverErr function if no value in selected field is p
   // Mock functions for testing - since all of them will be tested individually I will leave implementation blank
   const displayEmptyRoverErrMock = vi.fn()
   const fetchManifestMock = vi.fn()
+  const displayEmptyRoverInfoMock = vi.fn()
+  const fetchBasicMock = vi.fn()
+  const fetchExpandedMock = vi.fn()
 
   // Call the chooseRover function with mocked functions
   chooseRover(
     roverSelect,
     displayEmptyRoverErrMock,
+    displayEmptyRoverInfoMock,
     fetchManifestMock,
-    cleanAllDynamicContent
+    cleanAllDynamicContent,
+    fetchBasicMock,
+    fetchExpandedMock
   )
 
   // Value to be provdied to select element
@@ -69,13 +77,19 @@ it('should call fetchManifst function if other value than empty string is select
   // Mock functions for testing - since all of them will be tested individually I will leave implementation blank
   const displayEmptyRoverErrMock = vi.fn()
   const fetchManifestMock = vi.fn()
+  const displayEmptyRoverInfoMock = vi.fn()
+  const fetchBasicMock = vi.fn()
+  const fetchExpandedMock = vi.fn()
 
   // Call the chooseRover function with mocked functions
   chooseRover(
     roverSelect,
     displayEmptyRoverErrMock,
+    displayEmptyRoverInfoMock,
     fetchManifestMock,
-    cleanAllDynamicContent
+    cleanAllDynamicContent,
+    fetchBasicMock,
+    fetchExpandedMock
   )
 
   // Value to be provdied to select element

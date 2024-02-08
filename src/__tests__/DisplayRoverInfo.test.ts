@@ -56,4 +56,20 @@ describe('displayEmptyRoverErr', () => {
     // Expect that this element is actually of paragraph type
     expect(firstChild.tagName).toBe('P')
   })
+  it('Should contain a text provided as an argument', () => {
+    // Prepare the message to pass to the function
+    const messageToDisplay = 'test'
+
+    // Get a HTML Element containing error
+    const roverInfo = document.querySelector(
+      '#rover-info'
+    )! as unknown as HTMLDivElement
+    // Call the function
+    displayEmptyRoverErr(messageToDisplay, cleanAllDynamicContentMock)
+
+    // Get this child element
+    const firstChild = roverInfo.firstChild as HTMLElement
+
+    expect(firstChild.innerHTML).toContain(messageToDisplay)
+  })
 })

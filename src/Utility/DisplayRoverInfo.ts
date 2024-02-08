@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { displaySolDayInfo } from './DisplaySolarDayInfo'
-import type { missionManifest } from '../types/fetchedTypes'
+import type {
+  fetchBasicType,
+  fetchExpandedType,
+  missionManifest
+} from '../types/fetchedTypes'
 
 /**
  * Simple function displaying a message when rover was not
@@ -36,16 +40,8 @@ export function displayRoverInfo(
   roverName: string,
   cleanAllDynamicContent: () => void,
   removeAllChildNodes: (parent: HTMLElement) => void,
-  fetchBasic: (
-    roverName: string,
-    selectedSolarDay: string,
-    pagesCount: string
-  ) => void,
-  fetchExpanded: (
-    roverName: string,
-    selectedSolarDay: string,
-    camName: string
-  ) => void
+  fetchBasic: (args: fetchBasicType) => void,
+  fetchExpanded: (args: fetchExpandedType) => void
 ): void {
   // * Clear previously generated data
   cleanAllDynamicContent()
