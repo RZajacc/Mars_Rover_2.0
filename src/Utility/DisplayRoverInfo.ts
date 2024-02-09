@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { displaySolDayInfo } from './DisplaySolarDayInfo'
+// import { displaySolDayInfo } from './DisplaySolarDayInfo'
 import type {
+  PhotoManifest,
   fetchBasicType,
   fetchExpandedType,
   missionManifest
@@ -23,7 +24,7 @@ export function displayEmptyRoverErr(
   // * Create a field to display provided message and append it
   const roverInfo: HTMLDivElement = document.querySelector('#rover-info')!
   const roverParagraph = document.createElement('p')
-  roverParagraph.innerHTML = `<strong>${message}</strong>`
+  roverParagraph.innerHTML = message
   roverParagraph.setAttribute('style', 'text-align:center; color:red')
   roverInfo.appendChild(roverParagraph)
 }
@@ -41,7 +42,15 @@ export function displayRoverInfo(
   cleanAllDynamicContent: () => void,
   removeAllChildNodes: (parent: HTMLElement) => void,
   fetchBasic: (args: fetchBasicType) => void,
-  fetchExpanded: (args: fetchExpandedType) => void
+  fetchExpanded: (args: fetchExpandedType) => void,
+  displaySolDayInfo: (
+    photoArr: PhotoManifest[],
+    roverName: string,
+    selectedSolarDay: string,
+    removeAllChildNodes: (parent: HTMLElement) => void,
+    fetchBasic: (args: fetchBasicType) => void,
+    fetchExpanded: (args: fetchExpandedType) => void
+  ) => void
 ): void {
   // * Clear previously generated data
   cleanAllDynamicContent()
@@ -52,7 +61,7 @@ export function displayRoverInfo(
   roverParagraph.innerHTML = `<strong>${info.name}</strong> was active for 
       <strong>${info.max_sol}</strong> solar days, and made 
       <strong>${info.total_photos}</strong> during that time. Current mission 
-      status is <strong id="mission-status">${info.status.toUpperCase()}</strong>.`
+      status is <strong id="mission-status">${info.status}</strong>.`
   roverInfo.appendChild(roverParagraph)
 
   // * Check mission status and add value to a field
