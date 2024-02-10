@@ -9,6 +9,7 @@ import {
   displayRoverInfo
 } from '../Utility/DisplayRoverInfo'
 import { missionManifest } from '../types/fetchedTypes'
+import { complete } from 'happy-dom/lib/PropertySymbol'
 
 const htmlDocPath = path.join(process.cwd(), 'public', 'content.html')
 const htmlDocumentContent = fs.readFileSync(htmlDocPath).toString()
@@ -109,14 +110,14 @@ describe('displayRoverInfo()', () => {
     photos: [{ earth_date: '123', sol: 1, total_photos: 123, cameras: [''] }]
   }
   const roverName = 'Curiosity'
+  // Mock of remaning functions specific only for this method
+  const removeAllChildNodesMock = vi.fn()
+  const fetchBasicMock = vi.fn()
+  const fetchExpandedMock = vi.fn()
+  const displaySolDayInfoMock = vi.fn()
 
   // Before each test in this suite mock the helping functions and call main one
   beforeEach(() => {
-    // Mock of remaning functions specific only for this method
-    const removeAllChildNodesMock = vi.fn()
-    const fetchBasicMock = vi.fn()
-    const fetchExpandedMock = vi.fn()
-    const displaySolDayInfoMock = vi.fn()
     // Call the function
     displayRoverInfo(
       data,
@@ -154,7 +155,7 @@ describe('displayRoverInfo()', () => {
     expect(firstChild.innerHTML).toContain(data.status)
   })
 
-  it('Should display mission status in green for provided data', () => {
+  it('Should display mission status in green or red depending on mission status', () => {
     // Check mission status and add value to a field
     const missionStatus = document.querySelector(
       '#mission-status'
@@ -162,9 +163,26 @@ describe('displayRoverInfo()', () => {
 
     // Stylings assigned to the element
     const greenColor = 'color:#7CFC00'
+    const redColor = 'color:red'
 
     // In mocked data mission status is set to active
     expect(missionStatus.getAttribute('style')).toBe(greenColor)
+
+    // Change mission status
+    data.status = 'complete'
+    // Call the function one more time
+    displayRoverInfo(
+      data,
+      roverName,
+      cleanAllDynamicContentMock,
+      removeAllChildNodesMock,
+      fetchBasicMock,
+      fetchExpandedMock,
+      displaySolDayInfoMock
+    )
+
+    // Expect the value to be red now
+    expect(missionStatus.getAttribute('style')).toBe(redColor)
   })
 
   it('Should create an input field for solar day with specified min (0) and max values (maxSolDay)', () => {
@@ -180,5 +198,59 @@ describe('displayRoverInfo()', () => {
 
     // Expect its max value to be set to maxSol
     expect(solDayInputField.getAttribute('max')).toBe(data.max_sol)
+  })
+
+  it('Should create a failure msg div with an attibute hidden', () => {
+    const failureDiv = document.querySelector(
+      '.invalid-feedback'
+    ) as unknown as HTMLDivElement
+
+    // Expect failure div to be there
+    expect(failureDiv).not.toBeNull()
+
+    // Expect it to have hidden attribute
+    expect(failureDiv.getAttribute('hidden')).toBe('')
+  })
+  it('Should keep failure div hidden and call displaySolDayInfo() when input is correct', () => {
+    const failureDiv = document.querySelector(
+      '.invalid-feedback'
+    ) as unknown as HTMLDivElement
+
+    const solDayInputField = document.querySelector(
+      '#selected-solar-day'
+    ) as unknown as HTMLInputElement
+
+    // Correct value for the input
+    solDayInputField.value = '1'
+
+    const changeEvent = new window.Event('change') as unknown as Event
+
+    solDayInputField.dispatchEvent(changeEvent)
+
+    // Expect failure div to be still hidden
+    expect(failureDiv.getAttribute('hidden')).toBe('')
+
+    // Expect displaySolDayInfo() to be called
+    expect(displaySolDayInfoMock).toBeCalled()
+  })
+
+  it('Should not have keep hidden attribute for failure div in case input was out of rage', () => {
+    const failureDiv = document.querySelector(
+      '.invalid-feedback'
+    ) as unknown as HTMLDivElement
+
+    const solDayInputField = document.querySelector(
+      '#selected-solar-day'
+    ) as unknown as HTMLInputElement
+
+    // Provide incorrect value for the input
+    solDayInputField.value = data.max_sol + 1
+
+    const changeEvent = new window.Event('change') as unknown as Event
+
+    solDayInputField.dispatchEvent(changeEvent)
+
+    // Expect failure div to be still hidden
+    expect(failureDiv.getAttribute('hidden')).toBeNull()
   })
 })
