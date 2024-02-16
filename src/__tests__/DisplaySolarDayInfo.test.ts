@@ -22,7 +22,7 @@ const photoArr: PhotoManifest[] = [
   }
 ]
 const roverName = 'curiosity'
-const selectedSolarDay = '1'
+let selectedSolarDay = '1'
 
 // Mock of the functions
 const removeAllChildNodesMock = vi.fn()
@@ -63,4 +63,18 @@ it('Should should contain selected solar day as a part of displayed content', ()
   const firstChild = solDayDescDiv.firstChild as HTMLElement
 
   expect(firstChild.innerHTML).toContain(selectedSolarDay)
+})
+
+//! Funckcja musi dostać w arg displayCameraSelectors
+it('Should call displayCameraSelector() if total images amount is not equal 0, and call cleaningFuction once', () => {
+  displaySolDayInfo(
+    photoArr,
+    roverName,
+    selectedSolarDay,
+    removeAllChildNodesMock,
+    fetchBasicMock,
+    fetchExpandedMock
+  )
+  //   Function is called once to clean and 2nd as an argument to call displayCameraSelectors
+  expect(removeAllChildNodesMock).toBeCalledTimes(2)
 })
