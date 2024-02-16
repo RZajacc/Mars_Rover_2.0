@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
+
 /**
  * Helper function deleting all child nodes of a provided HTML Element.
  * @param {HTMLElement} parent Element for which you want to delete all child nodes
