@@ -54,3 +54,13 @@ it('Should generate a paragraph as a child of solar day description div', () => 
   // Check if its of specific type
   expect(firstChild.tagName).toBe('P')
 })
+
+it('Should should contain selected solar day as a part of displayed content', () => {
+  const solDayDescDiv = document.querySelector(
+    '#sol-day-desc'
+  ) as unknown as HTMLDivElement
+  //   Get the first child of the elemnt and cast a type
+  const firstChild = solDayDescDiv.firstChild as HTMLElement
+
+  expect(firstChild.innerHTML).toContain(selectedSolarDay)
+})
