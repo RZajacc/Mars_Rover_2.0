@@ -28,6 +28,7 @@ let selectedSolarDay = '1'
 const removeAllChildNodesMock = vi.fn()
 const fetchBasicMock = vi.fn()
 const fetchExpandedMock = vi.fn()
+const displayCameraSelectorsMock = vi.fn()
 
 beforeEach(() => {
   document.body.innerHTML = ''
@@ -38,7 +39,8 @@ beforeEach(() => {
     selectedSolarDay,
     removeAllChildNodesMock,
     fetchBasicMock,
-    fetchExpandedMock
+    fetchExpandedMock,
+    displayCameraSelectorsMock
   )
   vi.clearAllMocks()
 })
@@ -65,7 +67,6 @@ it('Should should contain selected solar day as a part of displayed content', ()
   expect(firstChild.innerHTML).toContain(selectedSolarDay)
 })
 
-//! Funckcja musi dostać w arg displayCameraSelectors
 it('Should call displayCameraSelector() if total images amount is not equal 0, and call cleaningFuction once', () => {
   displaySolDayInfo(
     photoArr,
@@ -73,8 +74,9 @@ it('Should call displayCameraSelector() if total images amount is not equal 0, a
     selectedSolarDay,
     removeAllChildNodesMock,
     fetchBasicMock,
-    fetchExpandedMock
+    fetchExpandedMock,
+    displayCameraSelectorsMock
   )
-  //   Function is called once to clean and 2nd as an argument to call displayCameraSelectors
-  expect(removeAllChildNodesMock).toBeCalledTimes(2)
+  //   Function is called once if photo array is empty
+  expect(removeAllChildNodesMock).toBeCalledTimes(1)
 })

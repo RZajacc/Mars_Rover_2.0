@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { displayCameraSelectors } from './DisplayCameraSelectors'
 import type {
   PhotoManifest,
   fetchBasicType,
@@ -22,7 +21,16 @@ export function displaySolDayInfo(
   selectedSolarDay: string,
   removeAllChildNodes: (parent: HTMLElement) => void,
   fetchBasic: (args: fetchBasicType) => void,
-  fetchExpanded: (args: fetchExpandedType) => void
+  fetchExpanded: (args: fetchExpandedType) => void,
+  displayCameraSelectors: (
+    camerasUsed: string[],
+    roverName: string,
+    selectedSolarDay: string,
+    pagesCount: string,
+    removeAllChildNodes: (parent: HTMLElement) => void,
+    fetchBasic: (args: fetchBasicType) => void,
+    fetchExpanded: (args: fetchExpandedType) => void
+  ) => void
 ): void {
   // * Find the array containing selected solar day
   const selectedData = photoArr.filter((entry) => {
