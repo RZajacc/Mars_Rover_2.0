@@ -6,8 +6,6 @@ import { Window } from 'happy-dom'
 
 import { chooseRover } from '../Utility/ChooseRover'
 import { cleanAllDynamicContent } from '../Utility/ClearDynamicContent'
-import { displayRoverInfo } from '../Utility/DisplayRoverInfo'
-import { fetchBasic, fetchExpanded } from '../content'
 
 const htmlDocPath = path.join(process.cwd(), 'public', 'content.html')
 const htmlDocumentContent = fs.readFileSync(htmlDocPath).toString()
