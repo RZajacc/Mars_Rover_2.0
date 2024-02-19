@@ -6,6 +6,7 @@ import type {
   fetchExpandedType,
   missionManifest
 } from '../types/fetchedTypes'
+import { displayCameraSelectors } from './DisplayCameraSelectors'
 
 /**
  * Simple function displaying a message when rover was not
@@ -49,7 +50,16 @@ export function displayRoverInfo(
     selectedSolarDay: string,
     removeAllChildNodes: (parent: HTMLElement) => void,
     fetchBasic: (args: fetchBasicType) => void,
-    fetchExpanded: (args: fetchExpandedType) => void
+    fetchExpanded: (args: fetchExpandedType) => void,
+    displayCameraSelectors: (
+      camerasUsed: string[],
+      roverName: string,
+      selectedSolarDay: string,
+      pagesCount: string,
+      removeAllChildNodes: (parent: HTMLElement) => void,
+      fetchBasic: (args: fetchBasicType) => void,
+      fetchExpanded: (args: fetchExpandedType) => void
+    ) => void
   ) => void
 ): void {
   // * Clear previously generated data
@@ -121,7 +131,8 @@ export function displayRoverInfo(
         solDayInputField.value,
         removeAllChildNodes,
         fetchBasic,
-        fetchExpanded
+        fetchExpanded,
+        displayCameraSelectors
       )
     } else {
       solDayInputField.setAttribute('class', 'form-control is-invalid')

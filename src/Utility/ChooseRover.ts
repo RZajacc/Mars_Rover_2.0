@@ -33,7 +33,16 @@ export function chooseRover(
       selectedSolarDay: string,
       removeAllChildNodes: (parent: HTMLElement) => void,
       fetchBasic: (args: fetchBasicType) => void,
-      fetchExpanded: (args: fetchExpandedType) => void
+      fetchExpanded: (args: fetchExpandedType) => void,
+      displayCameraSelectors: (
+        camerasUsed: string[],
+        roverName: string,
+        selectedSolarDay: string,
+        pagesCount: string,
+        removeAllChildNodes: (parent: HTMLElement) => void,
+        fetchBasic: (args: fetchBasicType) => void,
+        fetchExpanded: (args: fetchExpandedType) => void
+      ) => void
     ) => void
   ) => void,
   fetchManifest: (
@@ -51,7 +60,16 @@ export function chooseRover(
         selectedSolarDay: string,
         removeAllChildNodes: (parent: HTMLElement) => void,
         fetchBasic: (args: fetchBasicType) => void,
-        fetchExpanded: (args: fetchExpandedType) => void
+        fetchExpanded: (args: fetchExpandedType) => void,
+        displayCameraSelectors: (
+          camerasUsed: string[],
+          roverName: string,
+          selectedSolarDay: string,
+          pagesCount: string,
+          removeAllChildNodes: (parent: HTMLElement) => void,
+          fetchBasic: (args: fetchBasicType) => void,
+          fetchExpanded: (args: fetchExpandedType) => void
+        ) => void
       ) => void
     ) => void,
     fetchBasic: (args: fetchBasicType) => void,
