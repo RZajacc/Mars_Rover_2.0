@@ -131,3 +131,35 @@ test('Anchor element in cardGroup should have a valid link matching the one in d
   // Expect image to contain alt value containing earth date on a day picture was made
   expect(imageEl.getAttribute('alt')).toContain(earthDate)
 })
+
+test('PhotoDesc Ul element should contain 4 li containing rover name, solar day, photo id and camera name', () => {
+  const cardGroup = document.createElement('div') as unknown as HTMLDivElement
+  displayGallery(cardGroup, data)
+
+  // Get first element which is a bootstrap col
+  const colElement = cardGroup.firstChild as HTMLDivElement
+  const cardBody = colElement.firstChild as HTMLDivElement
+  // Get anchor element (first from the list since there is only one of that type)
+  const listElement = cardBody.getElementsByTagName(
+    'UL'
+  )[0] as unknown as HTMLUListElement
+
+  expect(listElement.childNodes.length).toBe(4)
+
+  // Getting all child nodes into variable
+  const listItems = listElement.childNodes as unknown as HTMLUListElement[]
+  // Data to check
+  const roverName = data.photos[0].rover.name
+  const solDay = data.photos[0].sol
+  const photoId = data.photos[0].id
+  const camName = data.photos[0].camera.name
+
+  // Since amount of li is fixed and so is the order of the data I will check one by one
+  expect(listItems[0].innerHTML).toContain(roverName)
+  expect(listItems[1].innerHTML).toContain(solDay)
+  expect(listItems[2].innerHTML).toContain(photoId)
+  expect(listItems[3].innerHTML).toContain(camName)
+})
+
+// Do same checks for PhotoDesc as UL
+// Then same for card footer and done
