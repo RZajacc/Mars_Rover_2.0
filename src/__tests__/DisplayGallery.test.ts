@@ -161,5 +161,30 @@ test('PhotoDesc Ul element should contain 4 li containing rover name, solar day,
   expect(listItems[3].innerHTML).toContain(camName)
 })
 
-// Do same checks for PhotoDesc as UL
-// Then same for card footer and done
+test('Card footer should have card-footer class and contain one child element containing earth date as innerHTML', () => {
+  const cardGroup = document.createElement('div') as unknown as HTMLDivElement
+  displayGallery(cardGroup, data)
+
+  // Get first element which is a bootstrap col
+  const colElement = cardGroup.firstChild as HTMLDivElement
+  const cardBody = colElement.firstChild as HTMLDivElement
+  // Get anchor element (first from the list since there is only one of that type)
+  const cardFooter = cardBody.getElementsByTagName(
+    'DIV'
+  )[0] as unknown as HTMLDivElement
+
+  // Check if it contains card-footer class
+  expect(cardFooter.getAttribute('class')).toContain('card-footer')
+
+  // Check if it has just one child element
+  expect(cardFooter.childNodes.length).toBe(1)
+
+  // Data to check against element
+  const earthDate = data.photos[0].earth_date
+
+  // Get the child element
+  const footerChild = cardFooter.firstChild as HTMLElement
+
+  // Check if footer element holds the right value in innerHTML
+  expect(footerChild.innerHTML).toContain(earthDate)
+})
