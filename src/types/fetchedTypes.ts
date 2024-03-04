@@ -63,6 +63,13 @@ export interface fetchBasicType {
   roverName: string
   selectedSolarDay: string
   pagesCount: string
+  showAllPhotos: (
+    data: responseRover,
+    roverName: string,
+    selectedSolarDay: string,
+    pagesCount: string,
+    page: string
+  ) => void
 }
 
 export interface fetchExpandedType {

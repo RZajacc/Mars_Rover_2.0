@@ -116,7 +116,6 @@ export function displayRoverInfo(
   failureDiv.setAttribute('hidden', '')
   failureDiv.innerHTML = `<strong>Value of range!</strong> You can choose between <strong>0</strong> and <strong>${info.max_sol}</strong>!`
   solDayInput.appendChild(failureDiv)
-
   // * Display error if provided value is out of range or call a function to display solar day information
   solDayInputField.addEventListener('change', () => {
     if (

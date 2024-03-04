@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import type { fetchBasicType, fetchExpandedType } from '../types/fetchedTypes'
+import type {
+  fetchBasicType,
+  fetchExpandedType,
+  responseRover
+} from '../types/fetchedTypes'
 
 /**
  * Displays camera select element with only those that were used by the rover

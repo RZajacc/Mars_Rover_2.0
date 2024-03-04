@@ -3,34 +3,63 @@ import {
   cleanAllDynamicContent,
   removeAllChildNodes
 } from './Utility/ClearDynamicContent'
-import { chooseRover } from './Utility/ChooseRover'
 import {
   displayEmptyRoverErr,
   displayRoverInfo
 } from './Utility/DisplayRoverInfo'
-import { fetchManifest } from './Utility/FetchManifest'
 import { displayGallery } from './Utility/DisplayGallery'
 import { PaginationFixedPages } from './Utility/PaginationFixedPages'
 import { PaginationUncertainPAmount } from './Utility/PaginationUncertainPCount'
 import type {
   fetchBasicType,
   fetchExpandedType,
+  responseManifest,
   responseRover
 } from './types/fetchedTypes.js'
 
 // ? ----------------------------------------------------------------------
 // ? SELECTING ROVER - Serves as a root call for everytning that comes next
 // ? ----------------------------------------------------------------------
+/**
+ * It queries select field on the page containing a string with a name
+ * of a rover to display data for. In case none was selected it will trigger
+ * a function do display error with a message provided manually. If it is selected
+ * properly it will fetch data from NASA API's mission manifest containing information
+ * describing selected rover's mission and pass it to a function that will display it
+ * on the page
+ */
 const roverSelect: HTMLSelectElement = document.querySelector('#rover-select')!
-chooseRover(
-  roverSelect,
-  displayEmptyRoverErr,
-  displayRoverInfo,
-  fetchManifest,
-  cleanAllDynamicContent,
-  fetchBasic,
-  fetchExpanded
-)
+roverSelect.addEventListener('change', () => {
+  const roverName = roverSelect.value
+  // * In case nothing was selected display an error
+  if (roverName === '') {
+    displayEmptyRoverErr(
+      'Nothing to display! Please select a rover!',
+      cleanAllDynamicContent
+    )
+    // * If rover was selected fetch data from its mission manifest entry
+  } else {
+    // * Fetch mission manifest
+    fetch(
+      `https://api.nasa.gov/mars-photos/api/v1/manifests/${roverName}/?api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
+    )
+      .then(async (response) => await response.json())
+      .then((data: responseManifest) => {
+        displayRoverInfo(
+          data.photo_manifest,
+          roverName,
+          cleanAllDynamicContent,
+          removeAllChildNodes,
+          fetchBasic,
+          fetchExpanded,
+          displaySolDayInfo
+        )
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+})
 
 // ? ----------------------------------------------------------------------
 // ? FETCHING DATA - Functions are called in several places but since they
@@ -55,7 +84,7 @@ export function fetchBasic(args: fetchBasicType, page = '1'): void {
   fetch(fetchUrl)
     .then(async (response) => await response.json())
     .then((data: responseRover) => {
-      showAllPhotos(
+      args.showAllPhotos(
         data,
         args.roverName,
         args.selectedSolarDay,
@@ -114,7 +143,7 @@ export function fetchExpanded(args: fetchExpandedType, page = '1'): void {
  * @param {string} pagesCount Calculated amount of pages available to display
  * @param {string} page Page user is currently on (default=1).
  */
-function showAllPhotos(
+export function showAllPhotos(
   data: responseRover,
   roverName: string,
   selectedSolarDay: string,
