@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
+import { fetchBasic, fetchExpanded } from '../content'
 import type {
   fetchBasicType,
   fetchExpandedType,
@@ -22,9 +23,9 @@ export function displayCameraSelectors(
   roverName: string,
   selectedSolarDay: string,
   pagesCount: string,
-  removeAllChildNodes: (parent: HTMLElement) => void,
-  fetchBasic: (args: fetchBasicType) => void,
-  fetchExpanded: (args: fetchExpandedType) => void
+  removeAllChildNodes: (parent: HTMLElement) => void
+  // fetchBasic: (args: fetchBasicType) => void,
+  // fetchExpanded: (args: fetchExpandedType) => void
 ): void {
   const camInfo: HTMLParagraphElement = document.querySelector('#cameras-info')!
   camInfo.innerHTML =

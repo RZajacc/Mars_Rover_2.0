@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as Cleaner from './ClearDynamicContent'
+import * as Cleaner from './DOMCleaners'
 import { fetchBasic } from '../content'
 
 /**

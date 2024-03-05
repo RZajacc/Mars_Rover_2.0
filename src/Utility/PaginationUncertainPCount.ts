@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as Cleaner from './ClearDynamicContent'
+import * as Cleaner from './DOMCleaners'
 import { fetchExpanded } from '../content'
 import type { responseRover } from '../types/fetchedTypes'
 

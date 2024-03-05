@@ -1,34 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 // import { displaySolDayInfo } from './DisplaySolarDayInfo'
-import type {
-  PhotoManifest,
-  fetchBasicType,
-  fetchExpandedType,
-  missionManifest
-} from '../types/fetchedTypes'
-import { displayCameraSelectors } from './DisplayCameraSelectors'
-
-/**
- * Simple function displaying a message when rover was not
- * selected from select field in HTML. Before displaying content
- * it uses other util function to clean all previousle generated
- * content on the DOM tree.
- * @param {string} message Message to display on the page
- */
-export function displayEmptyRoverErr(
-  message: string,
-  cleanAllDynamicContent: () => void
-): void {
-  // * Clear previously generated data
-  cleanAllDynamicContent()
-
-  // * Create a field to display provided message and append it
-  const roverInfo: HTMLDivElement = document.querySelector('#rover-info')!
-  const roverParagraph = document.createElement('p')
-  roverParagraph.innerHTML = message
-  roverParagraph.setAttribute('style', 'text-align:center; color:red')
-  roverInfo.appendChild(roverParagraph)
-}
+import type { missionManifest } from '../types/fetchedTypes'
+import { displaySolDayInfo } from './DisplaySolarDayInfo'
 
 /**
  * If the rover name was selected by a user on the page then data will be fetched
@@ -41,26 +14,26 @@ export function displayRoverInfo(
   info: missionManifest,
   roverName: string,
   cleanAllDynamicContent: () => void,
-  removeAllChildNodes: (parent: HTMLElement) => void,
-  fetchBasic: (args: fetchBasicType) => void,
-  fetchExpanded: (args: fetchExpandedType) => void,
-  displaySolDayInfo: (
-    photoArr: PhotoManifest[],
-    roverName: string,
-    selectedSolarDay: string,
-    removeAllChildNodes: (parent: HTMLElement) => void,
-    fetchBasic: (args: fetchBasicType) => void,
-    fetchExpanded: (args: fetchExpandedType) => void,
-    displayCameraSelectors: (
-      camerasUsed: string[],
-      roverName: string,
-      selectedSolarDay: string,
-      pagesCount: string,
-      removeAllChildNodes: (parent: HTMLElement) => void,
-      fetchBasic: (args: fetchBasicType) => void,
-      fetchExpanded: (args: fetchExpandedType) => void
-    ) => void
-  ) => void
+  removeAllChildNodes: (parent: HTMLElement) => void
+  // fetchBasic: (args: fetchBasicType) => void,
+  // fetchExpanded: (args: fetchExpandedType) => void,
+  // displaySolDayInfo: (
+  //   photoArr: PhotoManifest[],
+  //   roverName: string,
+  //   selectedSolarDay: string,
+  //   removeAllChildNodes: (parent: HTMLElement) => void,
+  //   fetchBasic: (args: fetchBasicType) => void,
+  //   fetchExpanded: (args: fetchExpandedType) => void,
+  // displayCameraSelectors: (
+  //   camerasUsed: string[],
+  //   roverName: string,
+  //   selectedSolarDay: string,
+  //   pagesCount: string,
+  //   removeAllChildNodes: (parent: HTMLElement) => void,
+  //   fetchBasic: (args: fetchBasicType) => void,
+  //   fetchExpanded: (args: fetchExpandedType) => void
+  // ) => void
+  // ) => void
 ): void {
   // * Clear previously generated data
   cleanAllDynamicContent()
@@ -128,10 +101,7 @@ export function displayRoverInfo(
         info.photos,
         roverName,
         solDayInputField.value,
-        removeAllChildNodes,
-        fetchBasic,
-        fetchExpanded,
-        displayCameraSelectors
+        removeAllChildNodes
       )
     } else {
       solDayInputField.setAttribute('class', 'form-control is-invalid')

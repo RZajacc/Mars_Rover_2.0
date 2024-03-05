@@ -4,7 +4,8 @@ import path from 'path'
 import { it, expect, vi, beforeEach } from 'vitest'
 import { Window } from 'happy-dom'
 
-import { cleanAllDynamicContent } from '../Utility/ClearDynamicContent'
+import { cleanAllDynamicContent } from '../Utility/DOMCleaners'
+import { chooseRover } from '../Utility/ChooseRover'
 
 const htmlDocPath = path.join(process.cwd(), 'public', 'content.html')
 const htmlDocumentContent = fs.readFileSync(htmlDocPath).toString()
@@ -33,15 +34,7 @@ it('should call displayEmptyRoverErr function if no value in selected field is p
   const fetchExpandedMock = vi.fn()
 
   // Call the chooseRover function with mocked functions
-  chooseRover(
-    roverSelect,
-    displayEmptyRoverErrMock,
-    displayEmptyRoverInfoMock,
-    fetchManifestMock,
-    cleanAllDynamicContent,
-    fetchBasicMock,
-    fetchExpandedMock
-  )
+  chooseRover()
 
   // Value to be provdied to select element
   const testedValue = ''

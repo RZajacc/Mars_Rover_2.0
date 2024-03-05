@@ -9,6 +9,7 @@ import {
   displayRoverInfo
 } from '../Utility/DisplayRoverInfo'
 import { missionManifest } from '../types/fetchedTypes'
+import { chooseRover } from '../content'
 import { complete } from 'happy-dom/lib/PropertySymbol'
 
 const htmlDocPath = path.join(process.cwd(), 'public', 'content.html')

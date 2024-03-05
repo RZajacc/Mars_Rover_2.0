@@ -4,6 +4,7 @@ import type {
   fetchBasicType,
   fetchExpandedType
 } from '../types/fetchedTypes'
+import { displayCameraSelectors } from './DisplayCameraSelectors'
 
 /**
  * Displays basic information referring to a solar day selected by the user,
@@ -19,18 +20,18 @@ export function displaySolDayInfo(
   photoArr: PhotoManifest[],
   roverName: string,
   selectedSolarDay: string,
-  removeAllChildNodes: (parent: HTMLElement) => void,
-  fetchBasic: (args: fetchBasicType) => void,
-  fetchExpanded: (args: fetchExpandedType) => void,
-  displayCameraSelectors: (
-    camerasUsed: string[],
-    roverName: string,
-    selectedSolarDay: string,
-    pagesCount: string,
-    removeAllChildNodes: (parent: HTMLElement) => void,
-    fetchBasic: (args: fetchBasicType) => void,
-    fetchExpanded: (args: fetchExpandedType) => void
-  ) => void
+  removeAllChildNodes: (parent: HTMLElement) => void
+  // fetchBasic: (args: fetchBasicType) => void,
+  // fetchExpanded: (args: fetchExpandedType) => void,
+  // displayCameraSelectors: (
+  //   camerasUsed: string[],
+  //   roverName: string,
+  //   selectedSolarDay: string,
+  //   pagesCount: string,
+  //   removeAllChildNodes: (parent: HTMLElement) => void,
+  //   fetchBasic: (args: fetchBasicType) => void,
+  //   fetchExpanded: (args: fetchExpandedType) => void
+  // ) => void
 ): void {
   // * Find the array containing selected solar day
   const selectedData = photoArr.filter((entry) => {
@@ -66,9 +67,7 @@ export function displaySolDayInfo(
       roverName,
       selectedSolarDay,
       pagesCount,
-      removeAllChildNodes,
-      fetchBasic,
-      fetchExpanded
+      removeAllChildNodes
     )
   } else {
     const camerasList: HTMLDivElement =

@@ -26,9 +26,8 @@ let selectedSolarDay = '1'
 
 // Mock of the functions
 const removeAllChildNodesMock = vi.fn()
-const fetchBasicMock = vi.fn()
-const fetchExpandedMock = vi.fn()
 const displayCameraSelectorsMock = vi.fn()
+const 
 
 beforeEach(() => {
   document.body.innerHTML = ''
@@ -37,10 +36,7 @@ beforeEach(() => {
     photoArr,
     roverName,
     selectedSolarDay,
-    removeAllChildNodesMock,
-    fetchBasicMock,
-    fetchExpandedMock,
-    displayCameraSelectorsMock
+    removeAllChildNodesMock
   )
   vi.clearAllMocks()
 })
@@ -72,10 +68,7 @@ it('Should call displayCameraSelector() if total images amount is not equal 0, a
     photoArr,
     roverName,
     selectedSolarDay,
-    removeAllChildNodesMock,
-    fetchBasicMock,
-    fetchExpandedMock,
-    displayCameraSelectorsMock
+    removeAllChildNodesMock
   )
   //   Cleaning function is called once if photo array is empty
   expect(removeAllChildNodesMock).toBeCalledTimes(1)
@@ -92,10 +85,7 @@ it('Should should call cleaning function 4 times (all relevant divs + initial cl
     photoArr,
     roverName,
     selectedSolarDay,
-    removeAllChildNodesMock,
-    fetchBasicMock,
-    fetchExpandedMock,
-    displayCameraSelectorsMock
+    removeAllChildNodesMock
   )
 
   expect(removeAllChildNodesMock).toBeCalledTimes(4)

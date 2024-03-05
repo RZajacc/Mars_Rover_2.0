@@ -1,12 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import {
-  cleanAllDynamicContent,
-  removeAllChildNodes
-} from './Utility/ClearDynamicContent'
-import {
-  displayEmptyRoverErr,
-  displayRoverInfo
-} from './Utility/DisplayRoverInfo'
+import { displayRoverInfo } from './Utility/DisplayRoverInfo'
 import { displayGallery } from './Utility/DisplayGallery'
 import { PaginationFixedPages } from './Utility/PaginationFixedPages'
 import { PaginationUncertainPAmount } from './Utility/PaginationUncertainPCount'
@@ -16,6 +9,11 @@ import type {
   responseManifest,
   responseRover
 } from './types/fetchedTypes.js'
+import { displayEmptyRoverErr } from './Utility/DisplayEmptyRoverErr'
+import {
+  cleanAllDynamicContent,
+  removeAllChildNodes
+} from './Utility/DOMCleaners'
 
 // ? ----------------------------------------------------------------------
 // ? SELECTING ROVER - Serves as a root call for everytning that comes next
@@ -28,38 +26,50 @@ import type {
  * describing selected rover's mission and pass it to a function that will display it
  * on the page
  */
-const roverSelect: HTMLSelectElement = document.querySelector('#rover-select')!
-roverSelect.addEventListener('change', () => {
-  const roverName = roverSelect.value
-  // * In case nothing was selected display an error
-  if (roverName === '') {
-    displayEmptyRoverErr(
-      'Nothing to display! Please select a rover!',
-      cleanAllDynamicContent
-    )
-    // * If rover was selected fetch data from its mission manifest entry
-  } else {
-    // * Fetch mission manifest
-    fetch(
-      `https://api.nasa.gov/mars-photos/api/v1/manifests/${roverName}/?api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
-    )
-      .then(async (response) => await response.json())
-      .then((data: responseManifest) => {
-        displayRoverInfo(
-          data.photo_manifest,
-          roverName,
-          cleanAllDynamicContent,
-          removeAllChildNodes,
-          fetchBasic,
-          fetchExpanded,
-          displaySolDayInfo
-        )
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
-})
+export const chooseRover = (
+  displayEmptyRoverErr: (
+    message: string,
+    cleanAllDynamicContent: () => void
+  ) => void,
+  cleanAllDynamicContent: () => void,
+  removeAllChildNodes: (parent: HTMLElement) => void
+): void => {
+  //* Query select field from document
+  const roverSelect: HTMLSelectElement =
+    document.querySelector('#rover-select')!
+  // * Add an event listenet to it and get selected value
+  roverSelect.addEventListener('change', (e) => {
+    const target = e.target as HTMLSelectElement
+    const roverName = target.value
+
+    // * In case nothing was selected display an error
+    if (roverName === '') {
+      displayEmptyRoverErr(
+        'Nothing to display! Please select a rover!',
+        cleanAllDynamicContent
+      )
+      // * If rover was selected fetch data from its mission manifest entry
+    } else {
+      // * Fetch mission manifest
+      const manifestUrl = `https://api.nasa.gov/mars-photos/api/v1/manifests/${roverName}/?api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
+      fetch(manifestUrl)
+        .then(async (response) => await response.json())
+        .then((data: responseManifest) => {
+          displayRoverInfo(
+            data.photo_manifest,
+            roverName,
+            cleanAllDynamicContent,
+            removeAllChildNodes
+          )
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  })
+}
+// * INIT the function
+chooseRover(displayEmptyRoverErr, cleanAllDynamicContent, removeAllChildNodes)
 
 // ? ----------------------------------------------------------------------
 // ? FETCHING DATA - Functions are called in several places but since they
