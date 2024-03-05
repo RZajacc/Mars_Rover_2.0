@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 // import { displaySolDayInfo } from './DisplaySolarDayInfo'
 import type { missionManifest } from '../types/fetchedTypes'
-import { displaySolDayInfo } from './DisplaySolarDayInfo'
 
 /**
  * If the rover name was selected by a user on the page then data will be fetched
@@ -10,34 +9,10 @@ import { displaySolDayInfo } from './DisplaySolarDayInfo'
  * @param {missionManifest} info Data fetched from NASA API for selected rover
  * @param {string} roverName Name of the rover collected from select input on the page
  */
-export function displayRoverInfo(
+export function DOMdisplayRoverInfo(
   info: missionManifest,
-  roverName: string,
-  cleanAllDynamicContent: () => void,
   removeAllChildNodes: (parent: HTMLElement) => void
-  // fetchBasic: (args: fetchBasicType) => void,
-  // fetchExpanded: (args: fetchExpandedType) => void,
-  // displaySolDayInfo: (
-  //   photoArr: PhotoManifest[],
-  //   roverName: string,
-  //   selectedSolarDay: string,
-  //   removeAllChildNodes: (parent: HTMLElement) => void,
-  //   fetchBasic: (args: fetchBasicType) => void,
-  //   fetchExpanded: (args: fetchExpandedType) => void,
-  // displayCameraSelectors: (
-  //   camerasUsed: string[],
-  //   roverName: string,
-  //   selectedSolarDay: string,
-  //   pagesCount: string,
-  //   removeAllChildNodes: (parent: HTMLElement) => void,
-  //   fetchBasic: (args: fetchBasicType) => void,
-  //   fetchExpanded: (args: fetchExpandedType) => void
-  // ) => void
-  // ) => void
-): void {
-  // * Clear previously generated data
-  cleanAllDynamicContent()
-
+): string[] {
   // * Create a field to display provided message and append it
   const roverInfo: HTMLDivElement = document.querySelector('#rover-info')!
   const roverParagraph = document.createElement('p')
@@ -87,25 +62,12 @@ export function displayRoverInfo(
   const failureDiv = document.createElement('div')
   failureDiv.setAttribute('class', 'invalid-feedback')
   failureDiv.setAttribute('hidden', '')
+  failureDiv.setAttribute('id', 'failureDiv')
   failureDiv.innerHTML = `<strong>Value of range!</strong> You can choose between <strong>0</strong> and <strong>${info.max_sol}</strong>!`
   solDayInput.appendChild(failureDiv)
-  // * Display error if provided value is out of range or call a function to display solar day information
-  solDayInputField.addEventListener('change', () => {
-    if (
-      parseInt(solDayInputField.value) >= 0 &&
-      parseInt(solDayInputField.value) <= parseInt(info.max_sol)
-    ) {
-      solDayInputField.setAttribute('class', 'form-control is-valid')
-      failureDiv.setAttribute('hidden', '')
-      displaySolDayInfo(
-        info.photos,
-        roverName,
-        solDayInputField.value,
-        removeAllChildNodes
-      )
-    } else {
-      solDayInputField.setAttribute('class', 'form-control is-invalid')
-      failureDiv.toggleAttribute('hidden')
-    }
-  })
+
+  const solDayInputID = solDayInputField.getAttribute('id')!
+  const failureDivID = failureDiv.getAttribute('id')!
+
+  return [solDayInputID, failureDivID]
 }

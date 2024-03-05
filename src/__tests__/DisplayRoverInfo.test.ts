@@ -7,7 +7,7 @@ import { vi, beforeEach, describe, it, expect } from 'vitest'
 import {
   displayEmptyRoverErr,
   displayRoverInfo
-} from '../Utility/DisplayRoverInfo'
+} from '../Utility/DOMDisplayRover'
 import { missionManifest } from '../types/fetchedTypes'
 import { chooseRover } from '../content'
 import { complete } from 'happy-dom/lib/PropertySymbol'

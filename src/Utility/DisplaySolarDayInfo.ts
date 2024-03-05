@@ -1,9 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import type {
-  PhotoManifest,
-  fetchBasicType,
-  fetchExpandedType
-} from '../types/fetchedTypes'
+import type { PhotoManifest } from '../types/fetchedTypes'
 import { displayCameraSelectors } from './DisplayCameraSelectors'
 
 /**
