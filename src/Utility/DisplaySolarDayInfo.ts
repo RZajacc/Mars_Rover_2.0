@@ -17,27 +17,7 @@ export function displaySolDayInfo(
   roverName: string,
   selectedSolarDay: string,
   removeAllChildNodes: (parent: HTMLElement) => void
-  // fetchBasic: (args: fetchBasicType) => void,
-  // fetchExpanded: (args: fetchExpandedType) => void,
-  // displayCameraSelectors: (
-  //   camerasUsed: string[],
-  //   roverName: string,
-  //   selectedSolarDay: string,
-  //   pagesCount: string,
-  //   removeAllChildNodes: (parent: HTMLElement) => void,
-  //   fetchBasic: (args: fetchBasicType) => void,
-  //   fetchExpanded: (args: fetchExpandedType) => void
-  // ) => void
 ): void {
-  // * Find the array containing selected solar day
-  const selectedData = photoArr.filter((entry) => {
-    const selectedSolarDayInt = parseInt(selectedSolarDay)
-    return entry.sol === selectedSolarDayInt
-  })
-
-  const solDayDescDiv: HTMLDivElement = document.querySelector('#sol-day-desc')!
-  removeAllChildNodes(solDayDescDiv)
-
   const solDayDescParagraph = document.createElement('p')
   solDayDescDiv.appendChild(solDayDescParagraph)
   let totalPictures: number

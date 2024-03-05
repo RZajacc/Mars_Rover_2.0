@@ -3,6 +3,7 @@ import { displayGallery } from './Utility/DisplayGallery'
 import { PaginationFixedPages } from './Utility/PaginationFixedPages'
 import { PaginationUncertainPAmount } from './Utility/PaginationUncertainPCount'
 import type {
+  PhotoManifest,
   fetchBasicType,
   fetchExpandedType,
   missionManifest,
@@ -85,7 +86,7 @@ export const displayRoverInfoSection = (
   // * Clear previously generated data
   utils.cleanAllDynamicContent()
 
-  // * Call helped DOM function to create HTML elements and display data
+  // * Build DOM elements with a function and retrieve ID's of elements required to continue
   const [solDayInputID, failureDivID] = DOMdisplayRoverInfo(
     info,
     utils.removeAllChildNodes
@@ -97,18 +98,17 @@ export const displayRoverInfoSection = (
   ) as HTMLInputElement
   const failureDiv = document.getElementById(failureDivID) as HTMLDivElement
   // * Display error if provided value is out of range or call a function to display solar day information
-  solDayInputField.addEventListener('change', () => {
-    if (
-      parseInt(solDayInputField.value) >= 0 &&
-      parseInt(solDayInputField.value) <= parseInt(info.max_sol)
-    ) {
+  solDayInputField.addEventListener('change', (e) => {
+    const target = e.target as HTMLInputElement
+    const solDay = target.value
+    if (parseInt(solDay) >= 0 && parseInt(solDay) <= parseInt(info.max_sol)) {
       solDayInputField.setAttribute('class', 'form-control is-valid')
       failureDiv.setAttribute('hidden', '')
-      displaySolDayInfo(
+      displaySolDayInfoSection(
         info.photos,
         roverName,
         solDayInputField.value,
-        removeAllChildNodes
+        utils
       )
     } else {
       solDayInputField.setAttribute('class', 'form-control is-invalid')
@@ -117,6 +117,22 @@ export const displayRoverInfoSection = (
   })
 }
 
+// ! Working now here
+export const displaySolDayInfoSection = (
+  photoArr: PhotoManifest[],
+  roverName: string,
+  selectedSolarDay: string,
+  utils: utilFuncs
+): void => {
+  // * Find the array containing selected solar day
+  const selectedData = photoArr.filter((entry) => {
+    const selectedSolarDayInt = parseInt(selectedSolarDay)
+    return entry.sol === selectedSolarDayInt
+  })
+
+  const solDayDescDiv: HTMLDivElement = document.querySelector('#sol-day-desc')!
+  utils.removeAllChildNodes(solDayDescDiv)
+}
 // ? ----------------------------------------------------------------------
 // ? FETCHING DATA - Functions are called in several places but since they
 // ? they are connected with displaying images I decided to keep them here
