@@ -76,4 +76,11 @@ export interface fetchExpandedType {
   roverName: string
   selectedSolarDay: string
   camName: string
+  showSelectedPhotos: (
+    data: responseRover,
+    roverName: string,
+    selectedSolarDay: string,
+    camName: string,
+    page: string
+  ) => void
 }
