@@ -1,3 +1,4 @@
+import type { utilFuncs } from '../content'
 import type {
   fetchBasicType,
   fetchExpandedType,
@@ -16,7 +17,11 @@ import type {
  * @param {string} pagesCount Calculated amount of page that are available to display
  * @param {string} page Page user is currently on (default=1).
  */
-export function fetchBasic(args: fetchBasicType, page = '1'): void {
+export function fetchBasic(
+  args: fetchBasicType,
+  page = '1',
+  utils: utilFuncs
+): void {
   const fetchUrl = `https://api.nasa.gov/mars-photos/api/v1/rovers/${args.roverName}/photos?sol=${args.selectedSolarDay}&page=${page}&api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
   fetch(fetchUrl)
     .then(async (response) => await response.json())
@@ -26,7 +31,8 @@ export function fetchBasic(args: fetchBasicType, page = '1'): void {
         args.roverName,
         args.selectedSolarDay,
         args.pagesCount,
-        page
+        page,
+        utils
       )
     })
     .catch(() => {
@@ -46,7 +52,11 @@ export function fetchBasic(args: fetchBasicType, page = '1'): void {
  * @param {string} camName Name of the camera selected
  * @param {string} page Page user is currently on (default=1).
  */
-export function fetchExpanded(args: fetchExpandedType, page = '1'): void {
+export function fetchExpanded(
+  args: fetchExpandedType,
+  page = '1',
+  utils: utilFuncs
+): void {
   const fetchUrl = `https://api.nasa.gov/mars-photos/api/v1/rovers/${args.roverName}/photos?sol=${args.selectedSolarDay}&camera=${args.camName}&page=${page}&api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
   fetch(fetchUrl)
     .then(async (response) => await response.json())
@@ -56,7 +66,8 @@ export function fetchExpanded(args: fetchExpandedType, page = '1'): void {
         args.roverName,
         args.selectedSolarDay,
         args.camName,
-        page
+        page,
+        utils
       )
     })
     .catch(() => {

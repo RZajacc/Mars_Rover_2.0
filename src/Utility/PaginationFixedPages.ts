@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as Cleaner from './DOMCleaners'
-import { fetchBasic } from '../content'
-
+import type { utilFuncs } from '../content'
+import { showAllPhotos } from '../content'
 /**
  * Displays bootrap pagination on the bottom of the page. This option is used
  * when user does not select any camera and browse all the photos. Only then is
@@ -25,7 +24,8 @@ export function PaginationFixedPages(
   pagesCount: string,
   roverName: string,
   selectedSolarDay: string,
-  page: string
+  page: string,
+  utils: utilFuncs
 ): void {
   // * Create a pagination if there are more pages than 1
   if (+pagesCount > 1) {
@@ -50,8 +50,17 @@ export function PaginationFixedPages(
 
     firstHref.addEventListener('click', () => {
       const targetPage = '1'
-      Cleaner.removeAllChildNodes(photoDiv)
-      fetchBasic({ roverName, pagesCount, selectedSolarDay }, targetPage)
+      utils.removeAllChildNodes(photoDiv)
+      utils.fetchBasic(
+        {
+          roverName,
+          pagesCount,
+          selectedSolarDay,
+          showAllPhotos
+        },
+        targetPage,
+        utils
+      )
     })
 
     // * PAGINATION LOGIC DEPENDING ON SEVERAL POSSIBLE SCENARIOS
@@ -72,8 +81,17 @@ export function PaginationFixedPages(
         paginationUl.appendChild(paginationLi)
         paginationHref.addEventListener('click', () => {
           const targetPage = paginationHref.textContent!
-          Cleaner.removeAllChildNodes(photoDiv)
-          fetchBasic({ roverName, selectedSolarDay, pagesCount }, targetPage)
+          utils.removeAllChildNodes(photoDiv)
+          utils.fetchBasic(
+            {
+              roverName,
+              selectedSolarDay,
+              pagesCount,
+              showAllPhotos
+            },
+            targetPage,
+            utils
+          )
         })
       }
     } else if (+page === 1 && +pagesCount <= 3) {
@@ -93,8 +111,17 @@ export function PaginationFixedPages(
         paginationUl.appendChild(paginationLi)
         paginationHref.addEventListener('click', () => {
           const targetPage = paginationHref.textContent!
-          Cleaner.removeAllChildNodes(photoDiv)
-          fetchBasic({ roverName, selectedSolarDay, pagesCount }, targetPage)
+          utils.removeAllChildNodes(photoDiv)
+          utils.fetchBasic(
+            {
+              roverName,
+              selectedSolarDay,
+              pagesCount,
+              showAllPhotos
+            },
+            targetPage,
+            utils
+          )
         })
       }
     } else if (+page === +pagesCount && +pagesCount >= 3) {
@@ -114,8 +141,17 @@ export function PaginationFixedPages(
         paginationUl.appendChild(paginationLi)
         paginationHref.addEventListener('click', () => {
           const targetPage = paginationHref.textContent!
-          Cleaner.removeAllChildNodes(photoDiv)
-          fetchBasic({ roverName, selectedSolarDay, pagesCount }, targetPage)
+          utils.removeAllChildNodes(photoDiv)
+          utils.fetchBasic(
+            {
+              roverName,
+              selectedSolarDay,
+              pagesCount,
+              showAllPhotos
+            },
+            targetPage,
+            utils
+          )
         })
       }
     } else if (+page === +pagesCount && +pagesCount <= 3) {
@@ -135,8 +171,17 @@ export function PaginationFixedPages(
         paginationUl.appendChild(paginationLi)
         paginationHref.addEventListener('click', () => {
           const targetPage = paginationHref.textContent!
-          Cleaner.removeAllChildNodes(photoDiv)
-          fetchBasic({ roverName, selectedSolarDay, pagesCount }, targetPage)
+          utils.removeAllChildNodes(photoDiv)
+          utils.fetchBasic(
+            {
+              roverName,
+              selectedSolarDay,
+              pagesCount,
+              showAllPhotos
+            },
+            targetPage,
+            utils
+          )
         })
       }
     } else {
@@ -156,8 +201,17 @@ export function PaginationFixedPages(
         paginationUl.appendChild(paginationLi)
         paginationHref.addEventListener('click', () => {
           const targetPage = paginationHref.textContent!
-          Cleaner.removeAllChildNodes(photoDiv)
-          fetchBasic({ roverName, selectedSolarDay, pagesCount }, targetPage)
+          utils.removeAllChildNodes(photoDiv)
+          utils.fetchBasic(
+            {
+              roverName,
+              selectedSolarDay,
+              pagesCount,
+              showAllPhotos
+            },
+            targetPage,
+            utils
+          )
         })
       }
     }
@@ -174,8 +228,17 @@ export function PaginationFixedPages(
 
     lastHref.addEventListener('click', () => {
       const targetPage = pagesCount
-      Cleaner.removeAllChildNodes(photoDiv)
-      fetchBasic({ roverName, selectedSolarDay, pagesCount }, targetPage)
+      utils.removeAllChildNodes(photoDiv)
+      utils.fetchBasic(
+        {
+          roverName,
+          selectedSolarDay,
+          pagesCount,
+          showAllPhotos
+        },
+        targetPage,
+        utils
+      )
     })
   }
 }

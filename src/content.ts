@@ -31,7 +31,7 @@ import { DOMcamSelectors } from './Utility/DOMcamSelectors'
  * describing selected rover's mission and pass it to a function that will display it
  * on the page
  */
-interface utilFuncs {
+export interface utilFuncs {
   displayEmptyRoverErr: (
     message: string,
     cleanAllDynamicContent: () => void
@@ -39,8 +39,12 @@ interface utilFuncs {
   cleanAllDynamicContent: () => void
   removeAllChildNodes: (parent: HTMLElement) => void
   cleanAllAfterSolDayInput: () => void
-  fetchBasic: (args: fetchBasicType) => void
-  fetchExpanded: (args: fetchExpandedType) => void
+  fetchBasic: (args: fetchBasicType, page: string, utils: utilFuncs) => void
+  fetchExpanded: (
+    args: fetchExpandedType,
+    page: string,
+    utils: utilFuncs
+  ) => void
 }
 
 export const chooseRover = (utils: utilFuncs): void => {
@@ -179,14 +183,14 @@ export const displayCameraSelectorsSection = (
     camName: camSelect.value,
     showSelectedPhotos
   }
-  fetchBasic(args1)
+  utils.fetchBasic(args1, '1', utils)
 
   // * Basic and expanded fetch differ only selected camera passed as attribute
   camSelect.addEventListener('change', () => {
     if (camSelect.value === 'ALL') {
-      fetchBasic(args1)
+      utils.fetchBasic(args1, '1', utils)
     } else {
-      fetchExpanded(args2)
+      utils.fetchExpanded(args2, '1', utils)
     }
   })
 }
@@ -207,13 +211,14 @@ export function showAllPhotos(
   roverName: string,
   selectedSolarDay: string,
   pagesCount: string,
-  page: string
+  page: string,
+  utils: utilFuncs
 ): void {
   // * Get the gallery div and clean it from existing content
   const photoDiv: HTMLDivElement = document.querySelector('#photo-gallery')!
-  removeAllChildNodes(photoDiv)
+  utils.removeAllChildNodes(photoDiv)
   const pagesDiv: HTMLDivElement = document.querySelector('#pages')!
-  removeAllChildNodes(pagesDiv)
+  utils.removeAllChildNodes(pagesDiv)
 
   // *Create a div containing cards group
   const cardGroup = document.createElement('div')
@@ -230,7 +235,8 @@ export function showAllPhotos(
     pagesCount,
     roverName,
     selectedSolarDay,
-    page
+    page,
+    utils
   )
 }
 
@@ -250,13 +256,14 @@ export function showSelectedPhotos(
   roverName: string,
   selectedSolarDay: string,
   camName: string,
-  page: string
+  page: string,
+  utils: utilFuncs
 ): void {
   // * Get the gallery div and clean it from existing content
   const photoDiv: HTMLDivElement = document.querySelector('#photo-gallery')!
-  removeAllChildNodes(photoDiv)
+  utils.removeAllChildNodes(photoDiv)
   const pagesDiv: HTMLDivElement = document.querySelector('#pages')!
-  removeAllChildNodes(pagesDiv)
+  utils.removeAllChildNodes(pagesDiv)
 
   // *Create a div containing cards group
   const cardGroup = document.createElement('div')
