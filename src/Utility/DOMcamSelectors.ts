@@ -1,12 +1,4 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-
-import { fetchBasic, fetchExpanded } from '../content'
-import type {
-  fetchBasicType,
-  fetchExpandedType,
-  responseRover
-} from '../types/fetchedTypes'
-
 /**
  * Displays camera select element with only those that were used by the rover
  * on the given day. Not all rover's have the same set of cameras, and not all
@@ -18,15 +10,13 @@ import type {
  * @param {string} pagesCount It is a paginated api, and this number contains
  * calculated number of available pages to display.
  */
-export function displayCameraSelectors(
+export function DOMcamSelectors(
   camerasUsed: string[],
   roverName: string,
   selectedSolarDay: string,
   pagesCount: string,
   removeAllChildNodes: (parent: HTMLElement) => void
-  // fetchBasic: (args: fetchBasicType) => void,
-  // fetchExpanded: (args: fetchExpandedType) => void
-): void {
+): string {
   const camInfo: HTMLParagraphElement = document.querySelector('#cameras-info')!
   camInfo.innerHTML =
     'Each rover has a diffent set of cameras. Select the ones that are interesting for you:'
@@ -69,25 +59,5 @@ export function displayCameraSelectors(
     camSelect.appendChild(selectOption)
   })
 
-  // * Make a first fetch and then respond to select change
-  const args1: fetchBasicType = {
-    roverName,
-    selectedSolarDay,
-    pagesCount
-  }
-  const args2: fetchExpandedType = {
-    roverName,
-    selectedSolarDay,
-    camName: camSelect.value
-  }
-  fetchBasic(args1)
-
-  // * Basic and expanded fetch differ only selected camera passed as attribute
-  camSelect.addEventListener('change', () => {
-    if (camSelect.value === 'ALL') {
-      fetchBasic(args1)
-    } else {
-      fetchExpanded(args2)
-    }
-  })
+  return camSelect.getAttribute('id')!
 }

@@ -19,6 +19,7 @@ import {
 import { fetchBasic, fetchExpanded } from './Utility/FetchData'
 import { DOMdisplayRoverInfo } from './Utility/DOMDisplayRover'
 import { DOMSolDayInfo } from './Utility/DOMSolDayInfo'
+import { DOMcamSelectors } from './Utility/DOMcamSelectors'
 // ? ----------------------------------------------------------------------
 // ? SELECTING ROVER - Serves as a root call for everytning that comes next
 // ? ----------------------------------------------------------------------
@@ -121,7 +122,6 @@ export const displayRoverInfoSection = (
   })
 }
 
-// ! Working now here
 export const displaySolDayInfoSection = (
   photoArr: PhotoManifest[],
   roverName: string,
@@ -137,28 +137,60 @@ export const displaySolDayInfoSection = (
   // * If there are any pictures display them, if not, clear the rest of a screen
   if (totalPictures !== 0) {
     const pagesCount = Math.ceil(totalPictures / 25).toString()
-    displayCameraSelectors(
+    displayCameraSelectorsSection(
       camerasUsed,
       roverName,
       selectedSolarDay,
       pagesCount,
-      removeAllChildNodes
+      utils
     )
   } else {
     utils.cleanAllAfterSolDayInput()
   }
 }
-// ? ----------------------------------------------------------------------
-// ? FETCHING DATA - Functions are called in several places but since they
-// ? they are connected with displaying images I decided to keep them here
-// ? for better readability.
-// ? ----------------------------------------------------------------------
 
-// ? -----------------------------------------------------------------------
-// ? DISPLAYING IMAGES - Functions are called only by fetching corresponding
-// ? fetching methods. Logic in both methods is similar but it differs a bit
-// ? in pagination and therefore it was easier to divide them in two.
-// ? -----------------------------------------------------------------------
+export const displayCameraSelectorsSection = (
+  camerasUsed: string[],
+  roverName: string,
+  selectedSolarDay: string,
+  pagesCount: string,
+  utils: utilFuncs
+): void => {
+  const camSelectID = DOMcamSelectors(
+    camerasUsed,
+    roverName,
+    selectedSolarDay,
+    pagesCount,
+    utils.removeAllChildNodes
+  )
+
+  const camSelect = document.getElementById(camSelectID) as HTMLSelectElement
+
+  // * Make a first fetch and then respond to select change
+  const args1: fetchBasicType = {
+    roverName,
+    selectedSolarDay,
+    pagesCount,
+    showAllPhotos
+  }
+  const args2: fetchExpandedType = {
+    roverName,
+    selectedSolarDay,
+    camName: camSelect.value,
+    showSelectedPhotos
+  }
+  fetchBasic(args1)
+
+  // * Basic and expanded fetch differ only selected camera passed as attribute
+  camSelect.addEventListener('change', () => {
+    if (camSelect.value === 'ALL') {
+      fetchBasic(args1)
+    } else {
+      fetchExpanded(args2)
+    }
+  })
+}
+
 /**
  * Called only by basic fetch function. It receives the data required
  * to display gallery, and prepares the area for it. To display the images

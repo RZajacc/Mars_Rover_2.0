@@ -3,7 +3,7 @@ import path from 'path'
 
 import { Window } from 'happy-dom'
 import { beforeEach, expect, it, vi } from 'vitest'
-import { displayCameraSelectors } from '../Utility/DisplayCameraSelectors'
+import { displayCameraSelectors } from '../Utility/DOMcamSelectors'
 
 // Get a path to html document and get it's content to string
 const htmlDocPath = path.join(process.cwd(), 'public', 'content.html')
