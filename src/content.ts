@@ -177,19 +177,21 @@ export const displayCameraSelectorsSection = (
     pagesCount,
     showAllPhotos
   }
-  const args2: fetchExpandedType = {
-    roverName,
-    selectedSolarDay,
-    camName: camSelect.value,
-    showSelectedPhotos
-  }
+
   utils.fetchBasic(args1, '1', utils)
 
   // * Basic and expanded fetch differ only selected camera passed as attribute
   camSelect.addEventListener('change', () => {
     if (camSelect.value === 'ALL') {
       utils.fetchBasic(args1, '1', utils)
+      console.log('Fetching basic')
     } else {
+      const args2: fetchExpandedType = {
+        roverName,
+        selectedSolarDay,
+        camName: camSelect.value,
+        showSelectedPhotos
+      }
       utils.fetchExpanded(args2, '1', utils)
     }
   })
@@ -280,6 +282,7 @@ export function showSelectedPhotos(
     roverName,
     selectedSolarDay,
     camName,
-    page
+    page,
+    utils
   )
 }

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import * as Cleaner from './DOMCleaners'
 import type { responseRover } from '../types/fetchedTypes'
+import type { utilFuncs } from '../content'
+import { showSelectedPhotos } from '../content'
 
 /**
  * Displays bootrap pagination on the bottom of the page. This option is used
@@ -25,15 +26,17 @@ export function PaginationUncertainPAmount(
   roverName: string,
   selectedSolarDay: string,
   camName: string,
-  page: string
+  page: string,
+  utils: utilFuncs
 ): void {
   // * If requested page is empty then move to last working one (Pagination)
   if (data.photos.length === 0) {
     const targetPage = +page - 1
-    Cleaner.removeAllChildNodes(photoDiv)
-    fetchExpanded(
-      { roverName, selectedSolarDay, camName },
-      targetPage.toString()
+    utils.removeAllChildNodes(photoDiv)
+    utils.fetchExpanded(
+      { roverName, selectedSolarDay, camName, showSelectedPhotos },
+      targetPage.toString(),
+      utils
     )
   }
 
@@ -60,8 +63,12 @@ export function PaginationUncertainPAmount(
 
     firstHref.addEventListener('click', () => {
       const targetPage = '1'
-      Cleaner.removeAllChildNodes(photoDiv)
-      fetchExpanded({ roverName, selectedSolarDay, camName }, targetPage)
+      utils.removeAllChildNodes(photoDiv)
+      utils.fetchExpanded(
+        { roverName, selectedSolarDay, camName, showSelectedPhotos },
+        targetPage,
+        utils
+      )
     })
 
     // *Create a move to a PREVIOUS PAGE element
@@ -77,10 +84,11 @@ export function PaginationUncertainPAmount(
     previousHref.addEventListener('click', () => {
       if (+page > 1) {
         const targetPage = +page - 1
-        Cleaner.removeAllChildNodes(photoDiv)
-        fetchExpanded(
-          { roverName, selectedSolarDay, camName },
-          targetPage.toString()
+        utils.removeAllChildNodes(photoDiv)
+        utils.fetchExpanded(
+          { roverName, selectedSolarDay, camName, showSelectedPhotos },
+          targetPage.toString(),
+          utils
         )
       }
     })
@@ -107,10 +115,11 @@ export function PaginationUncertainPAmount(
 
     nextHref.addEventListener('click', () => {
       const targetPage = +page + 1
-      Cleaner.removeAllChildNodes(photoDiv)
-      fetchExpanded(
-        { roverName, selectedSolarDay, camName },
-        targetPage.toString()
+      utils.removeAllChildNodes(photoDiv)
+      utils.fetchExpanded(
+        { roverName, selectedSolarDay, camName, showSelectedPhotos },
+        targetPage.toString(),
+        utils
       )
     })
   }
