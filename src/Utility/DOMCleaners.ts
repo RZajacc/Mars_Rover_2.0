@@ -37,3 +37,16 @@ export function cleanAllDynamicContent(): void {
   const pagesDiv: HTMLDivElement = document.querySelector('#pages')!
   removeAllChildNodes(pagesDiv)
 }
+
+export function cleanAllAfterSolDayInput(): void {
+  const camerasList: HTMLDivElement =
+    document.querySelector('#camera-selectors')!
+  removeAllChildNodes(camerasList)
+  const camInfo: HTMLParagraphElement = document.querySelector('#cameras-info')!
+  camInfo.innerHTML = ''
+  // * Get the gallery div and clean it from existing content
+  const photoDiv: HTMLDivElement = document.querySelector('#photo-gallery')!
+  removeAllChildNodes(photoDiv)
+  const pagesDiv: HTMLDivElement = document.querySelector('#pages')!
+  removeAllChildNodes(pagesDiv)
+}

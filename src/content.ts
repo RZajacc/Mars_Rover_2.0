@@ -13,10 +13,12 @@ import type {
 import { displayEmptyRoverErr } from './Utility/DisplayEmptyRoverErr'
 import {
   cleanAllDynamicContent,
-  removeAllChildNodes
+  removeAllChildNodes,
+  cleanAllAfterSolDayInput
 } from './Utility/DOMCleaners'
 import { fetchBasic, fetchExpanded } from './Utility/FetchData'
 import { DOMdisplayRoverInfo } from './Utility/DOMDisplayRover'
+import { DOMSolDayInfo } from './Utility/DOMSolDayInfo'
 // ? ----------------------------------------------------------------------
 // ? SELECTING ROVER - Serves as a root call for everytning that comes next
 // ? ----------------------------------------------------------------------
@@ -35,6 +37,7 @@ interface utilFuncs {
   ) => void
   cleanAllDynamicContent: () => void
   removeAllChildNodes: (parent: HTMLElement) => void
+  cleanAllAfterSolDayInput: () => void
   fetchBasic: (args: fetchBasicType) => void
   fetchExpanded: (args: fetchExpandedType) => void
 }
@@ -74,6 +77,7 @@ chooseRover({
   displayEmptyRoverErr,
   cleanAllDynamicContent,
   removeAllChildNodes,
+  cleanAllAfterSolDayInput,
   fetchBasic,
   fetchExpanded
 })
@@ -124,14 +128,25 @@ export const displaySolDayInfoSection = (
   selectedSolarDay: string,
   utils: utilFuncs
 ): void => {
-  // * Find the array containing selected solar day
-  const selectedData = photoArr.filter((entry) => {
-    const selectedSolarDayInt = parseInt(selectedSolarDay)
-    return entry.sol === selectedSolarDayInt
-  })
-
-  const solDayDescDiv: HTMLDivElement = document.querySelector('#sol-day-desc')!
-  utils.removeAllChildNodes(solDayDescDiv)
+  // * Call helper function to display data only for selected day
+  const [totalPictures, camerasUsed] = DOMSolDayInfo(
+    photoArr,
+    selectedSolarDay,
+    utils.removeAllChildNodes
+  )
+  // * If there are any pictures display them, if not, clear the rest of a screen
+  if (totalPictures !== 0) {
+    const pagesCount = Math.ceil(totalPictures / 25).toString()
+    displayCameraSelectors(
+      camerasUsed,
+      roverName,
+      selectedSolarDay,
+      pagesCount,
+      removeAllChildNodes
+    )
+  } else {
+    utils.cleanAllAfterSolDayInput()
+  }
 }
 // ? ----------------------------------------------------------------------
 // ? FETCHING DATA - Functions are called in several places but since they

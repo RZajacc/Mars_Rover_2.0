@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { PhotoManifest } from '../types/fetchedTypes'
-import { displayCameraSelectors } from './DisplayCameraSelectors'
-
 /**
  * Displays basic information referring to a solar day selected by the user,
  * like how many pictures were taken on that day in total. If there were
@@ -12,12 +10,19 @@ import { displayCameraSelectors } from './DisplayCameraSelectors'
  * @param {string} roverName Rover selected by the user
  * @param {string} selectedSolarDay Solar day selected by the user
  */
-export function displaySolDayInfo(
+export function DOMSolDayInfo(
   photoArr: PhotoManifest[],
-  roverName: string,
   selectedSolarDay: string,
   removeAllChildNodes: (parent: HTMLElement) => void
-): void {
+): [number, string[]] {
+  // * Find the array containing selected solar day
+  const selectedData = photoArr.filter((entry) => {
+    const selectedSolarDayInt = parseInt(selectedSolarDay)
+    return entry.sol === selectedSolarDayInt
+  })
+
+  const solDayDescDiv: HTMLDivElement = document.querySelector('#sol-day-desc')!
+  removeAllChildNodes(solDayDescDiv)
   const solDayDescParagraph = document.createElement('p')
   solDayDescDiv.appendChild(solDayDescParagraph)
   let totalPictures: number
@@ -35,27 +40,5 @@ export function displaySolDayInfo(
   solDayDescParagraph.innerHTML = `On <strong>${selectedSolarDay}</strong> 
       solar day rover made a total of <strong>${totalPictures}</strong> pictures.`
 
-  // * If there are any pictures display them, if not, clear the rest of a screen
-  if (totalPictures !== 0) {
-    const pagesCount = Math.ceil(totalPictures / 25).toString()
-    displayCameraSelectors(
-      camerasUsed,
-      roverName,
-      selectedSolarDay,
-      pagesCount,
-      removeAllChildNodes
-    )
-  } else {
-    const camerasList: HTMLDivElement =
-      document.querySelector('#camera-selectors')!
-    removeAllChildNodes(camerasList)
-    const camInfo: HTMLParagraphElement =
-      document.querySelector('#cameras-info')!
-    camInfo.innerHTML = ''
-    // * Get the gallery div and clean it from existing content
-    const photoDiv: HTMLDivElement = document.querySelector('#photo-gallery')!
-    removeAllChildNodes(photoDiv)
-    const pagesDiv: HTMLDivElement = document.querySelector('#pages')!
-    removeAllChildNodes(pagesDiv)
-  }
+  return [totalPictures, camerasUsed]
 }
