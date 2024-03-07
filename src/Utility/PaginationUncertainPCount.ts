@@ -21,7 +21,6 @@ import { showSelectedPhotos } from '../content'
  * for a fetch)
  */
 export function PaginationUncertainPAmount(
-  photoDiv: HTMLDivElement,
   data: responseRover,
   roverName: string,
   selectedSolarDay: string,
@@ -29,6 +28,8 @@ export function PaginationUncertainPAmount(
   page: string,
   utils: utilFuncs
 ): void {
+  // * Get the gallery and pagination div
+  const photoDiv = document.getElementById('photo-gallery') as HTMLDivElement
   // * If requested page is empty then move to last working one (Pagination)
   if (data.photos.length === 0) {
     const targetPage = +page - 1

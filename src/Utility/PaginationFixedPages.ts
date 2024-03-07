@@ -19,14 +19,15 @@ import { showAllPhotos } from '../content'
  * for a fetch)
  */
 export function PaginationFixedPages(
-  photoDiv: HTMLDivElement,
-  pagesDiv: HTMLDivElement,
   pagesCount: string,
   roverName: string,
   selectedSolarDay: string,
   page: string,
   utils: utilFuncs
 ): void {
+  // * Get the gallery and pagination div
+  const photoDiv = document.getElementById('photo-gallery') as HTMLDivElement
+  const pagesDiv = document.getElementById('pages') as HTMLDivElement
   // * Create a pagination if there are more pages than 1
   if (+pagesCount > 1) {
     //  *Create navigation and FIRST element tab

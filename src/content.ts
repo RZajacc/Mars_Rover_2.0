@@ -216,30 +216,11 @@ export function showAllPhotos(
   page: string,
   utils: utilFuncs
 ): void {
-  // * Get the gallery div and clean it from existing content
-  const photoDiv: HTMLDivElement = document.querySelector('#photo-gallery')!
-  utils.removeAllChildNodes(photoDiv)
-  const pagesDiv: HTMLDivElement = document.querySelector('#pages')!
-  utils.removeAllChildNodes(pagesDiv)
-
-  // *Create a div containing cards group
-  const cardGroup = document.createElement('div')
-  cardGroup.setAttribute('class', 'row row-cols-1 row-cols-md-2 g-3')
-  photoDiv.appendChild(cardGroup)
-
   // *Displaying photos is called from few places
-  displayGallery(cardGroup, data)
+  displayGallery(data, utils)
 
   // *Display pagination for fixed and known amount of pages
-  PaginationFixedPages(
-    photoDiv,
-    pagesDiv,
-    pagesCount,
-    roverName,
-    selectedSolarDay,
-    page,
-    utils
-  )
+  PaginationFixedPages(pagesCount, roverName, selectedSolarDay, page, utils)
 }
 
 /**
@@ -261,23 +242,11 @@ export function showSelectedPhotos(
   page: string,
   utils: utilFuncs
 ): void {
-  // * Get the gallery div and clean it from existing content
-  const photoDiv: HTMLDivElement = document.querySelector('#photo-gallery')!
-  utils.removeAllChildNodes(photoDiv)
-  const pagesDiv: HTMLDivElement = document.querySelector('#pages')!
-  utils.removeAllChildNodes(pagesDiv)
-
-  // *Create a div containing cards group
-  const cardGroup = document.createElement('div')
-  cardGroup.setAttribute('class', 'row row-cols-1 row-cols-md-2 g-3')
-  photoDiv.appendChild(cardGroup)
-
   // *Gallery is displayed from more places
-  displayGallery(cardGroup, data)
+  displayGallery(data, utils)
 
   // * Display pagination for uncertain amount of pages
   PaginationUncertainPAmount(
-    photoDiv,
     data,
     roverName,
     selectedSolarDay,
