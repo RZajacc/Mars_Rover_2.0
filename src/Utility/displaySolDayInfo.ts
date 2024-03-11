@@ -10,7 +10,7 @@ import type { PhotoManifest } from '../types/fetchedTypes'
  * @param {string} roverName Rover selected by the user
  * @param {string} selectedSolarDay Solar day selected by the user
  */
-export function DOMSolDayInfo(
+export function displaySolDayInfo(
   photoArr: PhotoManifest[],
   selectedSolarDay: string,
   removeAllChildNodes: (parent: HTMLElement) => void

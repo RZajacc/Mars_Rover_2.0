@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { Window } from 'happy-dom'
 import { beforeEach, expect, it, vi } from 'vitest'
-import { displaySolDayInfo } from '../Utility/DOMSolDayInfo'
+import { displaySolDayInfo } from '../Utility/displaySolDayInfo'
 import { PhotoManifest } from '../types/fetchedTypes'
 
 const htmlDocPath = path.join(process.cwd(), 'public', 'content.html')

@@ -6,7 +6,7 @@ import { it, describe, expect, vi, beforeEach } from 'vitest'
 import {
   removeAllChildNodes,
   cleanAllDynamicContent
-} from '../Utility/DOMCleaners'
+} from '../Utility/cleanerFunctions'
 import { Window } from 'happy-dom'
 
 const htmlDocPath = path.join(process.cwd() + '/public', 'content.html')

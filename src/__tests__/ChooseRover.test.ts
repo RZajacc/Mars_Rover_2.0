@@ -4,7 +4,7 @@ import path from 'path'
 import { it, expect, vi, beforeEach } from 'vitest'
 import { Window } from 'happy-dom'
 
-import { cleanAllDynamicContent } from '../Utility/DOMCleaners'
+import { cleanAllDynamicContent } from '../Utility/cleanerFunctions'
 import { chooseRover } from '../content'
 
 const htmlDocPath = path.join(process.cwd(), 'public', 'content.html')

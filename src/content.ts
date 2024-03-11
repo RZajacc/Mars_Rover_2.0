@@ -15,10 +15,10 @@ import {
   cleanAllDynamicContent,
   removeAllChildNodes,
   cleanAllAfterSolDayInput
-} from './Utility/DOMCleaners'
+} from './Utility/cleanerFunctions'
 import { fetchBasic, fetchExpanded } from './Utility/FetchData'
-import { DOMdisplayRoverInfo } from './Utility/DOMDisplayRover'
-import { DOMSolDayInfo } from './Utility/DOMSolDayInfo'
+import { displayRoverInfo } from './Utility/displayRoverInfo'
+import { displaySolDayInfo } from './Utility/displaySolDayInfo'
 import { camSelectors } from './Utility/camSelectors'
 // ? ----------------------------------------------------------------------
 // ? SELECTING ROVER - Serves as a root call for everytning that comes next
@@ -39,6 +39,7 @@ export interface utilFuncs {
   cleanAllDynamicContent: () => void
   removeAllChildNodes: (parent: HTMLElement) => void
   cleanAllAfterSolDayInput: () => void
+  camSelectors: (camerasUsed: string[], removeAllChildNodes: (parent: HTMLElement) => void) => string
   fetchBasic: (args: fetchBasicType, page: string, utils: utilFuncs) => void
   fetchExpanded: (
     args: fetchExpandedType,
@@ -84,6 +85,7 @@ chooseRover({
   cleanAllDynamicContent,
   removeAllChildNodes,
   cleanAllAfterSolDayInput,
+  camSelectors,
   fetchBasic,
   fetchExpanded,
   displayGallery
@@ -98,7 +100,7 @@ export const displayRoverInfoSection = (
   utils.cleanAllDynamicContent()
 
   // * Build DOM elements with a function and retrieve ID's of elements required to continue
-  const [solDayInputID, failureDivID] = DOMdisplayRoverInfo(
+  const [solDayInputID, failureDivID] = displayRoverInfo(
     info,
     utils.removeAllChildNodes
   )
@@ -135,7 +137,7 @@ export const displaySolDayInfoSection = (
   utils: utilFuncs
 ): void => {
   // * Call helper function to display data only for selected day
-  const [totalPictures, camerasUsed] = DOMSolDayInfo(
+  const [totalPictures, camerasUsed] = displaySolDayInfo(
     photoArr,
     selectedSolarDay,
     utils.removeAllChildNodes
@@ -162,7 +164,7 @@ export const displayCameraSelectorsSection = (
   pagesCount: string,
   utils: utilFuncs
 ): void => {
-  const camSelectID = camSelectors(
+  const camSelectID = utils.camSelectors(
     camerasUsed,
     utils.removeAllChildNodes
   )

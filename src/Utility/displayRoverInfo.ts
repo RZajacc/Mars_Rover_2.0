@@ -9,7 +9,7 @@ import type { missionManifest } from '../types/fetchedTypes'
  * @param {missionManifest} info Data fetched from NASA API for selected rover
  * @param {string} roverName Name of the rover collected from select input on the page
  */
-export function DOMdisplayRoverInfo(
+export function displayRoverInfo(
   info: missionManifest,
   removeAllChildNodes: (parent: HTMLElement) => void
 ): string[] {
