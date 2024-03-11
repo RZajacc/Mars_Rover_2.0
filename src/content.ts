@@ -19,7 +19,7 @@ import {
 import { fetchBasic, fetchExpanded } from './Utility/FetchData'
 import { DOMdisplayRoverInfo } from './Utility/DOMDisplayRover'
 import { DOMSolDayInfo } from './Utility/DOMSolDayInfo'
-import { DOMcamSelectors } from './Utility/DOMcamSelectors'
+import { camSelectors } from './Utility/camSelectors'
 // ? ----------------------------------------------------------------------
 // ? SELECTING ROVER - Serves as a root call for everytning that comes next
 // ? ----------------------------------------------------------------------
@@ -162,11 +162,8 @@ export const displayCameraSelectorsSection = (
   pagesCount: string,
   utils: utilFuncs
 ): void => {
-  const camSelectID = DOMcamSelectors(
+  const camSelectID = camSelectors(
     camerasUsed,
-    roverName,
-    selectedSolarDay,
-    pagesCount,
     utils.removeAllChildNodes
   )
 

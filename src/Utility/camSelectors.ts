@@ -10,11 +10,8 @@
  * @param {string} pagesCount It is a paginated api, and this number contains
  * calculated number of available pages to display.
  */
-export function DOMcamSelectors(
+export function camSelectors(
   camerasUsed: string[],
-  roverName: string,
-  selectedSolarDay: string,
-  pagesCount: string,
   removeAllChildNodes: (parent: HTMLElement) => void
 ): string {
   const camInfo: HTMLParagraphElement = document.querySelector('#cameras-info')!
