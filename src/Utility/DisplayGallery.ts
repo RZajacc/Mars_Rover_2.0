@@ -1,4 +1,3 @@
-import type { utilFuncs } from '../content'
 import type { responseRover } from '../types/fetchedTypes'
 
 /**
@@ -9,12 +8,12 @@ import type { responseRover } from '../types/fetchedTypes'
  * parameters of a card group.
  * @param {responseRover} data Data fetched from the API
  */
-export function displayGallery(data: responseRover, utils: utilFuncs): void {
+export function displayGallery(data: responseRover, removeAllChildNodes: (parent: HTMLElement) => void): void {
   // * Get the gallery div and clean it from existing content
   const photoDiv = document.getElementById('photo-gallery') as HTMLDivElement
-  utils.removeAllChildNodes(photoDiv)
+  removeAllChildNodes(photoDiv)
   const pagesDiv = document.getElementById('pages') as HTMLDivElement
-  utils.removeAllChildNodes(pagesDiv)
+  removeAllChildNodes(pagesDiv)
 
   // *Create a div containing cards group
   const cardGroup = document.createElement('div')

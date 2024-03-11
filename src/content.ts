@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { displayGallery } from './Utility/DisplayGallery'
+import { displayGallery } from './Utility/displayGallery'
 import { PaginationFixedPages } from './Utility/PaginationFixedPages'
 import { PaginationUncertainPAmount } from './Utility/PaginationUncertainPCount'
 import type {
@@ -45,6 +45,7 @@ export interface utilFuncs {
     page: string,
     utils: utilFuncs
   ) => void
+  displayGallery: (data: responseRover, cleanAllDynamicContent: () => void) => void
 }
 
 export const chooseRover = (utils: utilFuncs): void => {
@@ -84,7 +85,8 @@ chooseRover({
   removeAllChildNodes,
   cleanAllAfterSolDayInput,
   fetchBasic,
-  fetchExpanded
+  fetchExpanded,
+  displayGallery
 })
 
 export const displayRoverInfoSection = (
@@ -217,7 +219,7 @@ export function showAllPhotos(
   utils: utilFuncs
 ): void {
   // *Displaying photos is called from few places
-  displayGallery(data, utils)
+  utils.displayGallery(data, cleanAllDynamicContent)
 
   // *Display pagination for fixed and known amount of pages
   PaginationFixedPages(pagesCount, roverName, selectedSolarDay, page, utils)
@@ -243,7 +245,7 @@ export function showSelectedPhotos(
   utils: utilFuncs
 ): void {
   // *Gallery is displayed from more places
-  displayGallery(data, utils)
+  utils.displayGallery(data, cleanAllDynamicContent)
 
   // * Display pagination for uncertain amount of pages
   PaginationUncertainPAmount(
