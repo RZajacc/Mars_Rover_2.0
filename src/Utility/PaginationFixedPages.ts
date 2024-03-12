@@ -18,7 +18,7 @@ import { showAllPhotos } from '../content'
  * @param {string} page Current page fethed from the API (page is a attribute
  * for a fetch)
  */
-export function PaginationFixedPages(
+export function paginationFixedPages(
   pagesCount: string,
   roverName: string,
   selectedSolarDay: string,

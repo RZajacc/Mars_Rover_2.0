@@ -61,7 +61,7 @@ export function fetchExpanded(
   fetch(fetchUrl)
     .then(async (response) => await response.json())
     .then((data: responseRover) => {
-      args.showSelectedPhotos(
+      args.showSelectedCamPhotos(
         data,
         args.roverName,
         args.selectedSolarDay,

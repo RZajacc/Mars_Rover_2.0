@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { displayGallery } from './Utility/displayGallery'
-import { PaginationFixedPages } from './Utility/PaginationFixedPages'
-import { PaginationUncertainPAmount } from './Utility/PaginationUncertainPCount'
+import { paginationFixedPages } from './Utility/paginationFixedPages'
+import { paginationUncertainPAmount } from './Utility/paginationUncertainPCount'
 import type {
   PhotoManifest,
   fetchBasicType,
@@ -10,13 +10,13 @@ import type {
   responseManifest,
   responseRover
 } from './types/fetchedTypes.js'
-import { displayEmptyRoverErr } from './Utility/DisplayEmptyRoverErr'
+import { displayEmptyRoverErr } from './Utility/displayEmptyRoverErr'
 import {
   cleanAllDynamicContent,
   removeAllChildNodes,
   cleanAllAfterSolDayInput
 } from './Utility/cleanerFunctions'
-import { fetchBasic, fetchExpanded } from './Utility/FetchData'
+import { fetchBasic, fetchExpanded } from './Utility/fetchData'
 import { displayRoverInfo } from './Utility/displayRoverInfo'
 import { displaySolDayInfo } from './Utility/displaySolDayInfo'
 import { camSelectors } from './Utility/camSelectors'
@@ -191,7 +191,7 @@ export const displayCameraSelectorsSection = (
         roverName,
         selectedSolarDay,
         camName: camSelect.value,
-        showSelectedPhotos
+        showSelectedCamPhotos
       }
       utils.fetchExpanded(args2, '1', utils)
     }
@@ -221,7 +221,7 @@ export function showAllPhotos(
   utils.displayGallery(data, cleanAllDynamicContent)
 
   // *Display pagination for fixed and known amount of pages
-  PaginationFixedPages(pagesCount, roverName, selectedSolarDay, page, utils)
+  paginationFixedPages(pagesCount, roverName, selectedSolarDay, page, utils)
 }
 
 /**
@@ -235,7 +235,7 @@ export function showAllPhotos(
  * @param {string} camName Name of the camera selected
  * @param {string} page Page user is currently on (default=1).
  */
-export function showSelectedPhotos(
+export function showSelectedCamPhotos(
   data: responseRover,
   roverName: string,
   selectedSolarDay: string,
@@ -247,7 +247,7 @@ export function showSelectedPhotos(
   utils.displayGallery(data, cleanAllDynamicContent)
 
   // * Display pagination for uncertain amount of pages
-  PaginationUncertainPAmount(
+  paginationUncertainPAmount(
     data,
     roverName,
     selectedSolarDay,

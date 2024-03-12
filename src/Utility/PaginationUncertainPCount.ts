@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { responseRover } from '../types/fetchedTypes'
 import type { utilFuncs } from '../content'
-import { showSelectedPhotos } from '../content'
+import { showSelectedCamPhotos } from '../content'
 
 /**
  * Displays bootrap pagination on the bottom of the page. This option is used
@@ -20,7 +20,7 @@ import { showSelectedPhotos } from '../content'
  * @param {string} page Current page fethed from the API (page is a attribute
  * for a fetch)
  */
-export function PaginationUncertainPAmount(
+export function paginationUncertainPAmount(
   data: responseRover,
   roverName: string,
   selectedSolarDay: string,
@@ -35,7 +35,7 @@ export function PaginationUncertainPAmount(
     const targetPage = +page - 1
     utils.removeAllChildNodes(photoDiv)
     utils.fetchExpanded(
-      { roverName, selectedSolarDay, camName, showSelectedPhotos },
+      { roverName, selectedSolarDay, camName, showSelectedCamPhotos },
       targetPage.toString(),
       utils
     )
@@ -66,7 +66,7 @@ export function PaginationUncertainPAmount(
       const targetPage = '1'
       utils.removeAllChildNodes(photoDiv)
       utils.fetchExpanded(
-        { roverName, selectedSolarDay, camName, showSelectedPhotos },
+        { roverName, selectedSolarDay, camName, showSelectedCamPhotos },
         targetPage,
         utils
       )
@@ -87,7 +87,7 @@ export function PaginationUncertainPAmount(
         const targetPage = +page - 1
         utils.removeAllChildNodes(photoDiv)
         utils.fetchExpanded(
-          { roverName, selectedSolarDay, camName, showSelectedPhotos },
+          { roverName, selectedSolarDay, camName, showSelectedCamPhotos },
           targetPage.toString(),
           utils
         )
@@ -118,7 +118,7 @@ export function PaginationUncertainPAmount(
       const targetPage = +page + 1
       utils.removeAllChildNodes(photoDiv)
       utils.fetchExpanded(
-        { roverName, selectedSolarDay, camName, showSelectedPhotos },
+        { roverName, selectedSolarDay, camName, showSelectedCamPhotos },
         targetPage.toString(),
         utils
       )
