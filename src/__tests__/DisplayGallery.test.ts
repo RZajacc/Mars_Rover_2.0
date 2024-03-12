@@ -14,12 +14,6 @@ const document = window.document
 
 vi.stubGlobal('document', document)
 
-beforeEach(() => {
-  document.body.innerHTML = ''
-  document.write(htmlDocumentContent)
-  vi.clearAllMocks()
-})
-
 // MOCK FUNCTIONS
 const removeAllChildNodesMock = vi.fn()
 // MOCK DATA
@@ -56,31 +50,36 @@ const data: responseRover = {
   ]
 }
 
-it('Should generate as many children divs (bootstrap cards) for provided element as there are photos in data', () => {
-  const cardsGallery = document.getElementById('galleryCards') as unknown as HTMLDivElement
+beforeEach(() => {
+  document.body.innerHTML = ''
+  document.write(htmlDocumentContent)
+  vi.clearAllMocks()
   displayGallery(data, removeAllChildNodesMock)
+})
+
+it('Should generate as many children divs (bootstrap cards) for provided element as there are photos in data', () => {
+  
+  const cardsGallery = document.getElementById('galleryCards') as unknown as HTMLDivElement
 
   // There is only one photo in mock data so there can only be one child
   expect(cardsGallery.childNodes.length).toBe(1)
 })
 
 it('Should create a div with a bootstrap class col as a child to provided div element', () => {
-  const cardGroup = document.createElement('div') as unknown as HTMLDivElement
-  displayGallery(data, removeAllChildNodesMock)
-
+  const cardsGallery = document.getElementById('galleryCards') as unknown as HTMLDivElement
+  
   // Get first element which is a bootstrap col
-  const colElement = cardGroup.firstChild as HTMLDivElement
+  const colElement = cardsGallery.firstChild as HTMLDivElement
 
   // Check if it contains col class
   expect(colElement.getAttribute('class')).toContain('col')
 })
 
 it('Should generate a cardBody element as a child of boostrap col with 3 child elements, card body (link), photoDesc (ul) and card footer (div)', () => {
-  const cardGroup = document.createElement('div') as unknown as HTMLDivElement
-  displayGallery(data, removeAllChildNodesMock)
-
+  const cardsGallery = document.getElementById('galleryCards') as unknown as HTMLDivElement
+  
   // Get first element which is a bootstrap col
-  const colElement = cardGroup.firstChild as HTMLDivElement
+  const colElement = cardsGallery.firstChild as HTMLDivElement
   const cardBody = colElement.firstChild as HTMLDivElement
 
   // Expect cardBody to have 3 children
@@ -103,11 +102,10 @@ it('Should generate a cardBody element as a child of boostrap col with 3 child e
 })
 
 test('Anchor element in cardGroup should have a valid link matching the one in data, target set to blank and img element with image and earth date as alt value', () => {
-  const cardGroup = document.createElement('div') as unknown as HTMLDivElement
-  displayGallery(data, removeAllChildNodesMock)
-
+  const cardsGallery = document.getElementById('galleryCards') as unknown as HTMLDivElement
+ 
   // Get first element which is a bootstrap col
-  const colElement = cardGroup.firstChild as HTMLDivElement
+  const colElement = cardsGallery.firstChild as HTMLDivElement
   const cardBody = colElement.firstChild as HTMLDivElement
   // Get anchor element (first from the list since there is only one of that type)
   const anchorEl = cardBody.getElementsByTagName('A')[0]
@@ -135,11 +133,10 @@ test('Anchor element in cardGroup should have a valid link matching the one in d
 })
 
 test('PhotoDesc Ul element should contain 4 li containing rover name, solar day, photo id and camera name', () => {
-  const cardGroup = document.createElement('div') as unknown as HTMLDivElement
-  displayGallery(data, removeAllChildNodesMock)
-
+  const cardsGallery = document.getElementById('galleryCards') as unknown as HTMLDivElement
+  
   // Get first element which is a bootstrap col
-  const colElement = cardGroup.firstChild as HTMLDivElement
+  const colElement = cardsGallery.firstChild as HTMLDivElement
   const cardBody = colElement.firstChild as HTMLDivElement
   // Get anchor element (first from the list since there is only one of that type)
   const listElement = cardBody.getElementsByTagName(
@@ -164,11 +161,10 @@ test('PhotoDesc Ul element should contain 4 li containing rover name, solar day,
 })
 
 test('Card footer should have card-footer class and contain one child element containing earth date as innerHTML', () => {
-  const cardGroup = document.createElement('div') as unknown as HTMLDivElement
-  displayGallery(data, removeAllChildNodesMock)
+  const cardsGallery = document.getElementById('galleryCards') as unknown as HTMLDivElement
 
   // Get first element which is a bootstrap col
-  const colElement = cardGroup.firstChild as HTMLDivElement
+  const colElement = cardsGallery.firstChild as HTMLDivElement
   const cardBody = colElement.firstChild as HTMLDivElement
   // Get anchor element (first from the list since there is only one of that type)
   const cardFooter = cardBody.getElementsByTagName(
