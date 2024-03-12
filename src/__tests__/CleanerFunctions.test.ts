@@ -5,7 +5,8 @@ import { it, describe, expect, vi, beforeEach } from 'vitest'
 
 import {
   removeAllChildNodes,
-  cleanAllDynamicContent
+  cleanAllDynamicContent,
+  cleanAllAfterSolDayInput
 } from '../Utility/cleanerFunctions'
 import { Window } from 'happy-dom'
 
@@ -47,14 +48,14 @@ describe('removeAllChildNodes()', () => {
 
 describe('cleanAllDynamicContent()', () => {
   it('Should be able to clean the photo gallery div', () => {
-    const photoDiv: HTMLDivElement = document.querySelector(
+    const photoDiv = document.querySelector(
       '#photo-gallery'
     ) as unknown as HTMLDivElement
     cleanAllDynamicContent()
     expect(photoDiv.childNodes.length).toBe(0)
   })
   it('Should be able to clean the photo pagination div', () => {
-    const pagesDiv: HTMLDivElement = document.querySelector(
+    const pagesDiv = document.querySelector(
       '#pages'
     ) as unknown as HTMLDivElement
     cleanAllDynamicContent()
@@ -67,5 +68,34 @@ describe('cleanAllDynamicContent()', () => {
     )! as unknown as HTMLParagraphElement
 
     expect(camInfo.innerHTML).toBe('')
+  })
+})
+
+describe('cleanAllAfterSolDayInput()', () => {
+  it('Should clean cameras list', () => {
+    cleanAllAfterSolDayInput()
+    const camerasList =
+    document.querySelector('#camera-selectors') as unknown as HTMLDivElement
+
+    expect(camerasList.childNodes.length).toBe(0)
+  })
+
+  it('Should set camInfo innerHTML to an empty string', () => {
+    cleanAllAfterSolDayInput()
+    const camInfo = document.querySelector('#cameras-info') as unknown as HTMLParagraphElement
+
+    expect(camInfo.innerHTML).toBe('')
+  })
+
+  it('Should clean the photo gallery div', () => {
+    cleanAllAfterSolDayInput()
+    const photoDiv = document.querySelector('#photo-gallery') as unknown as HTMLDivElement
+    expect(photoDiv.childNodes.length).toBe(0)
+  })
+
+  it('Should clean the pagination div', () => {
+    cleanAllAfterSolDayInput()
+    const pagesDiv = document.querySelector('#pages') as unknown as HTMLDivElement
+    expect(pagesDiv.childNodes.length).toBe(0)
   })
 })
