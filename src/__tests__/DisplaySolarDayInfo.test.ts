@@ -21,7 +21,6 @@ let photoArr: PhotoManifest[] = [
     cameras: ['cam1']
   }
 ]
-const roverName = 'curiosity'
 let selectedSolarDay = '1'
 
 // Mock of the functions

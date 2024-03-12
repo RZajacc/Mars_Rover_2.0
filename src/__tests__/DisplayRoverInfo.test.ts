@@ -17,12 +17,6 @@ const window = new Window()
 const document = window.document
 vi.stubGlobal('document', document)
 
-// Mock the cleaning function to make sure its called
-const cleanAllDynamicContentMock = vi.fn()
-
-// Since both functions depend on each other I need to break this dependency by mock
-vi.mock('../Utility/ChooseRover.ts')
-
 beforeEach(() => {
   document.body.innerHTML = ''
   document.write(htmlDocumentContent)
@@ -55,7 +49,7 @@ beforeEach(() => {
 
   it('It should call the function cleaning all dynamically generated content at first', () => {
     // Check if cleanContent is being called
-    expect(cleanAllDynamicContentMock).toHaveBeenCalledOnce()
+    expect(removeAllChildNodesMock).toHaveBeenCalledOnce()
   })
 
   it('Should create a paragraph element containg rover desription', () => {
@@ -166,5 +160,5 @@ beforeEach(() => {
     solDayInputField.dispatchEvent(changeEvent)
 
     // Expect failure div to be still hidden
-    expect(failureDiv.getAttribute('hidden')).toBeNull()
+    expect(failureDiv.getAttribute('hidden')).toBe('')
   })
