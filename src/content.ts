@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { displayGallery } from './Utility/displayGallery'
 import { paginationFixedPages } from './Utility/paginationFixedPages'
-import { paginationUncertainPAmount } from './Utility/paginationUncertainPCount'
+import { paginationUncertainPCount } from './Utility/paginationUncertainPCount'
 import type {
   PhotoManifest,
   fetchBasicType,
@@ -47,6 +47,17 @@ export interface utilFuncs {
     utils: utilFuncs
   ) => void
   displayGallery: (data: responseRover, cleanAllDynamicContent: () => void) => void
+  paginationFixedPages: (pagesCount: string,
+    roverName: string,
+    selectedSolarDay: string,
+    page: string,
+    utils: utilFuncs) => void
+  paginationUncertainPCount: (data: responseRover,
+    roverName: string,
+    selectedSolarDay: string,
+    camName: string,
+    page: string,
+    utils: utilFuncs) => void
 }
 
 export const chooseRover = (utils: utilFuncs): void => {
@@ -88,7 +99,9 @@ chooseRover({
   camSelectors,
   fetchBasic,
   fetchExpanded,
-  displayGallery
+  displayGallery,
+  paginationFixedPages,
+  paginationUncertainPCount
 })
 
 export const displayRoverInfoSection = (
@@ -221,7 +234,7 @@ export function showAllPhotos(
   utils.displayGallery(data, cleanAllDynamicContent)
 
   // *Display pagination for fixed and known amount of pages
-  paginationFixedPages(pagesCount, roverName, selectedSolarDay, page, utils)
+  utils.paginationFixedPages(pagesCount, roverName, selectedSolarDay, page, utils)
 }
 
 /**
@@ -247,7 +260,7 @@ export function showSelectedCamPhotos(
   utils.displayGallery(data, cleanAllDynamicContent)
 
   // * Display pagination for uncertain amount of pages
-  paginationUncertainPAmount(
+  utils.paginationUncertainPCount(
     data,
     roverName,
     selectedSolarDay,

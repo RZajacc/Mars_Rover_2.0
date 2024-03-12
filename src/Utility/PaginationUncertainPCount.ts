@@ -20,7 +20,7 @@ import { showSelectedCamPhotos } from '../content'
  * @param {string} page Current page fethed from the API (page is a attribute
  * for a fetch)
  */
-export function paginationUncertainPAmount(
+export function paginationUncertainPCount(
   data: responseRover,
   roverName: string,
   selectedSolarDay: string,
