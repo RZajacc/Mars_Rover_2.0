@@ -3,7 +3,7 @@ import path from 'path'
 
 import { Window } from 'happy-dom'
 import { beforeEach, expect, it, vi } from 'vitest'
-import { displayCameraSelectors } from '../Utility/camSelectors'
+import { camSelectors } from '../Utility/camSelectors'
 
 // Get a path to html document and get it's content to string
 const htmlDocPath = path.join(process.cwd(), 'public', 'content.html')
@@ -18,26 +18,16 @@ vi.stubGlobal('document', document)
 
 // Mock the data and functions called later
 const camerasUsed = ['ENTRY']
-const roverName = 'curiosity'
-const selectedSolarDay = '1'
-const pagesCount = '1'
 const removeAllChildNodesMock = vi.fn()
-const fetchBasicMock = vi.fn()
-const fetchExpandedMock = vi.fn()
 
 // Before each test clear html doc and mocks and call the function
 beforeEach(() => {
   document.body.innerHTML = ''
   document.write(htmlDocumentContent)
   vi.clearAllMocks()
-  displayCameraSelectors(
+  camSelectors(
     camerasUsed,
-    roverName,
-    selectedSolarDay,
-    pagesCount,
     removeAllChildNodesMock,
-    fetchBasicMock,
-    fetchExpandedMock
   )
 })
 
@@ -71,30 +61,21 @@ it('Should contain two display options. All cameras and one provided in sample d
   expect(firstChild.options[1].value).toBe(camerasUsed[0])
 })
 
-it('Should call basic fetch function if select option equals All, and fetchExpanded otherwise', () => {
+it('Should return a string with a value of camSelect id value', () => {
+  
   const camerasList = document.querySelector(
     '#camera-selectors'
   ) as unknown as HTMLDivElement
 
-  const camSel = camerasList.firstChild as HTMLSelectElement
+  // First child is a select element with cameras as options
+  const firstChild = camerasList.firstChild as HTMLSelectElement
+  // Get Id value assigned to this element
+  const idElement = firstChild.getAttribute('id')
+  // Get Id returned by the function
+  const idReturned = camSelectors(camerasUsed, removeAllChildNodesMock)
 
-  //   All should be a default value for select so it will be called initially
-  expect(fetchBasicMock).toBeCalledTimes(1)
-
-  //   Select another option in select field
-  Array.from(camSel.options).forEach((option) => {
-    if (option.value === camerasUsed[0]) {
-      option.selected = true
-    }
-  })
-
-  //   Prepare event with proper type and fire it to trigger function
-  const changeEvent = new window.Event('change') as unknown as Event
-  camSel.dispatchEvent(changeEvent)
-
-  //   Expect that the value is actually changed from All
-  expect(camSel.value).toBe(camerasUsed[0])
-
-  //   Expect that fetchExpanded is called in this case
-  expect(fetchExpandedMock).toBeCalledTimes(1)
+  // Test both conditions
+  expect(idReturned).toBeTypeOf('string')
+  expect(idElement).toBe(idReturned)
 })
+
