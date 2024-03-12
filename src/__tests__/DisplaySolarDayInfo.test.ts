@@ -26,19 +26,27 @@ let selectedSolarDay = '1'
 
 // Mock of the functions
 const removeAllChildNodesMock = vi.fn()
-const displayCameraSelectorsMock = vi.fn()
-const 
+
 
 beforeEach(() => {
   document.body.innerHTML = ''
   document.write(htmlDocumentContent)
   displaySolDayInfo(
     photoArr,
-    roverName,
     selectedSolarDay,
     removeAllChildNodesMock
   )
   vi.clearAllMocks()
+})
+
+it('Should should call cleaning at first', () => {
+  displaySolDayInfo(
+    photoArr,
+    selectedSolarDay,
+    removeAllChildNodesMock
+  )
+
+  expect(removeAllChildNodesMock).toBeCalledTimes(1)
 })
 
 it('Should generate a paragraph as a child of solar day description div', () => {
@@ -61,32 +69,4 @@ it('Should should contain selected solar day as a part of displayed content', ()
   const firstChild = solDayDescDiv.firstChild as HTMLElement
 
   expect(firstChild.innerHTML).toContain(selectedSolarDay)
-})
-
-it('Should call displayCameraSelector() if total images amount is not equal 0, and call cleaningFuction once', () => {
-  displaySolDayInfo(
-    photoArr,
-    roverName,
-    selectedSolarDay,
-    removeAllChildNodesMock
-  )
-  //   Cleaning function is called once if photo array is empty
-  expect(removeAllChildNodesMock).toBeCalledTimes(1)
-
-  // Display camera selectors should be also called in this case
-  expect(displayCameraSelectorsMock).toBeCalledTimes(1)
-})
-
-it('Should should call cleaning function 4 times (all relevant divs + initial clean) when images are not present', () => {
-  // Assign empty array to trigger other behaviour in the function
-  photoArr = []
-
-  displaySolDayInfo(
-    photoArr,
-    roverName,
-    selectedSolarDay,
-    removeAllChildNodesMock
-  )
-
-  expect(removeAllChildNodesMock).toBeCalledTimes(4)
 })

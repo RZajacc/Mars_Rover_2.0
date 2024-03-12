@@ -33,7 +33,7 @@ it('It should call the function cleaning all dynamically generated content at fi
     // Check if cleanContent is being called
     expect(cleanAllDynamicContentMock).toHaveBeenCalledOnce()
   })
-  it('Should have a child of p element after being called', () => {
+  it('Should contain a child of p element after being called', () => {
     // Prepare the message to pass to the function
     const messageToDisplay = 'test'
 
@@ -53,7 +53,7 @@ it('It should call the function cleaning all dynamically generated content at fi
     // Expect that this element is actually of paragraph type
     expect(firstChild.tagName).toBe('P')
   })
-  it('Should contain a text provided as an argument', () => {
+  it('Should contain a text provided as an argument to it', () => {
     // Prepare the message to pass to the function
     const messageToDisplay = 'test'
 
