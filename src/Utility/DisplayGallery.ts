@@ -17,6 +17,7 @@ export function displayGallery(data: responseRover, removeAllChildNodes: (parent
 
   // *Create a div containing cards group
   const cardGroup = document.createElement('div')
+  cardGroup.setAttribute('id', 'galleryCards')
   cardGroup.setAttribute('class', 'row row-cols-1 row-cols-md-2 g-3')
   photoDiv.appendChild(cardGroup)
 

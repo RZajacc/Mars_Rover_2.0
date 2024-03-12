@@ -5,12 +5,10 @@ import { Window } from 'happy-dom'
 import { vi, beforeEach, describe, it, expect } from 'vitest'
 
 import {
-  displayEmptyRoverErr,
   displayRoverInfo
 } from '../Utility/displayRoverInfo'
 import { missionManifest } from '../types/fetchedTypes'
-import { chooseRover } from '../content'
-import { complete } from 'happy-dom/lib/PropertySymbol'
+
 
 const htmlDocPath = path.join(process.cwd(), 'public', 'content.html')
 const htmlDocumentContent = fs.readFileSync(htmlDocPath).toString()
@@ -31,74 +29,6 @@ beforeEach(() => {
   vi.clearAllMocks()
 })
 
-describe('displayEmptyRoverErr', () => {
-  it('It should call the function cleaning all dynamically generated content at first', () => {
-    // Prepare the message to pass to the function
-    const messageToDisplay = 'test'
-
-    // Call the function
-    displayEmptyRoverErr(messageToDisplay, cleanAllDynamicContentMock)
-
-    // Check if cleanContent is being called
-    expect(cleanAllDynamicContentMock).toHaveBeenCalledOnce()
-  })
-  it('Should have a child of p element after being called', () => {
-    // Prepare the message to pass to the function
-    const messageToDisplay = 'test'
-
-    // Get a HTML Element containing error
-    const roverInfo = document.querySelector(
-      '#rover-info'
-    )! as unknown as HTMLDivElement
-    // Call the function
-    displayEmptyRoverErr(messageToDisplay, cleanAllDynamicContentMock)
-
-    // Expect rover info to have only 1 child
-    expect(roverInfo.childNodes.length).toBe(1)
-
-    // Get this child element
-    const firstChild = roverInfo.firstChild as HTMLElement
-
-    // Expect that this element is actually of paragraph type
-    expect(firstChild.tagName).toBe('P')
-  })
-  it('Should contain a text provided as an argument', () => {
-    // Prepare the message to pass to the function
-    const messageToDisplay = 'test'
-
-    // Get a HTML Element containing error
-    const roverInfo = document.querySelector(
-      '#rover-info'
-    )! as unknown as HTMLDivElement
-    // Call the function
-    displayEmptyRoverErr(messageToDisplay, cleanAllDynamicContentMock)
-
-    // Get this child element
-    const firstChild = roverInfo.firstChild as HTMLElement
-
-    expect(firstChild.innerHTML).toBe(messageToDisplay)
-  })
-  it('Should display text in red and aligned to center', () => {
-    // Prepare the message to pass to the function
-    const messageToDisplay = 'test'
-
-    // Get a HTML Element containing error
-    const roverInfo = document.querySelector(
-      '#rover-info'
-    )! as unknown as HTMLDivElement
-    // Call the function
-    displayEmptyRoverErr(messageToDisplay, cleanAllDynamicContentMock)
-
-    // Get this child element
-    const firstChild = roverInfo.firstChild as HTMLElement
-
-    // CSS class to to be tested
-    const classes = 'text-align:center; color:red'
-    expect(firstChild.getAttribute('style')).toBe(classes)
-  })
-})
-
-describe('displayRoverInfo()', () => {
   // Data and function mocks necessary only for this function
   const data: missionManifest = {
     landing_date: '12',
@@ -113,21 +43,13 @@ describe('displayRoverInfo()', () => {
   const roverName = 'Curiosity'
   // Mock of remaning functions specific only for this method
   const removeAllChildNodesMock = vi.fn()
-  const fetchBasicMock = vi.fn()
-  const fetchExpandedMock = vi.fn()
-  const displaySolDayInfoMock = vi.fn()
 
   // Before each test in this suite mock the helping functions and call main one
   beforeEach(() => {
     // Call the function
     displayRoverInfo(
       data,
-      roverName,
-      cleanAllDynamicContentMock,
       removeAllChildNodesMock,
-      fetchBasicMock,
-      fetchExpandedMock,
-      displaySolDayInfoMock
     )
   })
 
@@ -174,12 +96,7 @@ describe('displayRoverInfo()', () => {
     // Call the function one more time
     displayRoverInfo(
       data,
-      roverName,
-      cleanAllDynamicContentMock,
       removeAllChildNodesMock,
-      fetchBasicMock,
-      fetchExpandedMock,
-      displaySolDayInfoMock
     )
 
     // Expect the value to be red now
@@ -212,7 +129,7 @@ describe('displayRoverInfo()', () => {
     // Expect it to have hidden attribute
     expect(failureDiv.getAttribute('hidden')).toBe('')
   })
-  it('Should keep failure div hidden and call displaySolDayInfo() when input is correct', () => {
+  it('Should keep failure div hidden', () => {
     const failureDiv = document.querySelector(
       '.invalid-feedback'
     ) as unknown as HTMLDivElement
@@ -230,9 +147,6 @@ describe('displayRoverInfo()', () => {
 
     // Expect failure div to be still hidden
     expect(failureDiv.getAttribute('hidden')).toBe('')
-
-    // Expect displaySolDayInfo() to be called
-    expect(displaySolDayInfoMock).toBeCalled()
   })
 
   it('Should not have keep hidden attribute for failure div in case input was out of rage', () => {
@@ -254,4 +168,3 @@ describe('displayRoverInfo()', () => {
     // Expect failure div to be still hidden
     expect(failureDiv.getAttribute('hidden')).toBeNull()
   })
-})
