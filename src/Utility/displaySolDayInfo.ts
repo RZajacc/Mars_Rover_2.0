@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import type { PhotoManifest } from '../types/fetchedTypes'
+import type { PhotoManifest } from '../types/dataTypes'
 /**
  * Displays basic information referring to a solar day selected by the user,
  * like how many pictures were taken on that day in total. If there were

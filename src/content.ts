@@ -9,7 +9,7 @@ import type {
   missionManifest,
   responseManifest,
   responseRover
-} from './types/fetchedTypes.js'
+} from './types/dataTypes.js'
 import { displayEmptyRoverErr } from './Utility/displayEmptyRoverErr'
 import {
   cleanAllDynamicContent,

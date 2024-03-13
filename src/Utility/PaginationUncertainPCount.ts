@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import type { responseRover } from '../types/fetchedTypes'
+import type { responseRover } from '../types/dataTypes'
 import type { utilFuncs } from '../content'
 import { showSelectedCamPhotos } from '../content'
 

@@ -7,7 +7,7 @@ import { vi, beforeEach, describe, it, expect } from 'vitest'
 import {
   displayRoverInfo
 } from '../Utility/displayRoverInfo'
-import { missionManifest } from '../types/fetchedTypes'
+import { missionManifest } from '../types/dataTypes'
 
 
 const htmlDocPath = path.join(process.cwd(), 'public', 'content.html')

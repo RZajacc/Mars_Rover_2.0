@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 // import { displaySolDayInfo } from './DisplaySolarDayInfo'
-import type { missionManifest } from '../types/fetchedTypes'
+import type { missionManifest } from '../types/dataTypes'
 
 /**
  * If the rover name was selected by a user on the page then data will be fetched

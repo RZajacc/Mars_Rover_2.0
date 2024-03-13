@@ -3,7 +3,7 @@ import type {
   fetchBasicType,
   fetchExpandedType,
   responseRover
-} from '../types/fetchedTypes'
+} from '../types/dataTypes'
 
 /**
  * Requests a data from NASA Api for a selected rover, on a selected solar day. API

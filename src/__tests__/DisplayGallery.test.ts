@@ -4,7 +4,7 @@ import path from 'path'
 import { Window } from 'happy-dom'
 import { beforeEach, expect, it, test, vi } from 'vitest'
 import { displayGallery } from '../Utility/displayGallery'
-import { responseRover } from '../types/fetchedTypes'
+import { responseRover } from '../types/dataTypes'
 
 const htmlDocPath = path.join(process.cwd(), 'public', 'content.html')
 const htmlDocumentContent = fs.readFileSync(htmlDocPath).toString()
