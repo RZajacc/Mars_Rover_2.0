@@ -1,9 +1,9 @@
-import type { utilFuncs } from '../content'
+import type { responseRover } from '../types/dataTypes'
 import type {
   fetchBasicType,
   fetchExpandedType,
-  responseRover
-} from '../types/dataTypes'
+  utilFuncs
+} from '../types/utilTypes'
 
 /**
  * Requests a data from NASA Api for a selected rover, on a selected solar day. API

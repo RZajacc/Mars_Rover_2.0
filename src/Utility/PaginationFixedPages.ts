@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import type { utilFuncs } from '../content'
 import { showAllPhotos } from '../content'
+import type { utilFuncs } from '../types/utilTypes'
 /**
  * Displays bootrap pagination on the bottom of the page. This option is used
  * when user does not select any camera and browse all the photos. Only then is

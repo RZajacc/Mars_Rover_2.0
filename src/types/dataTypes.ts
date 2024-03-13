@@ -1,5 +1,3 @@
-import type { utilFuncs } from '../content'
-
 // * Interface from data fetched from mission manifest
 export interface responseManifest {
   photo_manifest: missionManifest
@@ -59,32 +57,4 @@ export interface Rover {
 export interface RoverCam {
   full_name: string
   name: string
-}
-
-export interface fetchBasicType {
-  roverName: string
-  selectedSolarDay: string
-  pagesCount: string
-  showAllPhotos: (
-    data: responseRover,
-    roverName: string,
-    selectedSolarDay: string,
-    pagesCount: string,
-    page: string,
-    utils: utilFuncs
-  ) => void
-}
-
-export interface fetchExpandedType {
-  roverName: string
-  selectedSolarDay: string
-  camName: string
-  showSelectedCamPhotos: (
-    data: responseRover,
-    roverName: string,
-    selectedSolarDay: string,
-    camName: string,
-    page: string,
-    utils: utilFuncs
-  ) => void
 }

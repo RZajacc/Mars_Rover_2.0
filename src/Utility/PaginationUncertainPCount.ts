@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { responseRover } from '../types/dataTypes'
-import type { utilFuncs } from '../content'
 import { showSelectedCamPhotos } from '../content'
+import type { utilFuncs } from '../types/utilTypes'
 
 /**
  * Displays bootrap pagination on the bottom of the page. This option is used

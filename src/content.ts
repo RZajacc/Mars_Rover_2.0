@@ -4,8 +4,6 @@ import { paginationFixedPages } from './Utility/paginationFixedPages'
 import { paginationUncertainPCount } from './Utility/paginationUncertainPCount'
 import type {
   PhotoManifest,
-  fetchBasicType,
-  fetchExpandedType,
   missionManifest,
   responseManifest,
   responseRover
@@ -20,6 +18,11 @@ import { fetchBasic, fetchExpanded } from './Utility/fetchData'
 import { displayRoverInfo } from './Utility/displayRoverInfo'
 import { displaySolDayInfo } from './Utility/displaySolDayInfo'
 import { camSelectors } from './Utility/camSelectors'
+import type {
+  fetchBasicType,
+  fetchExpandedType,
+  utilFuncs
+} from './types/utilTypes'
 // ? ----------------------------------------------------------------------
 // ? SELECTING ROVER - Serves as a root call for everytning that comes next
 // ? ----------------------------------------------------------------------
@@ -31,34 +34,6 @@ import { camSelectors } from './Utility/camSelectors'
  * describing selected rover's mission and pass it to a function that will display it
  * on the page
  */
-export interface utilFuncs {
-  displayEmptyRoverErr: (
-    message: string,
-    cleanAllDynamicContent: () => void
-  ) => void
-  cleanAllDynamicContent: () => void
-  removeAllChildNodes: (parent: HTMLElement) => void
-  cleanAllAfterSolDayInput: () => void
-  camSelectors: (camerasUsed: string[], removeAllChildNodes: (parent: HTMLElement) => void) => string
-  fetchBasic: (args: fetchBasicType, page: string, utils: utilFuncs) => void
-  fetchExpanded: (
-    args: fetchExpandedType,
-    page: string,
-    utils: utilFuncs
-  ) => void
-  displayGallery: (data: responseRover, cleanAllDynamicContent: () => void) => void
-  paginationFixedPages: (pagesCount: string,
-    roverName: string,
-    selectedSolarDay: string,
-    page: string,
-    utils: utilFuncs) => void
-  paginationUncertainPCount: (data: responseRover,
-    roverName: string,
-    selectedSolarDay: string,
-    camName: string,
-    page: string,
-    utils: utilFuncs) => void
-}
 
 export const chooseRover = (utils: utilFuncs): void => {
   //* Query select field from document
@@ -177,10 +152,7 @@ export const displayCameraSelectorsSection = (
   pagesCount: string,
   utils: utilFuncs
 ): void => {
-  const camSelectID = utils.camSelectors(
-    camerasUsed,
-    utils.removeAllChildNodes
-  )
+  const camSelectID = utils.camSelectors(camerasUsed, utils.removeAllChildNodes)
 
   const camSelect = document.getElementById(camSelectID) as HTMLSelectElement
 
@@ -234,7 +206,13 @@ export function showAllPhotos(
   utils.displayGallery(data, cleanAllDynamicContent)
 
   // *Display pagination for fixed and known amount of pages
-  utils.paginationFixedPages(pagesCount, roverName, selectedSolarDay, page, utils)
+  utils.paginationFixedPages(
+    pagesCount,
+    roverName,
+    selectedSolarDay,
+    page,
+    utils
+  )
 }
 
 /**
