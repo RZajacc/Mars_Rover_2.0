@@ -8,7 +8,10 @@ import type { responseRover } from '../types/dataTypes'
  * parameters of a card group.
  * @param {responseRover} data Data fetched from the API
  */
-export function displayGallery(data: responseRover, removeAllChildNodes: (parent: HTMLElement) => void): void {
+export function displayGallery(
+  data: responseRover,
+  removeAllChildNodes: (parent: HTMLElement) => void
+): void {
   // * Get the gallery div and clean it from existing content
   const photoDiv = document.getElementById('photo-gallery') as HTMLDivElement
   removeAllChildNodes(photoDiv)

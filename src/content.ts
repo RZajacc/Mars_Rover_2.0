@@ -203,7 +203,7 @@ export function showAllPhotos(
   utils: utilFuncs
 ): void {
   // *Displaying photos is called from few places
-  utils.displayGallery(data, cleanAllDynamicContent)
+  utils.displayGallery(data, utils.removeAllChildNodes)
 
   // *Display pagination for fixed and known amount of pages
   utils.paginationFixedPages(
@@ -235,7 +235,7 @@ export function showSelectedCamPhotos(
   utils: utilFuncs
 ): void {
   // *Gallery is displayed from more places
-  utils.displayGallery(data, cleanAllDynamicContent)
+  utils.displayGallery(data, utils.removeAllChildNodes)
 
   // * Display pagination for uncertain amount of pages
   utils.paginationUncertainPCount(

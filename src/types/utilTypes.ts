@@ -48,7 +48,7 @@ export interface utilFuncs {
   ) => void
   displayGallery: (
     data: responseRover,
-    cleanAllDynamicContent: () => void
+    removeAllChildNodes: (parent: HTMLElement) => void
   ) => void
   paginationFixedPages: (
     pagesCount: string,
