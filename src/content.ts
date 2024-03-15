@@ -167,7 +167,7 @@ export const displayCameraSelectorsSection = async (
     'ALL',
     '1'
   )
-  imageDisplaySection(
+  await imageDisplaySection(
     imagesData,
     roverName,
     selectedSolarDay,
@@ -186,7 +186,7 @@ export const displayCameraSelectorsSection = async (
       camSelect.value,
       '1'
     )
-    imageDisplaySection(
+    await imageDisplaySection(
       imagesData,
       roverName,
       selectedSolarDay,
@@ -199,9 +199,9 @@ export const displayCameraSelectorsSection = async (
 }
 
 // ? ----------------------------------------------
-// ? DISPLAYING IMAGES depending on selected option
+// ? DISPLAYING IMAGES and a suitable pagination
 // ? ----------------------------------------------
-export const imageDisplaySection = (
+export const imageDisplaySection = async (
   data: responseRover,
   roverName: string,
   selectedSolarDay: string,
@@ -209,7 +209,7 @@ export const imageDisplaySection = (
   camName: string,
   page: string,
   utils: utilFuncs
-): void => {
+): Promise<void> => {
   // Displaying photos is called from few places
   utils.displayGallery(data, utils.removeAllChildNodes)
 
@@ -223,11 +223,13 @@ export const imageDisplaySection = (
       utils
     )
   } else {
-    utils.paginationUncertainPCount(
-      data,
+    const imagesAmount: number = data.photos.length
+    await utils.paginationUncertainPCount(
+      imagesAmount,
       roverName,
       selectedSolarDay,
       camName,
+      pagesCount,
       page,
       utils
     )

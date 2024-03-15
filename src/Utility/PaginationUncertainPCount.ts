@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import type { responseRover } from '../types/dataTypes'
-import { showSelectedCamPhotos } from '../content'
+import { imageDisplaySection } from '../content'
 import type { utilFuncs } from '../types/utilTypes'
 
 /**
@@ -20,29 +19,40 @@ import type { utilFuncs } from '../types/utilTypes'
  * @param {string} page Current page fethed from the API (page is a attribute
  * for a fetch)
  */
-export function paginationUncertainPCount(
-  data: responseRover,
+export async function paginationUncertainPCount(
+  imagesAmount: number,
   roverName: string,
   selectedSolarDay: string,
   camName: string,
+  pagesCount: string,
   page: string,
   utils: utilFuncs
-): void {
+): Promise<void> {
   // * Get the gallery and pagination div
   const photoDiv = document.getElementById('photo-gallery') as HTMLDivElement
   // * If requested page is empty then move to last working one (Pagination)
-  if (data.photos.length === 0) {
+  if (imagesAmount === 0) {
     const targetPage = +page - 1
     utils.removeAllChildNodes(photoDiv)
-    utils.fetchExpanded(
-      { roverName, selectedSolarDay, camName, showSelectedCamPhotos },
+    const imagesData = await utils.fetchImages(
+      roverName,
+      selectedSolarDay,
+      camName,
+      targetPage.toString()
+    )
+    await imageDisplaySection(
+      imagesData,
+      roverName,
+      selectedSolarDay,
+      pagesCount,
+      camName,
       targetPage.toString(),
       utils
     )
   }
 
   // * PAGINATION LOGIC FOR EACH POSSIBLE SCENARIO
-  if (data.photos.length === 25 || +page !== 1) {
+  if (imagesAmount === 25 || +page !== 1) {
     // ? Create navigation and Previous element tab
     const pagesDiv: HTMLDivElement = document.querySelector('#pages')!
     const paginationNav = document.createElement('nav')
@@ -62,11 +72,22 @@ export function paginationUncertainPCount(
     firstLi.appendChild(firstHref)
     paginationUl.appendChild(firstLi)
 
-    firstHref.addEventListener('click', () => {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    firstHref.addEventListener('click', async () => {
       const targetPage = '1'
       utils.removeAllChildNodes(photoDiv)
-      utils.fetchExpanded(
-        { roverName, selectedSolarDay, camName, showSelectedCamPhotos },
+      const imagesData = await utils.fetchImages(
+        roverName,
+        selectedSolarDay,
+        camName,
+        targetPage.toString()
+      )
+      await imageDisplaySection(
+        imagesData,
+        roverName,
+        selectedSolarDay,
+        pagesCount,
+        camName,
         targetPage,
         utils
       )
@@ -82,12 +103,23 @@ export function paginationUncertainPCount(
     previousLi.appendChild(previousHref)
     paginationUl.appendChild(previousLi)
 
-    previousHref.addEventListener('click', () => {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    previousHref.addEventListener('click', async () => {
       if (+page > 1) {
         const targetPage = +page - 1
         utils.removeAllChildNodes(photoDiv)
-        utils.fetchExpanded(
-          { roverName, selectedSolarDay, camName, showSelectedCamPhotos },
+        const imagesData = await utils.fetchImages(
+          roverName,
+          selectedSolarDay,
+          camName,
+          targetPage.toString()
+        )
+        await imageDisplaySection(
+          imagesData,
+          roverName,
+          selectedSolarDay,
+          pagesCount,
+          camName,
           targetPage.toString(),
           utils
         )
@@ -114,11 +146,22 @@ export function paginationUncertainPCount(
     nextLi.appendChild(nextHref)
     paginationUl.appendChild(nextLi)
 
-    nextHref.addEventListener('click', () => {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    nextHref.addEventListener('click', async () => {
       const targetPage = +page + 1
       utils.removeAllChildNodes(photoDiv)
-      utils.fetchExpanded(
-        { roverName, selectedSolarDay, camName, showSelectedCamPhotos },
+      const imagesData = await utils.fetchImages(
+        roverName,
+        selectedSolarDay,
+        camName,
+        targetPage.toString()
+      )
+      await imageDisplaySection(
+        imagesData,
+        roverName,
+        selectedSolarDay,
+        pagesCount,
+        camName,
         targetPage.toString(),
         utils
       )

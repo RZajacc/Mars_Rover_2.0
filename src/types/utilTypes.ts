@@ -30,11 +30,12 @@ export interface utilFuncs {
     utils: utilFuncs
   ) => void
   paginationUncertainPCount: (
-    data: responseRover,
+    imagesAmount: number,
     roverName: string,
     selectedSolarDay: string,
     camName: string,
+    pagesCount: string,
     page: string,
     utils: utilFuncs
-  ) => void
+  ) => Promise<void>
 }
