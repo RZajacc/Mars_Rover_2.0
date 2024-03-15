@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { showAllPhotos } from '../content'
+import { imageDisplaySection } from '../content'
 import type { utilFuncs } from '../types/utilTypes'
 /**
  * Displays bootrap pagination on the bottom of the page. This option is used
@@ -19,6 +19,7 @@ export function paginationFixedPages(
   pagesCount: string,
   roverName: string,
   selectedSolarDay: string,
+  camName: string,
   page: string,
   utils: utilFuncs
 ): void {
@@ -46,16 +47,22 @@ export function paginationFixedPages(
     firstLi.appendChild(firstHref)
     paginationUl.appendChild(firstLi)
 
-    firstHref.addEventListener('click', () => {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    firstHref.addEventListener('click', async () => {
       const targetPage = '1'
       utils.removeAllChildNodes(photoDiv)
-      utils.fetchBasic(
-        {
-          roverName,
-          pagesCount,
-          selectedSolarDay,
-          showAllPhotos
-        },
+      const imagesData = await utils.fetchImages(
+        roverName,
+        selectedSolarDay,
+        camName,
+        targetPage
+      )
+      await imageDisplaySection(
+        imagesData,
+        roverName,
+        selectedSolarDay,
+        pagesCount,
+        camName,
         targetPage,
         utils
       )
@@ -77,16 +84,22 @@ export function paginationFixedPages(
         paginationHref.textContent = i.toString()
         paginationLi.appendChild(paginationHref)
         paginationUl.appendChild(paginationLi)
-        paginationHref.addEventListener('click', () => {
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        paginationHref.addEventListener('click', async () => {
           const targetPage = paginationHref.textContent!
           utils.removeAllChildNodes(photoDiv)
-          utils.fetchBasic(
-            {
-              roverName,
-              selectedSolarDay,
-              pagesCount,
-              showAllPhotos
-            },
+          const imagesData = await utils.fetchImages(
+            roverName,
+            selectedSolarDay,
+            camName,
+            targetPage
+          )
+          await imageDisplaySection(
+            imagesData,
+            roverName,
+            selectedSolarDay,
+            pagesCount,
+            camName,
             targetPage,
             utils
           )
@@ -107,16 +120,22 @@ export function paginationFixedPages(
         paginationHref.textContent = i.toString()
         paginationLi.appendChild(paginationHref)
         paginationUl.appendChild(paginationLi)
-        paginationHref.addEventListener('click', () => {
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        paginationHref.addEventListener('click', async () => {
           const targetPage = paginationHref.textContent!
           utils.removeAllChildNodes(photoDiv)
-          utils.fetchBasic(
-            {
-              roverName,
-              selectedSolarDay,
-              pagesCount,
-              showAllPhotos
-            },
+          const imagesData = await utils.fetchImages(
+            roverName,
+            selectedSolarDay,
+            camName,
+            targetPage
+          )
+          await imageDisplaySection(
+            imagesData,
+            roverName,
+            selectedSolarDay,
+            pagesCount,
+            camName,
             targetPage,
             utils
           )
@@ -137,16 +156,22 @@ export function paginationFixedPages(
         paginationHref.textContent = i.toString()
         paginationLi.appendChild(paginationHref)
         paginationUl.appendChild(paginationLi)
-        paginationHref.addEventListener('click', () => {
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        paginationHref.addEventListener('click', async () => {
           const targetPage = paginationHref.textContent!
           utils.removeAllChildNodes(photoDiv)
-          utils.fetchBasic(
-            {
-              roverName,
-              selectedSolarDay,
-              pagesCount,
-              showAllPhotos
-            },
+          const imagesData = await utils.fetchImages(
+            roverName,
+            selectedSolarDay,
+            camName,
+            targetPage
+          )
+          await imageDisplaySection(
+            imagesData,
+            roverName,
+            selectedSolarDay,
+            pagesCount,
+            camName,
             targetPage,
             utils
           )
@@ -167,16 +192,22 @@ export function paginationFixedPages(
         paginationHref.textContent = i.toString()
         paginationLi.appendChild(paginationHref)
         paginationUl.appendChild(paginationLi)
-        paginationHref.addEventListener('click', () => {
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        paginationHref.addEventListener('click', async () => {
           const targetPage = paginationHref.textContent!
           utils.removeAllChildNodes(photoDiv)
-          utils.fetchBasic(
-            {
-              roverName,
-              selectedSolarDay,
-              pagesCount,
-              showAllPhotos
-            },
+          const imagesData = await utils.fetchImages(
+            roverName,
+            selectedSolarDay,
+            camName,
+            targetPage
+          )
+          await imageDisplaySection(
+            imagesData,
+            roverName,
+            selectedSolarDay,
+            pagesCount,
+            camName,
             targetPage,
             utils
           )
@@ -197,16 +228,22 @@ export function paginationFixedPages(
         paginationHref.textContent = i.toString()
         paginationLi.appendChild(paginationHref)
         paginationUl.appendChild(paginationLi)
-        paginationHref.addEventListener('click', () => {
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        paginationHref.addEventListener('click', async () => {
           const targetPage = paginationHref.textContent!
           utils.removeAllChildNodes(photoDiv)
-          utils.fetchBasic(
-            {
-              roverName,
-              selectedSolarDay,
-              pagesCount,
-              showAllPhotos
-            },
+          const imagesData = await utils.fetchImages(
+            roverName,
+            selectedSolarDay,
+            camName,
+            targetPage
+          )
+          await imageDisplaySection(
+            imagesData,
+            roverName,
+            selectedSolarDay,
+            pagesCount,
+            camName,
             targetPage,
             utils
           )
@@ -224,16 +261,22 @@ export function paginationFixedPages(
     lastLi.appendChild(lastHref)
     paginationUl.appendChild(lastLi)
 
-    lastHref.addEventListener('click', () => {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    lastHref.addEventListener('click', async () => {
       const targetPage = pagesCount
       utils.removeAllChildNodes(photoDiv)
-      utils.fetchBasic(
-        {
-          roverName,
-          selectedSolarDay,
-          pagesCount,
-          showAllPhotos
-        },
+      const imagesData = await utils.fetchImages(
+        roverName,
+        selectedSolarDay,
+        camName,
+        targetPage
+      )
+      await imageDisplaySection(
+        imagesData,
+        roverName,
+        selectedSolarDay,
+        pagesCount,
+        camName,
         targetPage,
         utils
       )

@@ -26,6 +26,7 @@ export interface utilFuncs {
     pagesCount: string,
     roverName: string,
     selectedSolarDay: string,
+    camName: string,
     page: string,
     utils: utilFuncs
   ) => void

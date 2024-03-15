@@ -219,6 +219,7 @@ export const imageDisplaySection = async (
       pagesCount,
       roverName,
       selectedSolarDay,
+      camName,
       page,
       utils
     )
