@@ -167,88 +167,69 @@ export const displayCameraSelectorsSection = async (
     'ALL',
     '1'
   )
-  showAllPhotos(imagesData, roverName, selectedSolarDay, pagesCount, '1', utils)
+  imageDisplaySection(
+    imagesData,
+    roverName,
+    selectedSolarDay,
+    pagesCount,
+    'ALL',
+    '1',
+    utils
+  )
 
   // Basic and expanded fetch differ only selected camera passed as attribute
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   camSelect.addEventListener('change', async () => {
-    if (camSelect.value === 'ALL') {
-      const imagesData = await utils.fetchImages(
-        roverName,
-        selectedSolarDay,
-        camSelect.value,
-        '1'
-      )
-      showAllPhotos(
-        imagesData,
-        roverName,
-        selectedSolarDay,
-        pagesCount,
-        '1',
-        utils
-      )
-    } else {
-      // Prepare arguments for fetch function
-      const imagesData = await utils.fetchImages(
-        roverName,
-        selectedSolarDay,
-        camSelect.value,
-        '1'
-      )
-      showSelectedCamPhotos(
-        imagesData,
-        roverName,
-        selectedSolarDay,
-        camSelect.value,
-        '1',
-        utils
-      )
-    }
+    const imagesData = await utils.fetchImages(
+      roverName,
+      selectedSolarDay,
+      camSelect.value,
+      '1'
+    )
+    imageDisplaySection(
+      imagesData,
+      roverName,
+      selectedSolarDay,
+      pagesCount,
+      camSelect.value,
+      '1',
+      utils
+    )
   })
 }
 
 // ? ----------------------------------------------
 // ? DISPLAYING IMAGES depending on selected option
 // ? ----------------------------------------------
-export function showAllPhotos(
+export const imageDisplaySection = (
   data: responseRover,
   roverName: string,
   selectedSolarDay: string,
   pagesCount: string,
-  page: string,
-  utils: utilFuncs
-): void {
-  // Displaying photos is called from few places
-  utils.displayGallery(data, utils.removeAllChildNodes)
-
-  // Display pagination for fixed and known amount of pages
-  utils.paginationFixedPages(
-    pagesCount,
-    roverName,
-    selectedSolarDay,
-    page,
-    utils
-  )
-}
-
-export function showSelectedCamPhotos(
-  data: responseRover,
-  roverName: string,
-  selectedSolarDay: string,
   camName: string,
   page: string,
   utils: utilFuncs
-): void {
-  // Gallery is displayed from more places
+): void => {
+  // Displaying photos is called from few places
   utils.displayGallery(data, utils.removeAllChildNodes)
 
-  // Display pagination for uncertain amount of pages
-  utils.paginationUncertainPCount(
-    data,
-    roverName,
-    selectedSolarDay,
-    camName,
-    page,
-    utils
-  )
+  // Determine which form of pagination to display
+  if (camName === 'ALL') {
+    utils.paginationFixedPages(
+      pagesCount,
+      roverName,
+      selectedSolarDay,
+      page,
+      utils
+    )
+  } else {
+    utils.paginationUncertainPCount(
+      data,
+      roverName,
+      selectedSolarDay,
+      camName,
+      page,
+      utils
+    )
+  }
 }
