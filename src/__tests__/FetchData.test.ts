@@ -1,6 +1,5 @@
 import { expect, it, vi } from 'vitest'
-import { fetchBasic } from '../Utility/fetchData'
-import { fetchBasicType, utilFuncs } from '../types/utilTypes'
+import { fetchImages } from '../Utility/fetchData'
 
 const testResponseData = { testKey: 'testData' }
 const fetchMock = vi.fn((url: string) => {
@@ -19,28 +18,8 @@ const fetchMock = vi.fn((url: string) => {
 
 vi.stubGlobal('fetch', fetchMock)
 
-const basicArgs: fetchBasicType = {
-  roverName: 'curiosity',
-  selectedSolarDay: '1',
-  pagesCount: '1',
-  showAllPhotos: vi.fn()
-}
-
-const utilsMock: utilFuncs = {
-  camSelectors: vi.fn(),
-  cleanAllAfterSolDayInput: vi.fn(),
-  cleanAllDynamicContent: vi.fn(),
-  displayEmptyRoverErr: vi.fn(),
-  displayGallery: vi.fn(),
-  fetchBasic: vi.fn(),
-  fetchExpanded: vi.fn(),
-  paginationFixedPages: vi.fn(),
-  paginationUncertainPCount: vi.fn(),
-  removeAllChildNodes: vi.fn()
-}
-
 it('Should return any available response data', async () => {
-  return expect(fetchBasic(basicArgs, '1', utilsMock)).resolves.toEqual(
+  return expect(fetchImages('curiosity', '1', 'ALL', '1')).resolves.toEqual(
     testResponseData
   )
 })

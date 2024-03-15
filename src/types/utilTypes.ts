@@ -1,32 +1,32 @@
 import type { responseRover } from './dataTypes'
 
-export interface fetchBasicType {
-  roverName: string
-  selectedSolarDay: string
-  pagesCount: string
-  showAllPhotos: (
-    data: responseRover,
-    roverName: string,
-    selectedSolarDay: string,
-    pagesCount: string,
-    page: string,
-    utils: utilFuncs
-  ) => void
-}
+// export interface fetchBasicType {
+//   roverName: string
+//   selectedSolarDay: string
+//   pagesCount: string
+//   showAllPhotos: (
+//     data: responseRover,
+//     roverName: string,
+//     selectedSolarDay: string,
+//     pagesCount: string,
+//     page: string,
+//     utils: utilFuncs
+//   ) => void
+// }
 
-export interface fetchExpandedType {
-  roverName: string
-  selectedSolarDay: string
-  camName: string
-  showSelectedCamPhotos: (
-    data: responseRover,
-    roverName: string,
-    selectedSolarDay: string,
-    camName: string,
-    page: string,
-    utils: utilFuncs
-  ) => void
-}
+// export interface fetchExpandedType {
+//   roverName: string
+//   selectedSolarDay: string
+//   camName: string
+//   showSelectedCamPhotos: (
+//     data: responseRover,
+//     roverName: string,
+//     selectedSolarDay: string,
+//     camName: string,
+//     page: string,
+//     utils: utilFuncs
+//   ) => void
+// }
 
 export interface utilFuncs {
   displayEmptyRoverErr: (
@@ -40,16 +40,12 @@ export interface utilFuncs {
     camerasUsed: string[],
     removeAllChildNodes: (parent: HTMLElement) => void
   ) => string
-  fetchBasic: (
-    args: fetchBasicType,
-    page: string,
-    utils: utilFuncs
+  fetchImages: (
+    roverName: string,
+    selectedSolarDay: string,
+    camName: string,
+    page: string
   ) => Promise<responseRover>
-  fetchExpanded: (
-    args: fetchExpandedType,
-    page: string,
-    utils: utilFuncs
-  ) => void
   displayGallery: (
     data: responseRover,
     removeAllChildNodes: (parent: HTMLElement) => void

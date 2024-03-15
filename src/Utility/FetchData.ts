@@ -1,9 +1,4 @@
 import type { responseRover } from '../types/dataTypes'
-import type {
-  fetchBasicType,
-  fetchExpandedType,
-  utilFuncs
-} from '../types/utilTypes'
 
 /**
  * Requests a data from NASA Api for a selected rover, on a selected solar day. API
@@ -18,28 +13,31 @@ import type {
  * @param {string} page Page user is currently on (default=1).
  */
 
-export async function fetchBasic(
-  args: fetchBasicType,
-  page = '1',
-  utils: utilFuncs
+export async function fetchImages(
+  roverName: string,
+  selectedSolarDay: string,
+  camName: string,
+  page = '1'
 ): Promise<responseRover> {
-  const fetchUrl = `https://api.nasa.gov/mars-photos/api/v1/rovers/${args.roverName}/photos?sol=${args.selectedSolarDay}&page=${page}&api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
+  // Fetch URL will be slightly different depending if camera is selected or not
+  let fetchUrl = ''
+  if (camName === 'ALL') {
+    fetchUrl = `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?sol=${selectedSolarDay}&page=${page}&api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
+  } else {
+    fetchUrl = `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos?sol=${selectedSolarDay}&camera=${camName}&page=${page}&api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
+  }
 
+  // Get the response and data from API
   const response = await fetch(fetchUrl)
   const responseData: responseRover = await response.json()
 
+  // Throw an error if something goes wrong
   if (!response.ok) {
-    throw new Error(`Something went wrong.. Error : ${response.status}`)
+    throw new Error(
+      `Something went wrong.. Error : ${response.status} - ${response.statusText}`
+    )
   }
 
-  // args.showAllPhotos(
-  //   responseData,
-  //   args.roverName,
-  //   args.selectedSolarDay,
-  //   args.pagesCount,
-  //   page,
-  //   utils
-  // )
   return responseData
 }
 
@@ -55,25 +53,25 @@ export async function fetchBasic(
  * @param {string} camName Name of the camera selected
  * @param {string} page Page user is currently on (default=1).
  */
-export function fetchExpanded(
-  args: fetchExpandedType,
-  page = '1',
-  utils: utilFuncs
-): void {
-  const fetchUrl = `https://api.nasa.gov/mars-photos/api/v1/rovers/${args.roverName}/photos?sol=${args.selectedSolarDay}&camera=${args.camName}&page=${page}&api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
-  fetch(fetchUrl)
-    .then(async (response) => await response.json())
-    .then((data: responseRover) => {
-      args.showSelectedCamPhotos(
-        data,
-        args.roverName,
-        args.selectedSolarDay,
-        args.camName,
-        page,
-        utils
-      )
-    })
-    .catch(() => {
-      console.log('Something went wrong')
-    })
-}
+// export function fetchExpanded(
+//   args: fetchExpandedType,
+//   page = '1',
+//   utils: utilFuncs
+// ): void {
+//   const fetchUrl = `https://api.nasa.gov/mars-photos/api/v1/rovers/${args.roverName}/photos?sol=${args.selectedSolarDay}&camera=${args.camName}&page=${page}&api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
+//   fetch(fetchUrl)
+//     .then(async (response) => await response.json())
+//     .then((data: responseRover) => {
+//       args.showSelectedCamPhotos(
+//         data,
+//         args.roverName,
+//         args.selectedSolarDay,
+//         args.camName,
+//         page,
+//         utils
+//       )
+//     })
+//     .catch(() => {
+//       console.log('Something went wrong')
+//     })
+// }

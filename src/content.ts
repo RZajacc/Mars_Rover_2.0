@@ -13,15 +13,11 @@ import {
   removeAllChildNodes,
   cleanAllAfterSolDayInput
 } from './Utility/cleanerFunctions'
-import { fetchBasic, fetchExpanded } from './Utility/fetchData'
+import { fetchImages } from './Utility/fetchData'
 import { displayRoverInfo } from './Utility/displayRoverInfo'
 import { displaySolDayInfo } from './Utility/displaySolDayInfo'
 import { camSelectors } from './Utility/camSelectors'
-import type {
-  fetchBasicType,
-  fetchExpandedType,
-  utilFuncs
-} from './types/utilTypes'
+import type { utilFuncs } from './types/utilTypes'
 
 // ? ----------------------------------------------------------------------
 // ? SELECTING ROVER - Serves as a root call for everytning that comes next
@@ -33,8 +29,7 @@ const utils: utilFuncs = {
   removeAllChildNodes,
   cleanAllAfterSolDayInput,
   camSelectors,
-  fetchBasic,
-  fetchExpanded,
+  fetchImages,
   displayGallery,
   paginationFixedPages,
   paginationUncertainPCount
@@ -165,32 +160,49 @@ export const displayCameraSelectorsSection = async (
   // Query the element
   const camSelect = document.getElementById(camSelectID) as HTMLSelectElement
 
-  // Prepare arguments for fetch function
-  const basicArgs: fetchBasicType = {
+  // Call fetch
+  const imagesData = await utils.fetchImages(
     roverName,
     selectedSolarDay,
-    pagesCount,
-    showAllPhotos
-  }
-
-  // Call fetch
-  const data = await utils.fetchBasic(basicArgs, '1', utils)
-  showAllPhotos(data, roverName, selectedSolarDay, pagesCount, '1', utils)
+    'ALL',
+    '1'
+  )
+  showAllPhotos(imagesData, roverName, selectedSolarDay, pagesCount, '1', utils)
 
   // Basic and expanded fetch differ only selected camera passed as attribute
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   camSelect.addEventListener('change', async () => {
     if (camSelect.value === 'ALL') {
-      await utils.fetchBasic(basicArgs, '1', utils)
-    } else {
-      // Prepare arguments for fetch function
-      const expArgs: fetchExpandedType = {
+      const imagesData = await utils.fetchImages(
         roverName,
         selectedSolarDay,
-        camName: camSelect.value,
-        showSelectedCamPhotos
-      }
-      utils.fetchExpanded(expArgs, '1', utils)
+        camSelect.value,
+        '1'
+      )
+      showAllPhotos(
+        imagesData,
+        roverName,
+        selectedSolarDay,
+        pagesCount,
+        '1',
+        utils
+      )
+    } else {
+      // Prepare arguments for fetch function
+      const imagesData = await utils.fetchImages(
+        roverName,
+        selectedSolarDay,
+        camSelect.value,
+        '1'
+      )
+      showSelectedCamPhotos(
+        imagesData,
+        roverName,
+        selectedSolarDay,
+        camSelect.value,
+        '1',
+        utils
+      )
     }
   })
 }
