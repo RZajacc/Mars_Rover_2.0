@@ -40,7 +40,11 @@ export interface utilFuncs {
     camerasUsed: string[],
     removeAllChildNodes: (parent: HTMLElement) => void
   ) => string
-  fetchBasic: (args: fetchBasicType, page: string, utils: utilFuncs) => void
+  fetchBasic: (
+    args: fetchBasicType,
+    page: string,
+    utils: utilFuncs
+  ) => Promise<responseRover>
   fetchExpanded: (
     args: fetchExpandedType,
     page: string,

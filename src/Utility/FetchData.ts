@@ -17,27 +17,30 @@ import type {
  * @param {string} pagesCount Calculated amount of page that are available to display
  * @param {string} page Page user is currently on (default=1).
  */
-export function fetchBasic(
+
+export async function fetchBasic(
   args: fetchBasicType,
   page = '1',
   utils: utilFuncs
-): void {
+): Promise<responseRover> {
   const fetchUrl = `https://api.nasa.gov/mars-photos/api/v1/rovers/${args.roverName}/photos?sol=${args.selectedSolarDay}&page=${page}&api_key=wlcQTmhFQql1kb762xbFcrn8imjFFLumfDszPmsi`
-  fetch(fetchUrl)
-    .then(async (response) => await response.json())
-    .then((data: responseRover) => {
-      args.showAllPhotos(
-        data,
-        args.roverName,
-        args.selectedSolarDay,
-        args.pagesCount,
-        page,
-        utils
-      )
-    })
-    .catch(() => {
-      console.log('Something went wrong')
-    })
+
+  const response = await fetch(fetchUrl)
+  const responseData: responseRover = await response.json()
+
+  if (!response.ok) {
+    throw new Error(`Something went wrong.. Error : ${response.status}`)
+  }
+
+  // args.showAllPhotos(
+  //   responseData,
+  //   args.roverName,
+  //   args.selectedSolarDay,
+  //   args.pagesCount,
+  //   page,
+  //   utils
+  // )
+  return responseData
 }
 
 /**
