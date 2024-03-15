@@ -26,29 +26,20 @@ let selectedSolarDay = '1'
 // Mock of the functions
 const removeAllChildNodesMock = vi.fn()
 
-
 beforeEach(() => {
   document.body.innerHTML = ''
   document.write(htmlDocumentContent)
-  displaySolDayInfo(
-    photoArr,
-    selectedSolarDay,
-    removeAllChildNodesMock
-  )
   vi.clearAllMocks()
 })
 
 it('Should should call cleaning at first', () => {
-  displaySolDayInfo(
-    photoArr,
-    selectedSolarDay,
-    removeAllChildNodesMock
-  )
+  displaySolDayInfo(photoArr, selectedSolarDay, removeAllChildNodesMock)
 
   expect(removeAllChildNodesMock).toBeCalledTimes(1)
 })
 
 it('Should generate a paragraph as a child of solar day description div', () => {
+  displaySolDayInfo(photoArr, selectedSolarDay, removeAllChildNodesMock)
   const solDayDescDiv = document.querySelector(
     '#sol-day-desc'
   ) as unknown as HTMLDivElement
@@ -61,6 +52,12 @@ it('Should generate a paragraph as a child of solar day description div', () => 
 })
 
 it('Should should contain selected solar day as a part of displayed content', () => {
+  const [photosN, camUsed] = displaySolDayInfo(
+    photoArr,
+    selectedSolarDay,
+    removeAllChildNodesMock
+  )
+
   const solDayDescDiv = document.querySelector(
     '#sol-day-desc'
   ) as unknown as HTMLDivElement
@@ -68,4 +65,21 @@ it('Should should contain selected solar day as a part of displayed content', ()
   const firstChild = solDayDescDiv.firstChild as HTMLElement
 
   expect(firstChild.innerHTML).toContain(selectedSolarDay)
+  expect(firstChild.innerHTML).toContain(photosN)
+})
+
+it('Should return a number and a string array as a result', () => {
+  const [photosN, camUsed] = displaySolDayInfo(
+    photoArr,
+    selectedSolarDay,
+    removeAllChildNodesMock
+  )
+
+  // Test the first returned value
+  expect(photosN).not.toBeNull()
+  expect(photosN).toBeTypeOf('number')
+
+  // Test second returned value
+  expect(camUsed).not.toBeNull()
+  expect(camUsed).toBeTypeOf('object')
 })

@@ -10,7 +10,7 @@ import {
 } from '../Utility/cleanerFunctions'
 import { Window } from 'happy-dom'
 
-const htmlDocPath = path.join(process.cwd() + '/public', 'content.html')
+const htmlDocPath = path.join(process.cwd(), 'public', 'content.html')
 const htmlDocumentContent = fs.readFileSync(htmlDocPath).toString()
 
 const window = new Window()
@@ -74,28 +74,35 @@ describe('cleanAllDynamicContent()', () => {
 describe('cleanAllAfterSolDayInput()', () => {
   it('Should clean cameras list', () => {
     cleanAllAfterSolDayInput()
-    const camerasList =
-    document.querySelector('#camera-selectors') as unknown as HTMLDivElement
+    const camerasList = document.querySelector(
+      '#camera-selectors'
+    ) as unknown as HTMLDivElement
 
     expect(camerasList.childNodes.length).toBe(0)
   })
 
   it('Should set camInfo innerHTML to an empty string', () => {
     cleanAllAfterSolDayInput()
-    const camInfo = document.querySelector('#cameras-info') as unknown as HTMLParagraphElement
+    const camInfo = document.querySelector(
+      '#cameras-info'
+    ) as unknown as HTMLParagraphElement
 
     expect(camInfo.innerHTML).toBe('')
   })
 
   it('Should clean the photo gallery div', () => {
     cleanAllAfterSolDayInput()
-    const photoDiv = document.querySelector('#photo-gallery') as unknown as HTMLDivElement
+    const photoDiv = document.querySelector(
+      '#photo-gallery'
+    ) as unknown as HTMLDivElement
     expect(photoDiv.childNodes.length).toBe(0)
   })
 
   it('Should clean the pagination div', () => {
     cleanAllAfterSolDayInput()
-    const pagesDiv = document.querySelector('#pages') as unknown as HTMLDivElement
+    const pagesDiv = document.querySelector(
+      '#pages'
+    ) as unknown as HTMLDivElement
     expect(pagesDiv.childNodes.length).toBe(0)
   })
 })

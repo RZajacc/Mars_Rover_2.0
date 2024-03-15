@@ -7,16 +7,13 @@ import type { utilFuncs } from '../types/utilTypes'
  * the total amount of pages countable. Therefore logic and form of displaying
  * pagination differs a bit from the one with selected camera. Each time user
  * changes a page to be displayed another piece of data is fetched from the API
- * @param {HTMLDivElement} photoDiv Div where gallery is displayed, and which
- * has to be also cleaned from previous content before displaying new.
- * @param {HTMLDivElement} pagesDiv Div serving as placeholder for a pagination
- * to be displayed, and updated in.
  * @param {string} pagesCount Calculated amount of pages that are available to
  * display
  * @param {string} roverName Rover name selected by the user.
  * @param {string} selectedSolarDay Solar day selected by the user.
  * @param {string} page Current page fethed from the API (page is a attribute
  * for a fetch)
+ * @param {utilFuncs} utils Collection of utility functions
  */
 export function paginationFixedPages(
   pagesCount: string,
