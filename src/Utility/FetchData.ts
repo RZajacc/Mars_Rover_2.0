@@ -1,5 +1,4 @@
 import type { responseRover } from '../types/dataTypes'
-
 /**
  * Requests a data from NASA Api for a selected rover, on a selected solar day. API
  * is paginated (each response contains 25 entries), therefore also page attribute is
