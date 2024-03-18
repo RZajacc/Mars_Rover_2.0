@@ -6,7 +6,8 @@
     "build": "webpack",
     "test": "vitest --run --reporter verbose --environment jsdom",
     "coverage": "vitest run --coverage",
-    "ui": "vitest --ui"
+    "ui": "vitest --ui",
+    "cypress:open" : "cypress open"
   },
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
@@ -16,6 +17,7 @@
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@vitest/coverage-v8": "^1.2.2",
     "@vitest/ui": "^1.2.2",
+    "cypress": "^13.7.0",
     "eslint": "^8.56.0",
     "eslint-config-standard-with-typescript": "^43.0.1",
     "eslint-plugin-import": "^2.29.1",
