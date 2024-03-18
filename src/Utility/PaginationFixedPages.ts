@@ -11,6 +11,7 @@ import type { utilFuncs } from '../types/utilTypes'
  * display
  * @param {string} roverName Rover name selected by the user.
  * @param {string} selectedSolarDay Solar day selected by the user.
+ * @param {string} camName Selected camera name
  * @param {string} page Current page fethed from the API (page is a attribute
  * for a fetch)
  * @param {utilFuncs} utils Collection of utility functions
@@ -23,13 +24,13 @@ export function paginationFixedPages(
   page: string,
   utils: utilFuncs
 ): void {
-  // * Get the gallery and pagination div
+  // Get the gallery and pagination div
   const photoDiv = document.getElementById('photo-gallery') as HTMLDivElement
   const pagesDiv = document.getElementById('pages') as HTMLDivElement
-  // * Create a pagination if there are more pages than 1
+
+  // Create a pagination if there are more pages than 1
   if (+pagesCount > 1) {
-    //  *Create navigation and FIRST element tab
-    // const pagesDiv = document.querySelector("#pages") as HTMLDivElement;
+    //  Create navigation list
     const paginationNav = document.createElement('nav')
     paginationNav.setAttribute('aria-label', 'pagination-nav')
     pagesDiv.appendChild(paginationNav)
@@ -37,7 +38,7 @@ export function paginationFixedPages(
     paginationUl.setAttribute('class', 'pagination justify-content-center')
     paginationNav.appendChild(paginationUl)
 
-    // *Create a move to a FIRST PAGE element
+    // Create a move to a FIRST PAGE element
     const firstLi = document.createElement('li')
     firstLi.setAttribute('class', 'page-item')
     const firstHref = document.createElement('a')
@@ -68,7 +69,7 @@ export function paginationFixedPages(
       )
     })
 
-    // * PAGINATION LOGIC DEPENDING ON SEVERAL POSSIBLE SCENARIOS
+    // SCENARIO 1 - were on the first page and there are 3 or more pages
     if (+page === 1 && +pagesCount >= 3) {
       for (let i = +page; i < +page + 3; i++) {
         const paginationLi = document.createElement('li')
@@ -105,6 +106,7 @@ export function paginationFixedPages(
           )
         })
       }
+      // SCENARIO 2 - were on the first page and there are 3 or less pages
     } else if (+page === 1 && +pagesCount <= 3) {
       for (let i = +page; i < +pagesCount + 1; i++) {
         const paginationLi = document.createElement('li')
@@ -141,6 +143,7 @@ export function paginationFixedPages(
           )
         })
       }
+      // SCENARIO 3- were on the last page and there are 3 or more pages
     } else if (+page === +pagesCount && +pagesCount >= 3) {
       for (let i = +page - 2; i < +pagesCount + 1; i++) {
         const paginationLi = document.createElement('li')
@@ -177,6 +180,7 @@ export function paginationFixedPages(
           )
         })
       }
+      // SCENARIO 4 - were on the last page and there are 3 or less pages
     } else if (+page === +pagesCount && +pagesCount <= 3) {
       for (let i = +pagesCount - 1; i < +pagesCount + 1; i++) {
         const paginationLi = document.createElement('li')
@@ -213,6 +217,7 @@ export function paginationFixedPages(
           )
         })
       }
+      // SCENARIO 5 - we are somehwere in the middle and we generate current and two neighbouring options
     } else {
       for (let i = +page - 1; i < +page + 2; i++) {
         const paginationLi = document.createElement('li')
@@ -251,7 +256,7 @@ export function paginationFixedPages(
       }
     }
 
-    // *Create a move to LAST element
+    // Create a move to LAST element
     const lastLi = document.createElement('li')
     lastLi.setAttribute('class', 'page-item')
     const lastHref = document.createElement('a')

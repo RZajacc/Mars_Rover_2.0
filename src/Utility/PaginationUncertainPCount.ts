@@ -9,15 +9,14 @@ import type { utilFuncs } from '../types/utilTypes'
  * Becayse of that logic and form of displaying pagination differs a bit from the
  * one without selected camera. Each time user changes a page to be displayed another
  * piece of data is fetched from the API
- * @param {HTMLDivElement} photoDiv Div where gallery is displayed, and which
- * has to be also cleaned from previous content before displaying new.
- * @param {responseRover} data Data fetched from the API for a given rover on
- * a given solar day.
+ * @param {string} pagesCount Calculated amount of pages that are available to
+ * display
  * @param {string} roverName Rover name selected by the user.
  * @param {string} selectedSolarDay Solar day selected by the user.
- * @param {string} camName Name of the camera that was selected by the user
+ * @param {string} camName Selected camera name
  * @param {string} page Current page fethed from the API (page is a attribute
  * for a fetch)
+ * @param {utilFuncs} utils Collection of utility functions
  */
 export async function paginationUncertainPCount(
   imagesAmount: number,
@@ -28,9 +27,9 @@ export async function paginationUncertainPCount(
   page: string,
   utils: utilFuncs
 ): Promise<void> {
-  // * Get the gallery and pagination div
+  // Get the gallery and pagination div
   const photoDiv = document.getElementById('photo-gallery') as HTMLDivElement
-  // * If requested page is empty then move to last working one (Pagination)
+  // If requested page is empty then move to last working one (Pagination)
   if (imagesAmount === 0) {
     const targetPage = +page - 1
     utils.removeAllChildNodes(photoDiv)
@@ -50,7 +49,8 @@ export async function paginationUncertainPCount(
       utils
     )
   } else {
-    // * PAGINATION LOGIC FOR EACH POSSIBLE SCENARIO
+    // Max images per page is 25. Therefor pagination is needed when where on different page than 1, or amount of images is max
+    // since then probably page 2 exists
     if (imagesAmount === 25 || +page !== 1) {
       // ? Create navigation and Previous element tab
       const pagesDiv: HTMLDivElement = document.querySelector('#pages')!
@@ -61,7 +61,7 @@ export async function paginationUncertainPCount(
       paginationUl.setAttribute('class', 'pagination justify-content-center')
       paginationNav.appendChild(paginationUl)
 
-      // *Create a move to a FIRST PAGE element
+      // Create a move to a FIRST PAGE element
       const firstLi = document.createElement('li')
       firstLi.setAttribute('class', 'page-item')
       const firstHref = document.createElement('a')
@@ -92,7 +92,7 @@ export async function paginationUncertainPCount(
         )
       })
 
-      // *Create a move to a PREVIOUS PAGE element
+      // Create a move to a PREVIOUS PAGE element
       const previousLi = document.createElement('li')
       previousLi.setAttribute('class', 'page-item')
       const previousHref = document.createElement('a')
@@ -125,7 +125,7 @@ export async function paginationUncertainPCount(
         }
       })
 
-      // * Create a CURRENT PAGE element
+      // Create a CURRENT PAGE element
       const currentLi = document.createElement('li')
       currentLi.setAttribute('class', 'page-item')
       const currentHref = document.createElement('a')
@@ -135,7 +135,7 @@ export async function paginationUncertainPCount(
       currentLi.appendChild(currentHref)
       paginationUl.appendChild(currentLi)
 
-      // *Create a move to NEXT element
+      // Create a move to NEXT element
       const nextLi = document.createElement('li')
       nextLi.setAttribute('class', 'page-item')
       const nextHref = document.createElement('a')
@@ -168,8 +168,3 @@ export async function paginationUncertainPCount(
     }
   }
 }
-
-// console.log('IMAGES AMOUNT', imag)
-// console.log('CAM NAME', camName)
-// console.log('PAGES COUNT', pagesCount)
-// console.log('PAGE', page)
