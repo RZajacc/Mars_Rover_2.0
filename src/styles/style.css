@@ -83,11 +83,11 @@ body {
   margin-bottom: 8%;
 }
 
-#form-desc {
+#form-description {
   text-align: center;
 }
 
-#emailErr {
+#email-error {
   color: red;
   font-weight: bold;
 }
