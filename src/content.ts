@@ -18,7 +18,6 @@ import { displayRoverInfo } from './Utility/displayRoverInfo'
 import { displaySolDayInfo } from './Utility/displaySolDayInfo'
 import { camSelectors } from './Utility/camSelectors'
 import type { utilFuncs } from './types/utilTypes'
-import './styles/style.css'
 // ? ----------------------------------------------------------------------
 // ? SELECTING ROVER - Serves as a root call for everytning that comes next
 // ? ----------------------------------------------------------------------
