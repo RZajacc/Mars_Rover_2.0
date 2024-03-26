@@ -1,0 +1,33 @@
+body {
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* ******NAVBAR & FOOTER************ */
+#rover-nav-pic {
+    width: 75px;
+}
+
+.navbar-nav {
+    font-size: 1.4rem;
+    font-family: 'Courier New', Courier, monospace;
+    justify-content: center;
+}
+
+.navbar-brand {
+    padding: 15px 0px 0px 5px;
+}
+
+.navbar-nav>a:hover {
+    font-weight: bold;
+}
+
+.footer {
+    margin-top: 7rem;
+}
+
+.footer-row {
+    height: 35px;
+    color: black;
+    vertical-align: middle;
+}
