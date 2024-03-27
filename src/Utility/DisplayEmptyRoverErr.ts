@@ -4,6 +4,7 @@
  * it uses other util function to clean all previousle generated
  * content on the DOM tree.
  * @param {string} message Message to display on the page
+ * @param {() => void} cleanAllDynamicContent Cleaner function
  */
 export function displayEmptyRoverErr(
   message: string,

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-// import { displaySolDayInfo } from './DisplaySolarDayInfo'
 import type { missionManifest } from '../types/dataTypes'
 
 /**
@@ -7,7 +6,7 @@ import type { missionManifest } from '../types/dataTypes'
  * from NASA API. This entry doesn't contain images, but it holds a lot of information
  * about selected rovers mission. Part of if will be displayed on the page as a result
  * @param {missionManifest} info Data fetched from NASA API for selected rover
- * @param {string} roverName Name of the rover collected from select input on the page
+ * @param {(parent : HTMLElement) => void} removeAllChildNodes Cleaner function
  */
 export function displayRoverInfo(
   info: missionManifest,

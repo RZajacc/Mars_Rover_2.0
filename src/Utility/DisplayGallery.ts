@@ -4,9 +4,8 @@ import type { responseRover } from '../types/dataTypes'
  * Displays a photo gallery after all necessary options before are provided
  * (like rover, and solar day, optionally also selected camera). Gallery uses
  * bootstrap card group.
- * @param {HTMLDivElement} cardGroup Div element with bootrap classes defining
- * parameters of a card group.
- * @param {responseRover} data Data fetched from the API
+ * @param {responseRover} data Data fetched from NASA API
+ * @param {(parent : HTMLElement) => void} removeAllChildNodes Cleaner function
  */
 export function displayGallery(
   data: responseRover,

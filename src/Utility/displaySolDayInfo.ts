@@ -7,8 +7,8 @@ import type { PhotoManifest } from '../types/dataTypes'
  * will be collected and provided to a function displaying camera selectors.
  * @param {PhotoManifest[]} photoArr Photos fetched from NASA API for a given
  * solar day.
- * @param {string} roverName Rover selected by the user
  * @param {string} selectedSolarDay Solar day selected by the user
+ * @param {(parent : HTMLElement) => void} removeAllChildNodes Cleaner function
  */
 export function displaySolDayInfo(
   photoArr: PhotoManifest[],

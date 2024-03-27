@@ -9,11 +9,11 @@ import type { utilFuncs } from '../types/utilTypes'
  * Becayse of that logic and form of displaying pagination differs a bit from the
  * one without selected camera. Each time user changes a page to be displayed another
  * piece of data is fetched from the API
- * @param {string} pagesCount Calculated amount of pages that are available to
- * display
+ * @param {number} imagesAmount Total amount of images
  * @param {string} roverName Rover name selected by the user.
  * @param {string} selectedSolarDay Solar day selected by the user.
  * @param {string} camName Selected camera name
+ * @param {string} pagesCount Total amount of pages available
  * @param {string} page Current page fethed from the API (page is a attribute
  * for a fetch)
  * @param {utilFuncs} utils Collection of utility functions

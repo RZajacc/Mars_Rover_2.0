@@ -38,6 +38,10 @@ export function cleanAllDynamicContent(): void {
   removeAllChildNodes(pagesDiv)
 }
 
+/**
+ * Special cleaner function to clean everything that was generated after solar
+ * day information was displayed on the page
+ */
 export function cleanAllAfterSolDayInput(): void {
   const camerasList: HTMLDivElement =
     document.querySelector('#camera-selectors')!

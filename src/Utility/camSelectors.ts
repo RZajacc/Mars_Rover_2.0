@@ -5,10 +5,7 @@
  * of them are used on any given day.
  * @param {string[]} cameraUsed Array of strings containg camera names used
  * by a rover at given day
- * @param {string} roverName Rover selected by the user
- * @param {string} selectedSolarDay Solar day selected by the user
- * @param {string} pagesCount It is a paginated api, and this number contains
- * calculated number of available pages to display.
+ * @param {(parent: HTMLelement) => void} removeAllChildNodes Cleaner function
  */
 export function camSelectors(
   camerasUsed: string[],
