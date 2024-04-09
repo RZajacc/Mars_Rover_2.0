@@ -1,4 +1,4 @@
-# MarsRover_3.0
+# MarsRover_2.0
 ### Version information:
 *Functionality of the page is the same as previous ones. What differs them is approach to structuring the code, usage of typescript and styling method*
 
