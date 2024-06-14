@@ -3,7 +3,8 @@
 
 *This version is built vith Javascript+Typescript and styled with Bootstrap. Also page logic was restructured completely, unit tests with Vitest are added and in some basic form also Webpack*
 
-*If you want to check other version of the projects please check:*
+*If you would like to take a look also on previous versions of the project please check:*
+
 * **v1.0** built vith pure Javascript and styled with Bootstrap. Check [here](https://github.com/RZajacc/Mars_Rover_1.0)
 * **v3.0** built vith Javascript+Typescript and styled with CSS+SCSS. Apart from Unit tests I'm working on End-to-end testing with Cypress, and trying to extend the use of Webpack. Check [here](https://github.com/RZajacc/MarsRover_3.0)
 
